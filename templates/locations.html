@@ -1,10 +1,55 @@
 {% extends "base.html" %}
-{% block content%}  
 
-    {% for record in locations %}
-        {{ record.name }}<br>
-        {{ record.rating }}<br>
-        {{ record.description }}<br>
-    {% endfor %}
+{% block styles %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-{% endblock%}  
+{% endblock%}
+
+
+{% block content%}
+<div class="container">
+    <div class="row">
+        <div class="center-align">
+            <!-- search bar -->
+            <h2>Search Bar</h2>
+            <div class="searchBar">
+                <form>
+                    <div class="input-field">
+                        <input id="search" type="search" required>
+                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- map window -->
+        <div class="center-align">
+            <h2>Google Maps Demo</h2>
+            <div id="map"></div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- database output -->
+        <div class="center-align">
+            <h2>Mongo DB Output</h2>
+            {% for record in locations %}
+            {{ record.name }}<br>
+            {{ record.rating }}<br>
+            {{ record.description }}<br>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock%}
+
+{% block scripts %}
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjc5iseqR_ZE_gLI2nVPFvRmw9-DaxDiI&callback=initMap&libraries=&v=weekly"
+    async>
+</script>
+
+{% endblock %}

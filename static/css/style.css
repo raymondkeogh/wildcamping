@@ -1,4 +1,4 @@
-body{
+body {
     background-image: url(../../static/images/background.jpg);
     background-size: cover;
     height: 100%;
@@ -6,8 +6,19 @@ body{
     background-repeat: no-repeat;
 }
 
-nav, .collapsible{
+nav,
+.collapsible {
     box-shadow: none;
-    -webkit-box-shadow: none; 
+    -webkit-box-shadow: none;
     background-color: transparent;
+}
+
+
+#map {
+    height: 400px;
+    z-index: 10;
+}
+
+#search {
+    background-color: white;
 }
