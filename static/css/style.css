@@ -4,6 +4,7 @@ body {
     height: 100%;
     position: relative;
     background-repeat: no-repeat;
+    color:white;
 }
 
 nav,
@@ -21,4 +22,20 @@ nav,
 
 #search {
     background-color: white;
+}
+
+.person_card, .place_card{
+    color: black;
+    background-color: white;
+    padding: 20px;
+}
+
+.user_profile h2 {
+    background-color: #0000008c;
+    padding: 20px;
+    
+}
+
+.fa-star:before {
+    color: #ff8e3d;
 }

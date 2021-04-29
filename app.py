@@ -38,7 +38,11 @@ def signup():
 def login():
     return render_template("login.html")
 
-
+@app.route("/profile_page")
+def profile_page():
+    user = mongo.db.users.find()
+    locations = mongo.db.locations.find()
+    return render_template("profile.html", locations=locations, user=user)
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
