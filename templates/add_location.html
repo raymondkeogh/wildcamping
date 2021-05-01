@@ -22,24 +22,39 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        <!-- map window -->
+    <div class="row add_location_inputs">
+        <!-- Text area input-->
         <div class="col s6">
             <div class="row">
                 <form class="col s12">
                     <div class="row">
+                        <h4>Site Description</h4>
                         <div class="input-field col s12">
-                            <textarea id="textarea1" class="materialize-textarea"></textarea>
-                            <label for="textarea1">Camp site description....</label>
+                            <textarea id="textarea2" class="materialize-textarea" data-length="240"></textarea>
+                        <label for="textarea2"></label>
                         </div>
                     </div>
                 </form>
             </div>
+            <!-- Rating input area -->
+            <div class="row">
+                <h4>Rating</h4>
+                <div class="rating">
+                    <span>☆</span><span>☆</span><span>☆</span><span>☆</span><span>☆</span>
+                </div>
+            </div>
         </div>
+        <!-- map input area -->
         <div class="col s6">
             <h4>Select location on map</h4>
             <div id="map"></div>
         </div>
+    </div>
+    <div class="row">
+        <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
+            <i class="material-icons right"></i>
+        </button>
+
     </div>
 </div>
 <h2>Chosen Location</h2>

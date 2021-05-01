@@ -4,7 +4,7 @@ body {
     height: 100%;
     position: relative;
     background-repeat: no-repeat;
-    color:white;
+    color: white;
 }
 
 nav,
@@ -24,7 +24,8 @@ nav,
     background-color: white;
 }
 
-.person_card, .place_card{
+.person_card,
+.place_card {
     color: black;
     background-color: white;
     padding: 20px;
@@ -33,9 +34,40 @@ nav,
 .user_profile h2 {
     background-color: #0000008c;
     padding: 20px;
-    
 }
 
 .fa-star:before {
     color: #ff8e3d;
+}
+
+
+/* Add_location page */
+ /* https://css-tricks.com/star-ratings/ */
+.rating {
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: left;
+    font-size: 48px;
+}
+
+.rating>span {
+    display: inline-block;
+    position: relative;
+    width: 1.2em;
+}
+
+.rating>span:hover:before,
+.rating>span:hover~span:before {
+    content: "\2605";
+    position: absolute;
+}
+
+#textarea2 {
+    height: 200px;
+    background-color: white;
+}
+
+.add_location_inputs{
+    background-color: #26485d;
+    padding:20px;
 }
