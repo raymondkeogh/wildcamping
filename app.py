@@ -63,6 +63,12 @@ def profile_page():
     locations = mongo.db.locations.find()
     return render_template("profile.html", locations=locations, user=user)
 
+
+@app.route("/add_location")
+def add_location():
+    return render_template("add_location.html")
+
+    
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),

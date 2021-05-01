@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block styles %}
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="center-align">
+            <!-- search bar -->
+            <h1><i class="fas fa-campground"></i></h1>
+            <div class="searchBar">
+                <form>
+                    <div class="input-field">
+                        <input id="search" type="search" required>
+                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <!-- map window -->
+        <div class="col s6">
+            <div class="row">
+                <form class="col s12">
+                    <div class="row">
+                        <div class="input-field col s12">
+                            <textarea id="textarea1" class="materialize-textarea"></textarea>
+                            <label for="textarea1">Camp site description....</label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col s6">
+            <h4>Select location on map</h4>
+            <div id="map"></div>
+        </div>
+    </div>
+</div>
+<h2>Chosen Location</h2>
+<form method="post">
+    <input type="text" id="lat" readonly="yes"><br>
+    <input type="text" id="lng" readonly="yes">
+</form>
+
+
+{% endblock%}
+
+{% block scripts %}
+
+<script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxdWmLSSJTX3YKlDFZgrvzP5INfBoO1dI&callback=initMap&libraries=&v=weekly"
+    async>
+</script>
+
+{% endblock %}

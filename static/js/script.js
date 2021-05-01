@@ -4,36 +4,59 @@ $(document).ready(function () {
     });
 });
 
-// https://stackoverflow.com/questions/3059044/google-maps-js-api-v3-simple-multiple-marker-example
-let map, marker;
-// Google maps api
+var map;
+var marker = false; ////Has the user plotted their location marker? 
+        
+//Create map
 function initMap() {
-    map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 10,
-        center: new google.maps.LatLng(-33.92, 151.25)
+
+    //The center location of our map.
+    var centerOfMap = new google.maps.LatLng(52.357971, -6.516758);
+
+    //Map options.
+    var options = {
+      center: centerOfMap, //Set center.
+      zoom: 7 //The zoom value.
+    };
+
+    //Create the map object.
+    map = new google.maps.Map(document.getElementById('map'), options);
+
+    //Listen for any clicks on the map.
+    google.maps.event.addListener(map, 'click', function(event) {                
+        //Get the location that the user clicked.
+        var clickedLocation = event.latLng;
+        //If the marker hasn't been added.
+        if(marker === false){
+            //Create the marker.
+            marker = new google.maps.Marker({
+                position: clickedLocation,
+                map: map,
+                draggable: true //make it draggable
+            });
+            //Listen for drag events!
+            google.maps.event.addListener(marker, 'dragend', function(event){
+                markerLocation();
+            });
+        } else{
+            //Marker has already been added, so just change its location.
+            marker.setPosition(clickedLocation);
+        }
+        //Get the marker's location.
+        markerLocation();
     });
-
-    let locations = [
-        ['Bondi Beach', -33.890542, 151.274856, 4],
-        ['Coogee Beach', -33.923036, 151.259052, 5],
-        ['Cronulla Beach', -34.028249, 151.157507, 3],
-        ['Manly Beach', -33.80010128657071, 151.28747820854187, 2],
-        ['Maroubra Beach', -33.950198, 151.259302, 1]
-    ];
-
-    let infowindow = new google.maps.InfoWindow();
-
-    for (let i = 0; i < locations.length; i++) {
-        marker = new google.maps.Marker({
-            position: new google.maps.LatLng(locations[i][1], locations[i][2]),
-            map: map
-        });
-
-        google.maps.event.addListener(marker, 'click', (function (marker, i) {
-            return function () {
-                infowindow.setContent(locations[i][0]);
-                infowindow.open(map, marker);
-            }
-        })(marker, i));
-    }
 }
+        
+//This function will get the marker's current location and then add the lat/long
+//values to our textfields so that we can save the location.
+function markerLocation(){
+    //Get location.
+    var currentLocation = marker.getPosition();
+    //Add lat and lng values to a field that we can save.
+    document.getElementById('lat').value = currentLocation.lat(); //latitude
+    document.getElementById('lng').value = currentLocation.lng(); //longitude
+}
+        
+        
+//Load the map when the page has finished loading.
+google.maps.event.addDomListener(window, 'load', initMap);
