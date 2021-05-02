@@ -39,7 +39,7 @@ def signup():
 
         if existing_user:
             flash("Username already exists")
-            return redirect(url_for("signup"))
+            return render_template("signup.html")
 
         register = {
             "username": request.form.get("username").lower(),
@@ -57,6 +57,7 @@ def signup():
 def login():
     return render_template("login.html")
 
+
 @app.route("/profile_page")
 def profile_page():
     user = mongo.db.users.find()
@@ -64,8 +65,22 @@ def profile_page():
     return render_template("profile.html", locations=locations, user=user)
 
 
-@app.route("/add_location")
+@app.route("/add_location", methods=["GET", "POST"])
 def add_location():
+    if request.method == "POST":
+        lat = request.form.get("lat")
+        lng = request.form.get("lng")
+        latlng = lat + ", " + lng
+        new_location = {
+            "name": request.form.get("location_name"),
+            "description": request.form.get("location_description"),
+            "rating": request.form.get("rating"),
+            "location": latlng
+        }
+        mongo.db.locations.insert_one(new_location)
+
+        flash("Location Added, Thanks for you input")
+        return render_template("profile.html")
     return render_template("add_location.html")
 
     

@@ -40,34 +40,70 @@ nav,
     color: #ff8e3d;
 }
 
-
 /* Add_location page */
- /* https://css-tricks.com/star-ratings/ */
+
 .rating {
-    unicode-bidi: bidi-override;
-    direction: rtl;
-    text-align: left;
-    font-size: 48px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: center
 }
 
-.rating>span {
-    display: inline-block;
+.rating>input {
+    display: none
+}
+
+.rating>label {
     position: relative;
-    width: 1.2em;
+    width: 1em;
+    font-size: 50px;
+    color: #FFD600;
+    cursor: pointer
 }
 
-.rating>span:hover:before,
-.rating>span:hover~span:before {
+.rating>label::before {
     content: "\2605";
     position: absolute;
+    opacity: 0
 }
 
-#textarea2 {
+.rating>label:hover:before,
+.rating>label:hover~label:before {
+    opacity: 1 !important
+}
+
+.rating>input:checked~label:before {
+    opacity: 1
+}
+
+.rating:hover>input:checked~label:before {
+    opacity: 0.4
+}
+
+#location_description {
     height: 200px;
     background-color: white;
 }
 
+
+#location_name {
+    background-color: white;
+}
+
+
 .add_location_inputs{
     background-color: #26485d;
     padding:20px;
+} 
+
+.flashes h4 {
+    line-height: 2;
+}
+
+.add_location_inputs button {
+    margin: 20px;
+}
+
+.map_area span input {
+    display: inline;
+    color: white;
 }
