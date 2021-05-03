@@ -78,11 +78,12 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/profile_page")
-def profile_page():
-    user = mongo.db.users.find()
-    locations = mongo.db.locations.find()
-    return render_template("profile.html", locations=locations, user=user)
+@app.route("/profile_page/<username>", methods=["GET", "POST"])
+def profile_page(username):
+    # grab the session user's username from db
+    username = mongo.db.users.find_one(
+        {"username": session["user"]})["username"]
+    return render_template("profile.html", username=username)
 
 
 @app.route("/add_location", methods=["GET", "POST"])
@@ -95,7 +96,8 @@ def add_location():
             "name": request.form.get("location_name"),
             "description": request.form.get("location_description"),
             "rating": request.form.get("rating"),
-            "location": latlng
+            "location": latlng,
+            "file": request.form.get("file")
         }
         mongo.db.locations.insert_one(new_location)
 
