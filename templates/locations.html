@@ -3,10 +3,10 @@
 {% block styles %}
 <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
-{% endblock%}
+{% endblock %}
 
 
-{% block content%}
+{% block content %}
 <div class="container">
     <div class="row">
         <div class="center-align">
@@ -23,25 +23,41 @@
         </div>
     </div>
     <div class="row">
-        <!-- map window -->
-        <div class="center-align">
-            <h2>Google Maps Demo</h2>
-            <div id="map"></div>
-        </div>
+      
     </div>
     <div class="row">
+        <div class="col s6">
         <!-- database output -->
-        <div class="center-align">
-            <h2>Mongo DB Output</h2>
+        <div class="locations">
             {% for record in locations %}
-            {{ record.name }}<br>
-            {{ record.rating }}<br>
-            {{ record.description }}<br>
+            <div class="row place_card">
+                <div class="col">
+                    <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
+                    <div class="location_longlat"> {{ record.location }}</div><br>
+                    Rating: {{ record.rating }}<br><br>
+                    Description: {{ record.description.capitalize() }}<br>
+                    <br>
+                </div>
+                <div class="col">Image File</div>
+
+                <!-- "Like button" code found on 
+                    https://css-tricks.com/recreating-the-twitter-heart-animation/ -->
+                <div>
+                    <input id="toggle-heart" name="toggle-heart" type="checkbox" />
+                    <label for="toggle-heart">❤</label>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
+    <div class="col s6">
+  <!-- map window -->
+        <div class="center-align">
+            <div id="map"></div>
+        </div>
+    </div>
+    </div>
 </div>
-
 
 {% endblock%}
 
