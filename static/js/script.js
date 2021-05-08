@@ -12,23 +12,10 @@ $(document).ready(function () {
 
 //This function will get the marker's current location and then add the lat/long
 //values to our textfields so that we can save the location.
-function markerLocation() {
-    //Get location.
-    var currentLocation = marker.getPosition();
-    //Add lat and lng values to a field that we can save.
-    document.getElementById('lat').value = currentLocation.lat(); //latitude
-    document.getElementById('lng').value = currentLocation.lng(); //longitude
-}
-
-
-
-
-
-
-
 
 // Code to sync db output, python and script https://stackoverflow.com/questions/49718569/multiple-markers-in-flask-google-map-api
-var map, i;
+var map, add_location_map, i;
+var marker2 = false;
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -36,7 +23,6 @@ function initMap() {
         center: new google.maps.LatLng(53.43237771764574, -6.871380403326448),
         mapTypeId: 'roadmap'
     });
-
     //variable to hold your endpoint
     var coordAddresses = 'https://8080-amethyst-crow-u769d91j.ws-eu03.gitpod.io/api/coordinates';
     //an array to hold your coordinates
@@ -52,7 +38,7 @@ function initMap() {
             var myAdd = {};
             var addresses = obj.coordinates;
             var l = addresses.length;
-        
+
             for (i = 0; i < l; i++) {
                 myAdd = {
                     position: {
@@ -80,11 +66,54 @@ function initMap() {
             infoWindow.setMap(map);
             infoWindow.setPosition(pos);
             infoWindow.setContent('An error occurred, we are unable to retrieve coordinates.');
-
         });
+}
 
-        // Second map for add_locaton_map window
-        
+// Second map for add_location_map window
+// Created a second function as initializing the maps in 
+// one func resulted in DOM errors and no maps displaying
+function initMap2() {
+    // Tutorial that helped create marker locations 
+    // https://thisinterestsme.com/google-maps-api-location-picker-example/
+
+    add_location_map = new google.maps.Map(document.getElementById('add_location_map'), {
+        center: new google.maps.LatLng(52.357971, -6.516758),
+        zoom: 7,
+        mapTypeId: 'roadmap'
+    });
+    google.maps.event.addListener(add_location_map, 'click', function (event) {
+        //Get the location that the user clicked.
+        var clickedLocation = event.latLng;
+        console.log("Clicked location is.    " + clickedLocation)
+        //If the marker hasn't been added.
+        if (marker2 === false) {
+            //Create the marker.
+            marker2 = new google.maps.Marker({
+                position: clickedLocation,
+                map: map,
+                draggable: true //make it draggable
+            });
+            console.log("Marker 2 is : " + marker2)
+            //Listen for drag events!
+            google.maps.event.addListener(marker2, 'dragend', function (event) {
+                markerLocation();
+            });
+        } else {
+            //Marker has already been added, so just change its location.
+            marker2.setPosition(clickedLocation);
+        }
+        //Get the marker's location.
+        markerLocation();
+    });
+}
+
+function markerLocation() {
+    //Get location.
+    var currentLocation = marker2.getPosition();
+    //Add lat and lng values to a field that we can save.
+    document.getElementById('lat').value = currentLocation.lat(); //latitude
+    document.getElementById('lng').value = currentLocation.lng(); //longitude
 }
 
 google.maps.event.addDomListener(window, 'load', initMap);
+google.maps.event.addDomListener(window, 'load', initMap2);

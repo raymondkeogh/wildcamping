@@ -14,7 +14,7 @@ nav,
     background-color: transparent;
 }
 
-#map {
+#map, #add_location_map {
     height: 400px;
     z-index: 10;
 }
@@ -42,6 +42,8 @@ nav,
     color: #ff8e3d;
 }
 
+/* Code used for star rating got from  
+https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .rating {
     display: flex;
     flex-direction: row-reverse;
