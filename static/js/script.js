@@ -14,8 +14,8 @@ $(document).ready(function () {
 //values to our textfields so that we can save the location.
 
 // Code to sync db output, python and script https://stackoverflow.com/questions/49718569/multiple-markers-in-flask-google-map-api
-var map, add_location_map, i;
-var marker2 = false;
+var map, i;
+
 
 function initMap() {
     map = new google.maps.Map(document.getElementById('map'), {
@@ -68,11 +68,12 @@ function initMap() {
             infoWindow.setContent('An error occurred, we are unable to retrieve coordinates.');
         });
 }
-
+var marker2 = false;
+var add_location_map;
 // Second map for add_location_map window
 // Created a second function as initializing the maps in 
-// one func resulted in DOM errors and no maps displaying
-function initMap2() {
+// one func resulted in DOM errors and no maps display
+function initUserMap() {
     // Tutorial that helped create marker locations 
     // https://thisinterestsme.com/google-maps-api-location-picker-example/
 
@@ -84,7 +85,6 @@ function initMap2() {
     google.maps.event.addListener(add_location_map, 'click', function (event) {
         //Get the location that the user clicked.
         var clickedLocation = event.latLng;
-        console.log("Clicked location is.    " + clickedLocation)
         //If the marker hasn't been added.
         if (marker2 === false) {
             //Create the marker.
@@ -92,8 +92,7 @@ function initMap2() {
                 position: clickedLocation,
                 map: map,
                 draggable: true //make it draggable
-            });
-            console.log("Marker 2 is : " + marker2)
+            }); 
             //Listen for drag events!
             google.maps.event.addListener(marker2, 'dragend', function (event) {
                 markerLocation();
@@ -114,6 +113,3 @@ function markerLocation() {
     document.getElementById('lat').value = currentLocation.lat(); //latitude
     document.getElementById('lng').value = currentLocation.lng(); //longitude
 }
-
-google.maps.event.addDomListener(window, 'load', initMap);
-google.maps.event.addDomListener(window, 'load', initMap2);

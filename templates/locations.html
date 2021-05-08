@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
+
 {% block styles %}
-<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
 {% endblock %}
 
 
 {% block content %}
-<div class="container">
+<div class="container" onload="initMap()">
     <div class="row">
         <div class="center-align">
             <!-- search bar -->
@@ -22,50 +22,50 @@
             </div>
         </div>
     </div>
-    <div class="row">
-      
-    </div>
+ 
     <div class="row">
         <div class="col s6">
-        <!-- database output -->
-        <div class="locations">
-            {% for record in locations %}
-            <div class="row place_card">
-                <div class="col">
-                    <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
-                    <div class="location_longlat"> {{ record.location }}</div><br>
-                    Rating: {{ record.rating }}<br><br>
-                    Description: {{ record.description.capitalize() }}<br>
-                    <br>
-                </div>
-                <div class="col">Image File</div>
+            <!-- database output -->
+            <div class="locations">
+                {% for record in locations %}
+                <div class="row place_card">
+                    <div class="col">
+                        <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
+                        <div class="location_longlat"> Longitude: {{ record.longitude }}<br>
+                            Latitude: {{record.latitude }}</div>
+                        <br>
+                        Rating: {{ record.rating }}<br><br>
+                        Description: {{ record.description.capitalize() }}<br>
+                        <br>
+                        Posted by: {{ record.posted_by.capitalize()}}
+                    </div>
+                    <div class="col">Image File</div>
 
-                <!-- "Like button" code found on 
+                    <!-- "Like button" code found on 
                     https://css-tricks.com/recreating-the-twitter-heart-animation/ -->
-                <div>
-                    <input id="toggle-heart" name="toggle-heart" type="checkbox" />
-                    <label for="toggle-heart">❤</label>
+                    <div>
+                        <input id="toggle-heart" name="toggle-heart" type="checkbox" />
+                        <label for="toggle-heart">❤</label>
+                    </div>
                 </div>
+                {% endfor %}
             </div>
-            {% endfor %}
         </div>
-    </div>
-    <div class="col s6">
-  <!-- map window -->
-        <div class="center-align">
-            <div id="map"></div>
+        <div class="col s6">
+            <!-- map window -->
+            <div class="center-align">
+                <div id="map" "></div>
+            </div>
         </div>
-    </div>
     </div>
 </div>
 
 {% endblock%}
 
 {% block scripts %}
-
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxdWmLSSJTX3YKlDFZgrvzP5INfBoO1dI&callback=initMap&libraries=&v=weekly"
-    async>
-</script>
+   <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxdWmLSSJTX3YKlDFZgrvzP5INfBoO1dI&callback=initMap&libraries=&v=weekly"
+        async>
+    </script>
 
 {% endblock %}
