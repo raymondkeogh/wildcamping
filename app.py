@@ -129,14 +129,13 @@ def user_location():
 
 @app.route("/api/coordinates")
 def coordinates():
-    addresses = mongo.db.locations.find() 
-    print("addresses from the db: ", addresses)
+    addresses = mongo.db.locations.find()
     all_coords = []  # initialize a list to store addresses
     for add in addresses:
-        print("add latitude: ", add["latitude"])
         address_details = {
-            "lat": add["latitude"],
-            "lng": add["longitude"]}
+            "lat": add["location"]["coordinates"][1],
+            "lng": add["location"]["coordinates"][0]
+        }
         all_coords.append(address_details)
     return jsonify({'coordinates': all_coords})
 
