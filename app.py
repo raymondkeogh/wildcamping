@@ -14,7 +14,7 @@ app = Flask(__name__)
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
-
+app.api_key = os.environ.get("GOOGLE_MAP_KEY")
 mongo = PyMongo(app)
 
 
@@ -26,8 +26,13 @@ def home_page():
 
 @app.route("/get_locations")
 def get_locations():
+    location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initMap&libraries=&v=weekly"
     locations = mongo.db.locations.find()
-    return render_template("locations.html", locations=locations)
+    reverse_geo = f"https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key={app.api_key}"
+
+    results = mongo.db.locations.find_one()
+    return render_template(
+        "locations.html", locations=locations, location_api=location_api)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -102,20 +107,24 @@ def logout():
 
 @app.route("/user_location", methods=["GET", "POST"])
 def user_location():
+    user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
     if request.method == "POST":
+        lat = request.form.get("lat")
+        lng = request.form.get("lng")
         new_location = {
             "name": request.form.get("location_name"),
             "description": request.form.get("location_description"),
             "rating": request.form.get("rating"),
-            "latitude": request.form.get("lat"),
-            "longitude": request.form.get("lng"),
-            "file": request.form.get("file")
+            "location": {"type": "Point", "coordinates": [lng, lat]},
+            "file": request.form.get("file"),
+            "posted_by": session["user"]
         }
         mongo.db.locations.insert_one(new_location)
 
         flash("Location Added, Thanks for you input")
         return render_template("profile.html")
-    return render_template("user_location.html")
+    return render_template(
+        "user_location.html", user_location_api=user_location_api)
 
 
 @app.route("/api/coordinates")

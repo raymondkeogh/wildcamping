@@ -50,16 +50,16 @@
                         <label for="1">☆</label>
                     </div>
                 </div>
-                <div class="row">          
-                        <div class="file-field input-field">
-                            <div class="btn">
-                                <span>Upload Image</span>
-                                <input name="file" type="file">
-                            </div>
-                            <div class="file-path-wrapper">
-                                <input class="file-path validate" type="text">
-                            </div>
+                <div class="row">
+                    <div class="file-field input-field">
+                        <div class="btn">
+                            <span>Upload Image</span>
+                            <input name="file" type="file">
                         </div>
+                        <div class="file-path-wrapper">
+                            <input class="file-path validate" type="text">
+                        </div>
+                    </div>
                 </div>
             </div>
             <!-- map input area -->
@@ -88,9 +88,9 @@
 {% endblock%}
 
 {% block scripts %}
-   <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxdWmLSSJTX3YKlDFZgrvzP5INfBoO1dI&callback=initUserMap&libraries=&v=weekly"
-        async>
-    </script>
+<script
+    src="{{user_location_api}}"
+    async>
+</script>
 
 {% endblock %}
