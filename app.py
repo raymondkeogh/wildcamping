@@ -3,6 +3,7 @@ from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for, jsonify)
 from flask_pymongo import PyMongo
+from pymongo import MongoClient, GEO2D
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
 if os.path.exists("env.py"):
@@ -17,7 +18,6 @@ app.secret_key = os.environ.get("SECRET_KEY")
 app.api_key = os.environ.get("GOOGLE_MAP_KEY")
 mongo = PyMongo(app)
 
-
 @app.route("/")
 @app.route("/home_page")
 def home_page():
@@ -29,10 +29,21 @@ def get_locations():
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initMap&libraries=&v=weekly"
     locations = mongo.db.locations.find()
     reverse_geo = f"https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key={app.api_key}"
-
-    results = mongo.db.locations.find_one()
+ 
+    mongo.db.locations.create_index(
+        [("location", GEO2D)])
+   
+    nearpoints = mongo.db.locations.find(
+        {"location":
+            {"$near":
+                {"$geometry": {
+                    "type": "Point",  "coordinates": [-73.9667, 40.78]},
+                    "$minDistance": 10000,
+                    "$maxDistance": 50000}}})
+    
+    
     return render_template(
-        "locations.html", locations=locations, location_api=location_api)
+        "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -88,8 +99,8 @@ def profile_page(username):
     # grab the session user's username from db
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    # locations = mongo.db.locations.find(
-    #     {"username": session["user"]})
+    locations = mongo.db.locations.find(
+        {"username": session["user"]})
     if session["user"]:
         return render_template(
             "profile.html", username=username)
