@@ -18,6 +18,7 @@ app.secret_key = os.environ.get("SECRET_KEY")
 app.api_key = os.environ.get("GOOGLE_MAP_KEY")
 mongo = PyMongo(app)
 
+
 @app.route("/")
 @app.route("/home_page")
 def home_page():
@@ -29,21 +30,20 @@ def get_locations():
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initMap&libraries=&v=weekly"
     locations = mongo.db.locations.find()
     reverse_geo = f"https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key={app.api_key}"
+    
  
-    mongo.db.locations.create_index(
-        [("location", GEO2D)])
-   
-    nearpoints = mongo.db.locations.find(
-        {"location":
-            {"$near":
-                {"$geometry": {
-                    "type": "Point",  "coordinates": [-73.9667, 40.78]},
-                    "$minDistance": 10000,
-                    "$maxDistance": 50000}}})
-    
-    
+    mongo.db.locations.create_index([("locations.location", "2dsphere")])
+
+    c = mongo.db.locations.find({ "locations.location" :
+                         { "$near" :
+                           { "$geometry" :
+                              { "type" : "Point" ,
+                                "coordinates" : [ -6.86 , 52.2 ] } ,
+                             "$maxDistance ": 100000 }}})
+
+
     return render_template(
-        "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints)
+        "locations.html", locations=locations, location_api=location_api, c=c)
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -126,10 +126,11 @@ def user_location():
             "name": request.form.get("location_name"),
             "description": request.form.get("location_description"),
             "rating": request.form.get("rating"),
-            "location": {"type": "Point", "coordinates": [lng, lat]},
+            "location": [lng, lat],
             "file": request.form.get("file"),
             "posted_by": session["user"]
         }
+
         mongo.db.locations.insert_one(new_location)
 
         flash("Location Added, Thanks for you input")
