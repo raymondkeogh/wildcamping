@@ -30,15 +30,20 @@
                 <div class="row place_card">
                     <div class="col">
                         <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
-                        <div class="location_longlat"> Longitude: {{ record.longitude }}<br>
-                            Latitude: {{record.latitude }}</div>
+                        <div class="location_longlat"> Longitude: {{ record.location.coordinates[0] }}<br>
+                            Latitude: {{record.location.coordinates[1] }}</div>
                         <br>
                         Rating: {{ record.rating }}<br><br>
                         Description: {{ record.description.capitalize() }}<br>
                         <br>
-                        Posted by: {{ record.posted_by.capitalize()}}
+                        Posted by: {{ record.posted_by.capitalize()}}<br>
+                        {% for x in nearpoints %}
+                           <p> {{x.name}}</p>
+                        {% endfor%}
                     </div>
                     <div class="col">Image File</div>
+                   
+                   
 
                     <!-- "Like button" code found on 
                     https://css-tricks.com/recreating-the-twitter-heart-animation/ -->
