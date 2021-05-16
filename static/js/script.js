@@ -9,7 +9,6 @@ $(document).ready(function () {
     $('input#input_text, textarea#location_name').characterCounter();
 });
 
-
 //This function will get the marker's current location and then add the lat/long
 //values to our textfields so that we can save the location.
 
@@ -24,7 +23,7 @@ function initMap() {
         mapTypeId: 'roadmap'
     });
     //variable to hold your endpoint
-    var coordAddresses = 'https://8080-amethyst-crow-u769d91j.ws-eu03.gitpod.io/api/coordinates';
+    var coordAddresses = 'https://8080-amethyst-crow-u769d91j.ws-eu04.gitpod.io/api/coordinates';
     //an array to hold your coordinates
     var locations = [];
     //Using fetch to process the ajax call 
@@ -85,7 +84,7 @@ function initUserMap() {
     google.maps.event.addListener(add_location_map, 'click', function (event) {
         //Get the location that the user clicked.
         var clickedLocation = event.latLng;
-        //If the marker hasn't been added.
+        //If the marker hasn't been added
         if (marker2 === false) {
             //Create the marker.
             marker2 = new google.maps.Marker({
@@ -113,3 +112,30 @@ function markerLocation() {
     document.getElementById('lat').value = currentLocation.lat(); //latitude
     document.getElementById('lng').value = currentLocation.lng(); //longitude
 }
+
+// Cloudinary File upload service
+
+
+document.querySelector("form").addEventListener("submit", (event) => {
+    // event.preventDefault();
+    const fileInput = document.querySelector("#media");
+    const formData = new FormData();
+
+    formData.append("file", fileInput.files[0]);
+
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+
+    fetch("http://127.0.0.1:5000/upload", options)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  });

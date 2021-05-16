@@ -1,23 +1,40 @@
 import os
 import requests
 import json
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+import logging
+from flask import Flask,render_template, request, jsonify
+from cloudinary.utils import cloudinary_url
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for, jsonify)
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
+from flask_cors import CORS, cross_origin
+from dotenv import load_dotenv
+
 if os.path.exists("env.py"):
     import env
 
+load_dotenv()
 
 app = Flask(__name__)
-
+CORS(app)
+logging.basicConfig(level=logging.DEBUG)
+app.logger.info('%s',os.getenv('CLOUD_NAME'))
 app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 app.api_key = os.environ.get("GOOGLE_MAP_KEY")
 app.geocode_api_key = os.environ.get("GEOCODE_API_KEY")
 mongo = PyMongo(app)
+
+cloudinary.config(
+    cloud_name = os.environ.get('CLOUD_NAME'),
+    api_key=os.environ.get('CLOUD_API_KEY'), 
+    api_secret=os.environ.get('CLOUD_API_SECRET'))
 
 
 @app.route("/")
@@ -113,8 +130,8 @@ def profile_page(username):
     # grab the session user's username from db
     username = mongo.db.users.find_one(
         {"username": session["user"]})["username"]
-    # locations = mongo.db.locations.find(
-    #     {"username": session["user"]})
+    locations = mongo.db.locations.find(
+        {"username": session["user"]})
     if session["user"]:
         return render_template(
             "profile.html", username=username)
@@ -144,9 +161,22 @@ def user_location():
             "file": request.form.get("file"),
             "posted_by": session["user"]
         }
-
         mongo.db.locations.insert_one(new_location)
 
+        # Upload file to Cloudinary
+        app.logger.info('in upload route')
+        cloudinary.config(
+            cloud_name = os.getenv('CLOUD_NAME'), 
+            api_key=os.getenv('CLOUD_API_KEY'), 
+            api_secret=os.getenv('CLOUD_API_SECRET'))
+        upload_result = None
+        if request.method == 'POST':
+            file_to_upload = request.files['file']
+            app.logger.info('%s file_to_upload', file_to_upload)
+            if file_to_upload:
+                upload_result = cloudinary.uploader.upload(file_to_upload)
+                app.logger.info(upload_result)
+                app.logger.info(type(upload_result))
         flash("Location Added, Thanks for you input")
         return render_template("profile.html")
     return render_template(
@@ -164,7 +194,6 @@ def coordinates():
         }
         all_coords.append(address_details)
     return jsonify({'coordinates': all_coords})
-
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

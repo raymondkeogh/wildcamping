@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="container">
-    <form method="POST" action="{{ url_for('user_location') }}">
+    <form method="POST" action="{{ url_for('user_location') }}" enctype="multipart/form-data">
         <div class="row add_location_inputs">
             <!-- Text input area -->
             <div class="col s6">
@@ -50,16 +50,8 @@
                         <label for="1">☆</label>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="file-field input-field">
-                        <div class="btn">
-                            <span>Upload Image</span>
-                            <input name="file" type="file">
-                        </div>
-                        <div class="file-path-wrapper">
-                            <input class="file-path validate" type="text">
-                        </div>
-                    </div>
+                <div class="row" id="upload">
+                    Picture File:<input id="media" name="file" type="file"/>
                 </div>
             </div>
             <!-- map input area -->
@@ -82,8 +74,6 @@
     </form>
 
 </div>
-
-
 
 {% endblock%}
 
