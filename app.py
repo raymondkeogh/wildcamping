@@ -1,4 +1,6 @@
 import os
+import requests
+import json
 from flask import (
     Flask, flash, render_template,
     redirect, request, session, url_for, jsonify)
@@ -14,6 +16,7 @@ app.config["MONGO_DBNAME"] = os.environ.get("MONGO_DBNAME")
 app.config["MONGO_URI"] = os.environ.get("MONGO_URI")
 app.secret_key = os.environ.get("SECRET_KEY")
 app.api_key = os.environ.get("GOOGLE_MAP_KEY")
+app.geocode_api_key = os.environ.get("GEOCODE_API_KEY")
 mongo = PyMongo(app)
 
 
@@ -23,19 +26,40 @@ def home_page():
     return render_template("index.html")
 
 
-@app.route("/get_locations")
+@app.route("/get_locations", methods=["GET", "POST"])
 def get_locations():
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initMap&libraries=&v=weekly"
     locations = mongo.db.locations.find()
-    reverse_geo = f"https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key={app.api_key}"  
-    mongo.db.locations.create_index([("location", "2dsphere")])
-    nearpoints = mongo.db.locations.find(
-        {"location":
-            {"$near":
-                {"$geometry":
-                    {"type": "Point", "coordinates":
-                        [-6.40, 51.15]}, "$maxDistance": 300000}}})
-    
+    # reverse_geo = f"https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key={app.api_key}" 
+    # Code used to get coordinates from search address 
+    # https://developer.here.com/documentation/geocoding-search-api/dev_guide/topics/endpoint-geocode-brief.html
+
+    URL = "https://geocode.search.hereapi.com/v1/geocode"
+    api_key = {app.geocode_api_key} # Acquire from developer.here.com
+    errors = []
+    geosearch_data = {}
+    nearpoints = {}
+
+    if request.method == "POST":
+        # get url that the user has entered
+        search = request.form['search']
+        PARAMS = {'apikey': api_key, 'q': search}
+        r = requests.get(url = URL, params = PARAMS) 
+        # r = request.POST.get(url = URL, params = PARAMS) 
+        geosearch_data = r.json()
+        latitude = geosearch_data['items'][0]['position']['lat']
+        longitude = geosearch_data['items'][0]['position']['lng']
+        mongo.db.locations.create_index([("location", "2dsphere")])
+        nearpoints = mongo.db.locations.find(
+            {"location":
+                {"$near":
+                    {"$geometry":
+                        {"type": "Point", "coordinates":
+                            [longitude, latitude]}, "$maxDistance": 50000}}})
+        # coordinates(nearpoints)
+        return render_template(
+        "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints, geosearch_data=geosearch_data)
+      
     return render_template(
         "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints)
 
@@ -46,17 +70,14 @@ def signup():
         # check if username already exists in db
         existing_user = mongo.db.users.find_one(
             {"username": request.form.get("username").lower()})
-
         if existing_user:
             flash("Username already exists")
             return render_template("signup.html")
-
         register = {
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password"))
         }
         mongo.db.users.insert_one(register)
-
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
         flash("Registration Successful!")

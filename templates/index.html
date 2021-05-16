@@ -13,9 +13,9 @@
             <!-- search bar -->
             <h1><i class="fas fa-campground"></i></h1>
             <div class="searchBar">
-                <form>
+                <form role="form" method='POST' action="{{url_for('get_locations')}}">
                     <div class="input-field">
-                        <input id="search" type="search" required>
+                        <input id="search" type="search" name="search" required>
                         <label class="label-icon" for="search"><i class="material-icons">search</i></label>
                     </div>
                 </form>
