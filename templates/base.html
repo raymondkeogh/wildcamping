@@ -28,10 +28,11 @@
                 <ul class="right hide-on-med-and-down">
                     <li><a href="{{url_for('home_page')}}">Home</a></li>
                     <li><a href="{{url_for('get_locations')}}">Locations</a></li>
-                    <li><a href="{{url_for('coordinates')}}">coordinates</a></li>
+                    <li><a href="{{url_for('coordinates')}}">Coordinates</a></li>
 
                     {% if session.user %}
                     <li><a href="{{url_for('profile_page', username=session['user'])}}">Profile</a></li>
+                    <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
                     <li><a href="{{url_for('user_location')}}">Add Location</a></li>
                     <li><a href="{{url_for('logout')}}">Log Out</a></li>
                     {% else %}
@@ -48,6 +49,7 @@
             <li><a href="{{url_for('get_locations')}}">Locations</a></li>
             {% if session.user %}
             <li><a href="{{url_for('profile_page', username=session['user'])}}">Profile</a></li>
+            <li><a href="{{url_for('edit_profile')}}">Edit Profile</a></li>
             <li><a href="{{url_for('user_location')}}">Add Location</a></li>
             <li><a href="{{url_for('logout')}}">Log Out</a></li>
             {% else %}

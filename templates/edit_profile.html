@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
+        <div class="row edit_profile_inputs">
+            <!-- Text input area -->
+            <div class="col s6">
+                <div class="row">
+                    <h5>Username: {{ user.username }} </h5>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <h5>Your Bio</h5>
+                            <div class="input-field col s12">
+                                <textarea id="bio" name="bio"
+                                    class="materialize-textarea" data-length="240"></textarea>
+                                <label for="bio"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div class="row" id="upload">
+                    Profile Picture :<input id="media" name="file" type="file"/>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
+                    <i class="material-icons right"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+{% endblock%}
+
+{% block scripts %}
+<script
+    src="{{user_location_api}}"
+    async>
+</script>
+
+{% endblock %}

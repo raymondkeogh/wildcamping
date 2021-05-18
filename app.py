@@ -128,15 +128,50 @@ def login():
 @app.route("/profile_page/<username>", methods=["GET", "POST"])
 def profile_page(username):
     # grab the session user's username from db
-    username = mongo.db.users.find_one(
-        {"username": session["user"]})["username"]
-    locations = mongo.db.locations.find(
+    user = mongo.db.users.find_one(
         {"username": session["user"]})
+    print(username)
+    # locations = mongo.db.locations.find(
+    #     {"username": session["user"]})
     if session["user"]:
         return render_template(
-            "profile.html", username=username)
+            "profile.html", user=user)
     else:
         return redirect(url_for("login"))
+
+
+@app.route("/edit_profile", methods=["GET", "POST"])
+def edit_profile():
+    user = mongo.db.users.find_one(
+        {"username": session["user"]})
+    if request.method == 'POST':
+        # Upload file to Cloudinary
+        app.logger.info('in upload route')
+        cloudinary.config(
+            cloud_name=os.getenv('CLOUD_NAME'),
+            api_key=os.getenv('CLOUD_API_KEY'),
+            api_secret=os.getenv('CLOUD_API_SECRET'))
+        upload_result = None
+        if request.method == 'POST':
+            file_to_upload = request.files['file']
+            app.logger.info('%s file_to_upload', file_to_upload)
+            if file_to_upload:
+                upload_result = cloudinary.uploader.upload(file_to_upload)
+                app.logger.info(upload_result)
+                app.logger.info(type(upload_result))
+        profile_update = {
+            "username": session["user"],
+            "bio": request.form.get("bio"),
+            "file": upload_result["url"],
+        }
+        mongo.db.users.update({"username": session["user"]}, profile_update)
+
+        flash("Profile updated")
+
+
+        return render_template(
+            "profile.html", user=user)
+    return render_template("edit_profile.html", user=user)
 
 
 @app.route("/profile_page/<username>/user_locations")
@@ -151,23 +186,11 @@ def logout():
 def user_location():
     user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
     if request.method == "POST":
-        lat = float(request.form.get("lat"))
-        lng = float(request.form.get("lng"))
-        new_location = {
-            "name": request.form.get("location_name"),
-            "description": request.form.get("location_description"),
-            "rating": request.form.get("rating"),
-            "location": {"type": "Point", "coordinates": [lng, lat]},
-            "file": request.form.get("file"),
-            "posted_by": session["user"]
-        }
-        mongo.db.locations.insert_one(new_location)
-
         # Upload file to Cloudinary
         app.logger.info('in upload route')
         cloudinary.config(
-            cloud_name = os.getenv('CLOUD_NAME'), 
-            api_key=os.getenv('CLOUD_API_KEY'), 
+            cloud_name=os.getenv('CLOUD_NAME'),
+            api_key=os.getenv('CLOUD_API_KEY'),
             api_secret=os.getenv('CLOUD_API_SECRET'))
         upload_result = None
         if request.method == 'POST':
@@ -177,6 +200,19 @@ def user_location():
                 upload_result = cloudinary.uploader.upload(file_to_upload)
                 app.logger.info(upload_result)
                 app.logger.info(type(upload_result))
+
+        lat = float(request.form.get("lat"))
+        lng = float(request.form.get("lng"))
+        new_location = {
+            "name": request.form.get("location_name"),
+            "description": request.form.get("location_description"),
+            "rating": request.form.get("rating"),
+            "location": {"type": "Point", "coordinates": [lng, lat]},
+            "file": upload_result["url"],
+            "posted_by": session["user"]
+        }
+        mongo.db.locations.insert_one(new_location)
+
         flash("Location Added, Thanks for you input")
         return render_template("profile.html")
     return render_template(
@@ -194,6 +230,14 @@ def coordinates():
         }
         all_coords.append(address_details)
     return jsonify({'coordinates': all_coords})
+
+# Attempt to get like button to update the db with locaiton id
+# @app.route("/likes", methods=['GET', 'POST'])
+# def result():
+#     if request.method == "POST":
+#         likes = request.get_json()
+#         mongo.db.users.update({"username": session["user"]}, {"$push": {"locations": likes}})
+#         return jsonify({likes})
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
