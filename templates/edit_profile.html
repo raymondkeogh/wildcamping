@@ -11,9 +11,26 @@
     <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
         <div class="row edit_profile_inputs">
             <!-- Text input area -->
-            <div class="col s6">
-                <div class="row">
-                    <h5>Username: {{ user.username }} </h5>
+            <div class="col s12">
+                <div class="row profile_header">
+                    {% if user.file %}
+                    <div class="profile_picture">
+                        <label for="media">
+                            <input id="media" name="file" type="file" style="display:none"/>
+                        <i class="fas fa-edit"></i>
+                        <img src="{{ user.file }}" alt="profile photo">
+                    </label>
+                    </div>
+                    {% else %}
+                        <a href=""></a><div class="empty_profile">
+                        <label for="media">
+                            <i class="fas fa-camera-retro"></i>
+                            <br>Add Photo
+                            <input id="media" name="file" type="file" style="display:none"/>
+                          </label>
+                        </div>
+                    {% endif %}
+                    <span>Username: {{ user.username }} </span>
                 </div>
                 <div class="row">
                     <div class="col s12">
@@ -27,15 +44,13 @@
                         </div>
                     </div>
                 </div>
-        
-                <div class="row" id="upload">
-                    Profile Picture :<input id="media" name="file" type="file"/>
-                </div>
             </div>
             <div class="row">
+                <div class="col s12">
                 <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
                     <i class="material-icons right"></i>
                 </button>
+            </div>
             </div>
         </div>
     </form>

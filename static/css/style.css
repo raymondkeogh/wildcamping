@@ -32,19 +32,77 @@ nav,
     background-color: white;
 }
 
-.person_card,
+.profile_card,
 .place_card {
     color: black;
     background-color: white;
     padding: 30px;
     border-radius: 15px;
+    min-height: 300px;
+    min-width: 400px;
+}
+
+.user_bio {
+    height: 180px;
+}
+
+.empty_profile {
+    height: 100px;
+    width: 100px;
+    border: 1px solid black;
+    text-align: center;
+    padding: 15px;
+    display: inline-block;   
+}
+
+.fa-camera-retro {
+    font-size: 30px; 
+    margin:auto;
+}
+
+.profile_header span{
+    font-size: 30px;  
+    
 
 }
 
-.user_profile h2 {
-    background-color: #0000008c;
-    padding: 20px;
+
+
+/* Edit_profile page */
+
+.edit_profile_inputs {
+    background-color: white;
+    border-radius: 15px;
+    padding: 15px;
+    color: black;
 }
+
+.profile_picture {
+    height: 100px;
+    width: 100px;
+    overflow:hidden;
+    position: relative;
+}
+
+.profile_picture img{
+    width:100%;
+}
+
+.profile_picture i {
+    position:absolute;
+    bottom: 5px;
+    right: 5px;
+    color:white;
+    font-size: 20px;
+
+}
+
+#bio {
+    height: 180px;
+    border: 1px solid black;
+}
+
+
 
 
 /* Add_location page */
