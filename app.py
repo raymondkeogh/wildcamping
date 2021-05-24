@@ -14,6 +14,7 @@ from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
+from bson import ObjectId
 
 if os.path.exists("env.py"):
     import env
@@ -40,7 +41,8 @@ cloudinary.config(
 @app.route("/")
 @app.route("/home_page")
 def home_page():
-    return render_template("index.html")
+    locations = mongo.db.locations.find()
+    return render_template("index.html", locations = locations)
 
 
 @app.route("/get_locations", methods=["GET", "POST"])
@@ -72,7 +74,7 @@ def get_locations():
                 {"$near":
                     {"$geometry":
                         {"type": "Point", "coordinates":
-                            [longitude, latitude]}, "$maxDistance": 50000}}})
+                            [longitude, latitude]}, "$maxDistance": 100000}}})
         # coordinates(nearpoints)
         return render_template(
         "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints, geosearch_data=geosearch_data)
@@ -97,6 +99,10 @@ def signup():
         mongo.db.users.insert_one(register)
         # put the new user into 'session' cookie
         session["user"] = request.form.get("username").lower()
+        user = mongo.db.users.find_one(
+        {"username": session["user"]})
+        return render_template(
+            "profile.html", user=user)
         flash("Registration Successful!")
     return render_template("signup.html")
 
@@ -114,7 +120,7 @@ def login():
                     existing_user["password"], request.form.get("password")):
                 session["user"] = request.form.get("username").lower()
                 flash("Welcome, {}".format(request.form.get("username")))
-                return render_template("profile.html")
+                return render_template("profile.html", user=session["user"])
             else:
                 # incorrect passord
                 flash("Username or Password incorrect, Please try again")
@@ -130,12 +136,33 @@ def profile_page(username):
     # grab the session user's username from db
     user = mongo.db.users.find_one(
         {"username": session["user"]})
-    print(username)
-    # locations = mongo.db.locations.find(
-    #     {"username": session["user"]})
+    locations = mongo.db.locations.find()
     if session["user"]:
         return render_template(
-            "profile.html", user=user)
+            "profile.html", user=user, locations=locations)
+        if request.method == 'POST':
+            # Upload file to Cloudinary
+            app.logger.info('in upload route')
+            cloudinary.config(
+                cloud_name=os.getenv('CLOUD_NAME'),
+                api_key=os.getenv('CLOUD_API_KEY'),
+                api_secret=os.getenv('CLOUD_API_SECRET'))
+            upload_result = None
+            if request.method == 'POST':
+                file_to_upload = request.files['file']
+                app.logger.info('%s file_to_upload', file_to_upload)
+                if file_to_upload:
+                    upload_result = cloudinary.uploader.upload(file_to_upload)
+                    app.logger.info(upload_result)
+                    app.logger.info(type(upload_result))
+            profile_update = {
+                "file": upload_result["url"],
+            }
+            mongo.db.users.update({
+                "username": session["user"]}, {
+                    "$set": {profile_update}})
+            return render_template(
+                "profile.html", user=user, locations=locations)
     else:
         return redirect(url_for("login"))
 
@@ -164,17 +191,15 @@ def edit_profile():
             "bio": request.form.get("bio"),
             "file": upload_result["url"],
         }
-        mongo.db.users.update({"username": session["user"]}, profile_update)
-
+        mongo.db.users.update({"username": session["user"]}, {"$set": {profile_update}})
         flash("Profile updated")
-
-
+        
         return render_template(
             "profile.html", user=user)
     return render_template("edit_profile.html", user=user)
 
 
-@app.route("/profile_page/<username>/user_locations")
+# @app.route("/profile_page/<username>/user_locations")
 @app.route("/logout")
 def logout():
     flash("You have been logged out")
@@ -185,6 +210,8 @@ def logout():
 @app.route("/user_location", methods=["GET", "POST"])
 def user_location():
     user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
+    user = mongo.db.users.find_one(
+        {"username": session["user"]})
     if request.method == "POST":
         # Upload file to Cloudinary
         app.logger.info('in upload route')
@@ -214,9 +241,11 @@ def user_location():
         mongo.db.locations.insert_one(new_location)
 
         flash("Location Added, Thanks for you input")
-        return render_template("profile.html")
+        return render_template("profile.html", user=user)
     return render_template(
-        "user_location.html", user_location_api=user_location_api)
+        "user_location.html", user=user, user_location_api=user_location_api)
+
+
 
 # https://stackoverflow.com/questions/49718569/multiple-markers-in-flask-google-map-api
 @app.route("/api/coordinates")
@@ -231,13 +260,33 @@ def coordinates():
         all_coords.append(address_details)
     return jsonify({'coordinates': all_coords})
 
-# Attempt to get like button to update the db with locaiton id
-# @app.route("/likes", methods=['GET', 'POST'])
-# def result():
-#     if request.method == "POST":
-#         likes = request.get_json()
-#         mongo.db.users.update({"username": session["user"]}, {"$push": {"locations": likes}})
-#         return jsonify({likes})
+
+
+# Take location_id and action from location cards and add like/unlike to db
+# Inspiration from https://github.com/LigaMoon/swap-clothes-app/blob/main/app.py
+@app.route('/liked_item/<location_id>/<action>')
+def likes(location_id, action):
+    user = session['user']
+    if action == 'like':
+        mongo.db.locations.update_one({"_id": ObjectId(location_id)},
+                                  {'$push': {'liked_by': user},
+                                  '$inc': {'liked_count': 1}})
+
+    # Takes user from locations like_by array
+    elif action == 'unlike':
+        mongo.db.locations.update_one({"_id": ObjectId(location_id)},
+                                  {'$pull': {'liked_by': user},
+                                  '$inc': {'liked_count': -1}})
+
+    return redirect(request.referrer)
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
