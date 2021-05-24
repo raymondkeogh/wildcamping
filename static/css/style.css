@@ -5,6 +5,7 @@ body {
     position: relative;
     background-repeat: no-repeat;
     color: white;
+    background-attachment: fixed;
 }
 
 nav,
@@ -21,25 +22,38 @@ nav,
     border-radius: 15px;
 }
 
-.locations {
-    border-radius: 15px;
-}
-
 .location_name {
     font-size: 20px;
 }
+
+.landing-page {
+    padding: 20px;
+}
+
 #search {
     background-color: white;
 }
 
-.profile_card,
 .place_card {
     color: black;
     background-color: white;
-    padding: 30px;
+    padding: 14px;
     border-radius: 15px;
-    min-height: 300px;
-    min-width: 400px;
+    margin: 10px;
+    align-items: center;
+    height: 400px;
+    width: 300px;
+}
+
+.place_card img {
+    height: 150px;
+    width: 270px;
+    object-fit: cover;
+}
+
+.topspots .top-spot-item-card .col{
+    height: 400px;
+    width: 300px;
 }
 
 .user_bio {
@@ -62,8 +76,17 @@ nav,
 
 .profile_header span{
     font-size: 30px;  
-    
+}
 
+.user_profile .profile_card {
+    background-color: white;
+    color: black;
+    padding: 30px;
+}
+
+.fa-edit {
+    font-size: 30px;  
+    color:black;
 }
 
 
@@ -85,7 +108,7 @@ nav,
 }
 
 .profile_picture img{
-    width:100%;
+    height:100%;
 }
 
 .profile_picture i {
@@ -97,12 +120,10 @@ nav,
 
 }
 
-#bio {
+#bio, .bio{
     height: 180px;
     border: 1px solid black;
 }
-
-
 
 
 /* Add_location page */
@@ -178,15 +199,21 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     color: white;
 }
 
-
-.place_card img {
-    width: 90%;
-}
 /* Locations result page */
 
 .locations {
     overflow-y: scroll;
     height: 600px;
+    margin: 10px;
+    border-radius: 15px;
+}
+
+
+
+
+
+.map-section {
+    width
 }
 
 /* Code used for heart 'like' animation 
@@ -230,11 +257,11 @@ https://css-tricks.com/recreating-the-twitter-heart-animation/ */
     text-shadow: 0 0 3px white, 0 1px 1px white, 0 -1px 1px white, 1px 0 1px white, -1px 0 1px white;
 }
 
-.like-button label {
+.like-button {
     align-self: center;
     position: relative;
     color: #888;
-    font-size: 2em;
+    font-size: 1.4em;
     filter: grayscale(1);
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -244,8 +271,8 @@ https://css-tricks.com/recreating-the-twitter-heart-animation/ */
     float: right;
 }
 
-.like-button label:before,
-.like-button label:after {
+.like-button:before,
+.like-button:after {
     position: absolute;
     z-index: -1;
     top: 50%;
@@ -254,7 +281,7 @@ https://css-tricks.com/recreating-the-twitter-heart-animation/ */
     content: '';
 }
 
-.like-button label:before {
+.like-button:before {
     box-sizing: border-box;
     margin: -2.25rem;
     border: solid 2.25rem #e2264d;
@@ -263,7 +290,7 @@ https://css-tricks.com/recreating-the-twitter-heart-animation/ */
     transform: scale(0);
 }
 
-.like-button label:after {
+.like-button:after {
     margin: -0.1875rem;
     width: 0.375rem;
     height: 0.375rem;

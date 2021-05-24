@@ -7,7 +7,7 @@
 
 
 {% block content %}
-<div class="container">
+<div class="landing-page">
     <div class="row">
         <div class="center-align ">
             <!-- search bar -->
@@ -22,15 +22,59 @@
             </div>
         </div>
     </div>
- </div>
 
-{% endblock%}
+    <section class="map-section center-align row ">
+      <div class="col s12 m12 l12" id="map" onload="initMap()"></div>
+    </section>
+    <!-- I used the like button idea from this template to help me create my own one
+    https://github.com/LigaMoon/swap-clothes-app/blob/main/templates/index.html -->
+    <section class="topspots">
+        <!-- Campsite display cards -->
+        <h2 class="center-align">Top Spots <i class="fas fa-fire-alt"></i></h2>
+        <div class="row">
+            {% for location in locations %}
+            <div class="col s12 m6 l4 top-spot-item-card">
+                <div class="place_card center">
+                    <!-- Card Image -->
+                    <div class="campsite-pic">
+                        <img src="{{ location.file }}" alt="item image" class="card-image">
+                    </div>
+                    <div class="campsite-description">
+                        <span class="location-title">{{ location.name }}</span>
+                        <p class="location_longlat"> {{ location.location.coordinates }}</p>
+                        <p>Description: {{ location.description}}</p>
+                        <p><strong>Rating: </strong>
+                            {% for x in range(1, location.rating | int) %}
+                            <span class="fa fa-star checked"></span>
+                            {% endfor %}</p>
+                    </div>
+                     <!-- If user is logged in and has liked the item  -->
+                     {% if session.user in location.liked_by %}
+                     <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}" class="like-button">
+                         <span class="like-button">❤</span></a>
+                     <!-- If user is logged in and hasn't liked the item -->
+                     {% elif session.user %}
+                     <a href="{{  url_for('likes', location_id=location._id, action='like') }}" class="like-button">
+                         <span class="like-button">❤</span></a>
+                     <!-- If user hasn't logged in -->
+                     {% else %}
+                     <a class="like-button tooltipped" data-position="top"
+                         data-tooltip="Sign In or Sign Up to like an item">
+                         <span class="like-button-disabled">❤</span></a>
+                     {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
 
-{% block scripts %}
+    {% endblock %}
 
-<script
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxdWmLSSJTX3YKlDFZgrvzP5INfBoO1dI&callback=initMap&libraries=&v=weekly"
-    async>
-</script>
+    {% block scripts %}
 
-{% endblock %}
+    <script
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxdWmLSSJTX3YKlDFZgrvzP5INfBoO1dI&callback=initMap&libraries=&v=weekly"
+        async>
+    </script>
+
+    {% endblock %}
