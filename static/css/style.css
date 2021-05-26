@@ -15,11 +15,10 @@ nav,
     background-color: transparent;
 }
 
-#map,
-#add_location_map {
-    height: 400px;
-    margin: 1px;
-    border-radius: 15px;
+#map{
+    height: 100vh;
+    padding:0px;
+    margin:0px;
 }
 
 .location_name {
@@ -47,7 +46,7 @@ nav,
 }
 
 .splash-page h4 {
-    background-color: black;
+    background-color: rgb(9, 6, 65);
     border-radius: 15px;
     padding: 10px;
     width: 200px;
@@ -56,15 +55,16 @@ nav,
 }
 
 
-.place_card {
+.row .place_card{
     color: black;
     background-color: white;
     padding: 14px;
     border-radius: 15px;
     margin: 10px;
+    margin-top: 0;
+    margin-right: 20px;
     align-items: center;
-    height: 100%;
-    width: 100%;
+    width: 95%;
     position:relative;
     border: 1px solid black;
     box-shadow: 10px 8px 6px -6px black;
@@ -73,6 +73,7 @@ nav,
 .place_card img {
     height: 150px;
     width: 100%;
+    margin-top: 20px;
     object-fit: cover;
     border-radius: 15px;
 }
@@ -200,16 +201,20 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 #location_description {
     height: 200px;
     background-color: white;
+    border-radius: 15px;
 }
 
 #location_name {
     background-color: white;
+    border-radius: 15px;
+
 }
 
 .add_location_inputs {
     background-color: #26485d;
     padding: 20px;
     min-height: 800px;
+    border-radius: 15px;
 }
 
 .flashes h4 {
@@ -218,11 +223,25 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 
 .add_location_inputs button {
     margin: 20px;
+    border-radius: 15px;
 }
 
-.map_area input {
+#add_location_map {
+    height: 400px;
+    margin: 1px;
+    border-radius: 15px;
+}
+
+.select-map-area {
+    border-radius: 15px;
+
+}
+
+
+.select-map-area input {
     display: inline;
     color: white;
+    border-radius: 15px;
 }
 
 /* Locations result page */
@@ -230,12 +249,23 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .locations {
     overflow-y: scroll;
     height: 600px;
-    margin: 10px;
-    border-radius: 15px;
 }
 
-.map-section #map{
+
+.search-results-map{
+    min-height: calc(100vh - 260px);
+}
+
+.search-results-map .col{
+    margin: 0;
+    padding: 0; 
+}
+
+
+
+.index-map-section #map {
     height: 300px;
+    border-radius: 15px;
 }
 
 .like-button {

@@ -6,7 +6,7 @@
 
 
 {% block content %}
-<div class="container">
+<div>
     <div class="row">
         <div class="center-align">
             <!-- search bar -->
@@ -23,10 +23,10 @@
         </div>
     </div>
  
-    <div class="row">
-        <div class="col m12 l6">
+    <div class="row search-results">
+        <div class="col s12 l6">
             <!-- map window -->
-            <div class="center-align">
+            <div class="center-align search-results-map">
                 <div id="map" onload="initMap()"></div>
             </div>
         </div>
@@ -35,15 +35,17 @@
             <div class="loopcounter"></div>
             <div class="locations">
                 {% for record in nearpoints %}
-                    {{loop.index}}
-
                 <div class="row place_card">
-                    <div class="col">
+                    <div class="col s6">
                         <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
                         <div class="location_longlat"> Longitude: {{ record.location.coordinates[0] }}<br>
                             Latitude: {{record.location.coordinates[1] }}</div>
                         <br>
-                        Rating: {{ record.rating }}<br><br>
+                        <strong>Rating: </strong>
+                        {% for x in range(1, record.rating | int) %}
+                        <span class="fa fa-star checked"></span>
+                        {% endfor %}
+                        <br><br>
                         Description: {{ record.description.capitalize() }}<br>
                         <br>
                         Posted by: {{ record.posted_by.capitalize()}}<br>
@@ -54,7 +56,7 @@
                         <input class="toggle-heart" id="{{record._id}}" name="toggle-heart" type="checkbox" onclick="likeMe(this.id)" />
                         <label for="{{record._id}}">❤</label>
                     </div>
-                    <div class="col"><img src="{{record.file}}" alt=""></div>
+                    <div class="col s6"><img src="{{record.file}}" alt=""></div>
                 </div>
                 {% endfor %}
             </div>
