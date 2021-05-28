@@ -15,8 +15,12 @@ nav,
     background-color: transparent;
 }
 
+.nav-wrapper {
+    margin: 5px;
+}
+
 #map{
-    height: 100vh;
+    height: calc(100vh - 100px);
     padding:0px;
     margin:0px;
 }
@@ -32,7 +36,31 @@ nav,
 #search {
     background-color: white;
     border-radius: 15px;
+    height: 40px;
+    width: 300px;
+    margin: 10px
 }
+
+.input-field {
+    display: inline-block;
+    position: relative;
+   
+}
+
+.input-field button {
+    position:absolute;
+    right:0;
+    top:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 50px;
+    border-radius: 0 15px 15px 0;
+    margin: 10px;
+    padding: 0;
+}
+
 
 
 .splash-page {
@@ -248,9 +276,14 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 
 .locations {
     overflow-y: scroll;
-    height: 600px;
+    height: calc(100vh - 100px);
+
 }
 
+.search-results .col {
+    margin: 0;
+    padding: 0; 
+}
 
 .search-results-map{
     min-height: calc(100vh - 260px);
