@@ -15,6 +15,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_cors import CORS, cross_origin
 from dotenv import load_dotenv
 from bson import ObjectId
+from itertools import tee
 
 if os.path.exists("env.py"):
     import env
@@ -42,12 +43,12 @@ cloudinary.config(
 @app.route("/home_page")
 def home_page():
     locations = mongo.db.locations.find()
-    return render_template("index.html", locations = locations)
+    return render_template("index.html", locations=locations)
 
 
 @app.route("/get_locations", methods=["GET", "POST"])
 def get_locations():
-    location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initMap&libraries=&v=weekly"
+    location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=searchResultMap&libraries=&v=weekly"
     locations = mongo.db.locations.find()
     # reverse_geo = f"https://maps.googleapis.com/maps/api/geocode/json?latlng=40.714224,-73.961452&key={app.api_key}" 
     # Code used to get coordinates from search address 
@@ -75,12 +76,26 @@ def get_locations():
                     {"$geometry":
                         {"type": "Point", "coordinates":
                             [longitude, latitude]}, "$maxDistance": 100000}}})
-        # coordinates(nearpoints)
         return render_template(
-        "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints, geosearch_data=geosearch_data)
+        "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints,geosearch_data=geosearch_data)
       
     return render_template(
         "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints)
+
+
+# Renders Json data of locations from Database
+# https://stackoverflow.com/questions/49718569/multiple-markers-in-flask-google-map-api
+@app.route("/api/coordinates")
+def coordinates(addresses = mongo.db.locations.find()):
+    all_coords = []  # initialize a list to store addresses
+    for add in addresses:
+        address_details = {
+            "lng": add["location"]["coordinates"][0],
+            "lat": add["location"]["coordinates"][1]
+        } 
+        all_coords.append(address_details)
+
+    return jsonify({'coordinates': all_coords})
 
 
 @app.route("/signup", methods=["GET", "POST"])
@@ -160,7 +175,7 @@ def profile_page(username):
             }
             mongo.db.users.update({
                 "username": session["user"]}, {
-                    "$set": {profile_update}})
+                    "$set": profile_update})
             return render_template(
                 "profile.html", user=user, locations=locations)
     else:
@@ -187,11 +202,12 @@ def edit_profile():
                 app.logger.info(upload_result)
                 app.logger.info(type(upload_result))
         profile_update = {
-            "username": session["user"],
             "bio": request.form.get("bio"),
-            "file": upload_result["url"],
+            "file": upload_result["url"]
         }
-        mongo.db.users.update({"username": session["user"]}, {"$set": {profile_update}})
+        mongo.db.users.update({
+                "username": session["user"]}, 
+                {"$set": profile_update})
         flash("Profile updated")
         
         return render_template(
@@ -206,7 +222,7 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
-
+# Allow user to input custom loctions
 @app.route("/user_location", methods=["GET", "POST"])
 def user_location():
     user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
@@ -247,21 +263,6 @@ def user_location():
 
 
 
-# https://stackoverflow.com/questions/49718569/multiple-markers-in-flask-google-map-api
-@app.route("/api/coordinates")
-def coordinates():
-    addresses = mongo.db.locations.find()
-    all_coords = []  # initialize a list to store addresses
-    for add in addresses:
-        address_details = {
-            "lng": add["location"]["coordinates"][0],
-            "lat": add["location"]["coordinates"][1] 
-        }
-        all_coords.append(address_details)
-    return jsonify({'coordinates': all_coords})
-
-
-
 # Take location_id and action from location cards and add like/unlike to db
 # Inspiration from https://github.com/LigaMoon/swap-clothes-app/blob/main/app.py
 @app.route('/liked_item/<location_id>/<action>')
@@ -279,13 +280,6 @@ def likes(location_id, action):
                                   '$inc': {'liked_count': -1}})
 
     return redirect(request.referrer)
-
-
-
-
-
-
-
 
 
 if __name__ == "__main__":

@@ -1,24 +1,33 @@
 {% extends "base.html" %}
-
 {% block styles %}
-
 {% endblock %}
-
-
 {% block content %}
 <div>
     <div class="row search-results">
         <div class="col s12 l6">
             <!-- map window -->
             <div class="center-align search-results-map">
-                <div id="map" onload="initMap()"></div>
+                <div id="map" onload="searchResultMap()"></div>
+            </div>
+
+            <!-- pass coordinates from python to script in order to draw map from pymongo query -->
+            <div id="search-coordinates" style="display: none">
+                { "coordinates":[ 
+                    {% for location in nearpoints %} 
+                    {   "lat": {{location.location.coordinates[1]}}, 
+                        "lng": {{location.location.coordinates[0]}} },{% endfor %}]}
             </div>
         </div>
         <div class="col m12 l6">
             <!-- database output -->
             <div class="loopcounter"></div>
             <div class="locations">
-                {% for record in nearpoints2 %}
+                <!-- use .rewind() to all me to use nearpoints cursor again for second loop -->
+                <div style="display: none">{{ nearpoints.rewind() }}
+                </div>
+                {% for record in nearpoints %}
+               
+                    {{ loop.index }}
                 <div class="row place_card">
                     <div class="col s6">
                         <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
@@ -54,6 +63,6 @@
    <script
         src="{{ location_api }}"
         async>
+    
     </script>
-
 {% endblock %}

@@ -8,67 +8,8 @@ $(document).ready(function () {
     $('input#input_text, textarea#location_description').characterCounter();
     $('input#input_text, textarea#location_name').characterCounter();
 });
-
-//This function will get the marker's current location and then add the lat/long
-//values to our textfields so that we can save the location.
-
-// Code to sync db output, python and script https://stackoverflow.com/questions/49718569/multiple-markers-in-flask-google-map-api
-var map, i;
-
-
-function initMap() {
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7,
-        center: new google.maps.LatLng(53.43237771764574, -6.871380403326448),
-        mapTypeId: 'roadmap'
-    });
-    //variable to hold your endpoint
-    var coordAddresses = 'https://8080-amethyst-crow-u769d91j.ws-eu04.gitpod.io/api/coordinates';
-    //an array to hold your coordinates
-    var locations = [];
-    //Using fetch to process the ajax call 
-    // if you use fetch, besure to include the source below this line in your template
-    //<script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/2.0.3/fetch.js"></script>
-    fetch(coordAddresses)
-        .then(function (response) {
-            return response.text();
-        }).then(function (body) {
-            var obj = JSON.parse(body);
-            var myAdd = {};
-            var addresses = obj.coordinates;
-            var l = addresses.length;
-
-            for (i = 0; i < l; i++) {
-                myAdd = {
-                    position: {
-                        lat: parseFloat(obj.coordinates[i].lat),
-                        lng: parseFloat(obj.coordinates[i].lng)
-                    },
-                    title: obj.coordinates[i].title,
-                };
-                locations.push(myAdd);
-            }
-            locations.forEach(function (feature) {
-                var marker = new google.maps.Marker({
-                    position: feature.position,
-                    title: feature.title,
-                    map: map
-                });
-            });
-
-        }).catch(function () {
-            // if the ajax call fails display an error in an info window
-            var pos = {
-                lat: lat,
-                lng: lng
-            };
-            infoWindow.setMap(map);
-            infoWindow.setPosition(pos);
-            infoWindow.setContent('An error occurred, we are unable to retrieve coordinates.');
-        });
-}
-var marker2 = false;
 var add_location_map;
+var marker2 = false;
 // Second map for add_location_map window
 // Created a second function as initializing the maps in 
 // one func resulted in DOM errors and no maps display
@@ -81,17 +22,19 @@ function initUserMap() {
         zoom: 7,
         mapTypeId: 'roadmap'
     });
+
     google.maps.event.addListener(add_location_map, 'click', function (event) {
         //Get the location that the user clicked.
         var clickedLocation = event.latLng;
+        
         //If the marker hasn't been added
         if (marker2 === false) {
             //Create the marker.
             marker2 = new google.maps.Marker({
                 position: clickedLocation,
-                map: map,
+                map: add_location_map,
                 draggable: true //make it draggable
-            }); 
+            });
             //Listen for drag events!
             google.maps.event.addListener(marker2, 'dragend', function (event) {
                 markerLocation();
@@ -105,6 +48,7 @@ function initUserMap() {
     });
 }
 
+
 function markerLocation() {
     //Get location.
     var currentLocation = marker2.getPosition();
@@ -114,8 +58,6 @@ function markerLocation() {
 }
 
 // Cloudinary File upload service
-
-
 document.querySelector("form").addEventListener("submit", (event) => {
     // event.preventDefault();
     const fileInput = document.querySelector("#media");
@@ -124,18 +66,73 @@ document.querySelector("form").addEventListener("submit", (event) => {
     formData.append("file", fileInput.files[0]);
 
     const options = {
-      method: "POST",
-      body: formData,
+        method: "POST",
+        body: formData,
     };
 
     fetch("http://127.0.0.1:5000/upload", options)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+});
+
+// Function to catch the like click event and send post to python
+//https://stackoverflow.com/questions/62243087/in-django-how-to-send-json-object-using-xmlhttprequest-in-javascript
+function likeMe(id) {
+    $.ajax({
+        url: "/likes",
+        type: "POST",
+        data: { locations : id },
+        dataType: "json",
+        success: function (result) {
+            switch (result) {
+                case true:
+                    processResponse(result);
+                    break;
+                default:
+                    resultDiv.html(result);
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            alert(xhr.status);
+            alert(thrownError);
+        }
+    });
+
+}
+
+// Draw map and add markers based on mongodb query results
+function searchResultMap() {
+    var locationsString = $('#search-coordinates').text()
+    var nLocationsString = locationsString.replace(",]}", "]}");
+    var locationsObj = JSON.parse(nLocationsString);
+    var locations = locationsObj.coordinates
+    var loclen = locations.length
+
+    centerLat = locations[Math.floor(loclen/2)].lat;
+    centerLng = locations[Math.floor(loclen/2)].lng;
+           
+            // console.log(centerOfmyAdd);
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: new google.maps.LatLng(centerLat, centerLng),
+                mapTypeId: 'roadmap'
+            });
+
+            var coordinates = { lat: 40.785845, lng: -74.020496 };
+            locations.forEach(function (feature) {
+                var marker = new google.maps.Marker({
+                    position: {"lat":feature.lat, "lng": feature.lng},
+                    map: map
+                });
+            });
+}
+
+
+

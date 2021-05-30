@@ -29,15 +29,24 @@
     </div>
     </section>
 
-    <section class="map-section center-align row ">
+    <section class="index-map-section center-align row ">
         <h2 class="center-align">Top Spots <i class="fas fa-fire-alt"></i></h2>
-      <div class="col s12 m12 l12" id="map" onload="initMap()"></div>
+      <div class="col s12 m12 l12" id="map" onload="searchResultMap()"></div>
+      <div id="search-coordinates" style="display: none">
+        { "coordinates":[ 
+            {% for location in locations %} 
+            {   "lat": {{location.location.coordinates[1]}}, 
+                "lng": {{location.location.coordinates[0]}} },{% endfor %}]}
+    </div>
     </section>
     <!-- I used the like button idea from this template to help me create my own one
     https://github.com/LigaMoon/swap-clothes-app/blob/main/templates/index.html -->
     <section class="topspots" id="topspots">
+                <!-- use .rewind() to all me to use locations cursor again for second loop -->
+                <div style="display: none">{{ locations.rewind() }}
+                </div>
         <!-- Campsite display cards -->
-        <div class="row">
+        <div class="row locations-row">
             {% for location in locations %}
             <div class="col s12 m6 l4 top-spot-item-card">
                 <div class="place_card center">
@@ -79,7 +88,7 @@
     {% block scripts %}
 
     <script
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxdWmLSSJTX3YKlDFZgrvzP5INfBoO1dI&callback=initMap&libraries=&v=weekly"
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAxdWmLSSJTX3YKlDFZgrvzP5INfBoO1dI&callback=searchResultMap&libraries=&v=weekly"
         async>
     </script>
 
