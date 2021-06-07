@@ -8,7 +8,7 @@
 
 {% block content %}
 <div class="container">
-    <form method="POST" action="{{ url_for('user_location') }}" enctype="multipart/form-data">
+    <form method="POST" action="{{ url_for('user_location') }}" name="user_location_form" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="row add_location_inputs">
             <!-- Text input area -->
             <div class="col s6">
@@ -16,7 +16,9 @@
                     <h5>Campsite Name:</h5>
                     <div class="input-field col s12">
                         <textarea id="location_name" name="location_name" class="materialize-textarea"
-                            data-length="40"></textarea>
+                            data-length="40">{%if location_id %}
+                            {{location_id.name}}
+                        {% endif%}</textarea>
                         <label for="location_name"></label>
                     </div>
                 </div>
@@ -26,7 +28,7 @@
                             <h5>Campsite Description</h5>
                             <div class="input-field col s12">
                                 <textarea id="location_description" name="location_description"
-                                    class="materialize-textarea" data-length="240"></textarea>
+                                    class="materialize-textarea" data-length="240">{{location_id.description}}</textarea>
                                 <label for="location_description"></label>
                             </div>
                         </div>
@@ -51,7 +53,7 @@
                     </div>
                 </div>
                 <div class="row" id="upload">
-                    Picture File:<input id="media" name="file" type="file"/>
+                    Picture File:<input id="media" name="file" type="file" value="{{location_id.file}}"/>{{location_id.file}}
                 </div>
             </div>
             <!-- map input area -->
@@ -59,9 +61,9 @@
                 <h5>Select location on map</h5>
                 <div id="add_location_map"></div>
                 <div>
-                    <input type="text" name="lat" id="lat" readonly="yes">
+                    <input type="text" name="lat" id="lat" readonly="yes" value="{%if location_id %}{{location_id.location.coordinates[1]}}{% endif %}" required>
                     <label for="lat">Latitude</label>
-                    <input type="text" name="lng" id="lng" readonly="yes">
+                    <input type="text" name="lng" id="lng" readonly="yes" value="{%if location_id %}{{location_id.location.coordinates[0]}}{% endif %}" required>
                     <label for="lng">Longitude</label>
                 </div>
             </div>
