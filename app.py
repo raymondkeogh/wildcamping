@@ -108,6 +108,9 @@ def signup():
             flash("Username already exists")
             return render_template("signup.html")
         register = {
+
+
+            
             "username": request.form.get("username").lower(),
             "password": generate_password_hash(request.form.get("password"))
         }
@@ -146,15 +149,15 @@ def login():
     return render_template("login.html")
 
 
-@app.route("/profile_page/<username>", methods=["GET", "POST"])
-def profile_page(username):
+@app.route("/profile_page", methods=["GET", "POST"])
+def profile_page():
     # grab the session user's username from db
-    user = mongo.db.users.find_one(
-        {"username": session["user"]})
+    username = mongo.db.users.find_one({"username": session["user"]})["username"]
     locations = mongo.db.locations.find()
+    
     if session["user"]:
         return render_template(
-            "profile.html", user=user, locations=locations)
+            "profile.html", username=username, locations=locations)
         if request.method == 'POST':
             # Upload file to Cloudinary
             app.logger.info('in upload route')
@@ -177,42 +180,19 @@ def profile_page(username):
                 "username": session["user"]}, {
                     "$set": profile_update})
             return render_template(
-                "profile.html", user=user, locations=locations)
-    else:
-        return redirect(url_for("login"))
+                "profile.html", username=username, locations=locations)
+    
+    return redirect(url_for("login"))
 
 
 @app.route("/edit_profile", methods=["GET", "POST"])
 def edit_profile():
     user = mongo.db.users.find_one(
         {"username": session["user"]})
-    if request.method == 'POST':
-        # Upload file to Cloudinary
-        app.logger.info('in upload route')
-        cloudinary.config(
-            cloud_name=os.getenv('CLOUD_NAME'),
-            api_key=os.getenv('CLOUD_API_KEY'),
-            api_secret=os.getenv('CLOUD_API_SECRET'))
-        upload_result = None
-        if request.method == 'POST':
-            file_to_upload = request.files['file']
-            app.logger.info('%s file_to_upload', file_to_upload)
-            if file_to_upload:
-                upload_result = cloudinary.uploader.upload(file_to_upload)
-                app.logger.info(upload_result)
-                app.logger.info(type(upload_result))
-        profile_update = {
-            "bio": request.form.get("bio"),
-            "file": upload_result["url"]
-        }
-        mongo.db.users.update({
-                "username": session["user"]}, 
-                {"$set": profile_update})
-        flash("Profile updated")
-        
-        return render_template(
-            "profile.html", user=user)
-    return render_template("edit_profile.html", user=user)
+    liked_locations = mongo.db.locations.find({"liked_by": session["user"]})
+    posted_locations = mongo.db.locations.find({"posted_by": session["user"]})
+
+    return render_template("edit_profile.html", user=user, liked_locations=liked_locations, posted_locations=posted_locations)
 
 
 # @app.route("/profile_page/<username>/user_locations")
@@ -222,12 +202,14 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
-# Allow user to input custom loctions
+# Allow user to input new custom loctions
 @app.route("/user_location", methods=["GET", "POST"])
 def user_location():
     user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
     user = mongo.db.users.find_one(
         {"username": session["user"]})
+    location = request.args.get("location_id")
+    db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
     if request.method == "POST":
         # Upload file to Cloudinary
         app.logger.info('in upload route')
@@ -243,7 +225,7 @@ def user_location():
                 upload_result = cloudinary.uploader.upload(file_to_upload)
                 app.logger.info(upload_result)
                 app.logger.info(type(upload_result))
-
+         
         lat = float(request.form.get("lat"))
         lng = float(request.form.get("lng"))
         new_location = {
@@ -254,12 +236,65 @@ def user_location():
             "file": upload_result["url"],
             "posted_by": session["user"]
         }
-        mongo.db.locations.insert_one(new_location)
+        # if the record is in the database (check if the object id exits)
+
+        # mongo.db.locations.find({..criteria..}, {"_id" : 1});
+        # then update the record, 
+        # else its not in the database 
+        # then create a new entry 
+
+        if db_location==None:
+            mongo.db.locations.insert_one(new_location)
+        else:
+             mongo.db.locations.update_one({"_id": ObjectId(location_id)}, new_location)
+
 
         flash("Location Added, Thanks for you input")
-        return render_template("profile.html", user=user)
-    return render_template(
-        "user_location.html", user=user, user_location_api=user_location_api)
+        return render_template("profile.html", user=user, location_id=db_location)
+    else:
+        return render_template(
+            "user_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
+
+
+
+# # Allow user to input new custom loctions
+# @app.route("/user_location/<location_id>", methods=["GET", "POST"])
+# def edit_location(location_id):
+#     user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
+#     user = mongo.db.users.find_one(
+#         {"username": session["user"]})
+#     if request.method == "POST":
+#         # Upload file to Cloudinary
+#         app.logger.info('in upload route')
+#         cloudinary.config(
+#             cloud_name=os.getenv('CLOUD_NAME'),
+#             api_key=os.getenv('CLOUD_API_KEY'),
+#             api_secret=os.getenv('CLOUD_API_SECRET'))
+#         upload_result = None
+#         if request.method == 'POST':
+#             file_to_upload = request.files['file']
+#             app.logger.info('%s file_to_upload', file_to_upload)
+#             if file_to_upload:
+#                 upload_result = cloudinary.uploader.upload(file_to_upload)
+#                 app.logger.info(upload_result)
+#                 app.logger.info(type(upload_result))
+
+#         lat = float(request.form.get("lat"))
+#         lng = float(request.form.get("lng"))
+#         new_location = {
+#             "name": request.form.get("location_name"),
+#             "description": request.form.get("location_description"),
+#             "rating": request.form.get("rating"),
+#             "location": {"type": "Point", "coordinates": [lng, lat]},
+#             "file": upload_result["url"],
+#             "posted_by": session["user"]
+#         }
+#         mongo.db.locations.insert_one(new_location)
+
+#         flash("Location Updated!")
+#         return render_template("edit_location.html", user=user, location_id=location_id)
+#     return render_template(
+#         "edit_location.html", user=user, user_location_api=user_location_api, location_id=location_id)
 
 
 
@@ -280,7 +315,58 @@ def likes(location_id, action):
                                   '$inc': {'liked_count': -1}})
 
     return redirect(request.referrer)
+    # return ('', 204)
 
+
+@app.route('/delete_post/<location>')
+def delete_post(location):
+    user = session['user']
+    mongo.db.locations.remove({"_id": ObjectId(location)})
+    return redirect(request.referrer)
+
+
+@app.route('/edit_location', methods=["GET", "POST"])
+def edit_location():
+    user = mongo.db.users.find_one(
+        {"username": session["user"]})
+    user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
+    location = request.args.get("location")
+    db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
+    if request.method == "POST":
+        # Upload file to Cloudinary
+        app.logger.info('in upload route')
+        cloudinary.config(
+            cloud_name=os.getenv('CLOUD_NAME'),
+            api_key=os.getenv('CLOUD_API_KEY'),
+            api_secret=os.getenv('CLOUD_API_SECRET'))
+        upload_result = None
+        if request.method == 'POST':
+            file_to_upload = request.files['file']
+            app.logger.info('%s file_to_upload', file_to_upload)
+            if file_to_upload:
+                upload_result = cloudinary.uploader.upload(file_to_upload)
+                app.logger.info(upload_result)
+                app.logger.info(type(upload_result))
+        lat = float(request.form.get("lat"))
+        lng = float(request.form.get("lng"))
+        if file_to_upload:
+            file = upload_result["url"]
+        else:
+            file = request.form.get("file")
+        new_location = {
+            "name": request.form.get("location_name"),
+            "description": request.form.get("location_description"),
+            "rating": request.form.get("rating"),
+            "location": {"type": "Point", "coordinates": [lng, lat]},
+            "file": file,
+            "posted_by": session["user"]
+        }
+        mongo.db.locations.update_one({"_id": ObjectId(location)}, {"$set": new_location})
+        flash("Location Added, Thanks for you input")
+        return render_template("profile.html", user=user, location_id=db_location)
+    else:
+        return render_template("edit_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
+    
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),

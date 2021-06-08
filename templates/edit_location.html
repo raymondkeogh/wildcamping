@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block styles %}
+
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container">
+    <form method="POST" action="{{ url_for('edit_location') }}" name="user_location_form" enctype="multipart/form-data" onsubmit="return validateForm()">
+        <div class="row add_location_inputs">
+            <!-- Text input area -->
+            <div class="col s6">
+                <div class="row">
+                    <h5>Campsite Name:</h5>
+                    <div class="input-field col s12">
+                        <textarea id="location_name" name="location_name" class="materialize-textarea"
+                            data-length="40" required>
+                            {{location_id.name}}
+                        </textarea>
+                        <label for="location_name"></label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="row">
+                            <h5>Campsite Description</h5>
+                            <div class="input-field col s12">
+                                <textarea id="location_description" name="location_description"
+                                    class="materialize-textarea" data-length="240">{{location_id.description}}</textarea>
+                                <label for="location_description"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Rating input area -->
+                <!-- Code used for star rating got from  
+                https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 -->
+                <div class="row">
+                    <h5>Rating</h5>
+                    <div class="rating left">
+                        <input type="radio" name="rating" value="5" id="5" onClick="reply_click(this.id)">
+                        <label for="5">☆</label>
+                        <input type="radio" name="rating" value="4" id="4" onClick="reply_click(this.id)">
+                        <label for="4">☆</label>
+                        <input type="radio" name="rating" value="3" id="3" onClick="reply_click(this.id)">
+                        <label for="3">☆</label>
+                        <input type="radio" name="rating" value="2" id="2" onClick="reply_click(this.id)">
+                        <label for="2">☆</label>
+                        <input type="radio" name="rating" value="1" id="1" onClick="reply_click(this.id)">
+                        <label for="1">☆</label>
+                    </div>
+                </div>
+                <div class="row" id="upload">
+                    Picture File:<input id="media" name="file" type="file" value="{{location_id.file}}"/>{{location_id.file}}
+                </div>
+            </div>
+            <!-- map input area -->
+            <div class="select-map-area col s6" onload="initUserMap()">
+                <h5>Select location on map</h5>
+                <div id="add_location_map"></div>
+                <div>
+                    <input type="text" name="lat" id="lat" readonly="yes" value="{%if location_id %}{{location_id.location.coordinates[1]}}{% endif %}" required>
+                    <label for="lat">Latitude</label>
+                    <input type="text" name="lng" id="lng" readonly="yes" value="{%if location_id %}{{location_id.location.coordinates[0]}}{% endif %}" required>
+                    <label for="lng">Longitude</label>
+                </div>
+            </div>
+            <div class="row">
+                <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
+                    <i class="material-icons right"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{% endblock%}
+
+{% block scripts %}
+<script
+    src="{{user_location_api}}"
+    async>
+</script>
+
+{% endblock %}
+
+
+

@@ -8,60 +8,81 @@
 
 {% block content %}
 <div class="container">
-    <form method="POST" action="{{ url_for('edit_profile') }}" enctype="multipart/form-data">
-        <div class="row edit_profile_inputs">
-            <!-- Text input area -->
-            <div class="col s12">
-                <div class="row profile_header">
-                    {% if user.file %}
-                    <div class="profile_picture">
-                        <label for="media">
-                            <input id="media" name="file" type="file" style="display:none"/>
-                        <i class="fas fa-edit"></i>
-                        <img src="{{ user.file }}" alt="profile photo">
-                    </label>
-                    </div>
-                    {% else %}
-                        <a href=""></a><div class="empty_profile">
-                        <label for="media">
-                            <i class="fas fa-camera-retro"></i>
-                            <br>Add Photo
-                            <input id="media" name="file" type="file" style="display:none"/>
-                          </label>
-                        </div>
-                    {% endif %}
-                    <span>Username: {{ user.username }} </span>
+    <div class="row edit_profile_inputs">
+        <!-- Text input area -->
+        <div class="col s12">
+            <span>Username: {{ user.username }} </span>
+        </div>
+    </div>
+    <div class="row locations-row">
+        <h2>Your posts</h2>
+        {% for posting in posted_locations %}
+        <div class="col s12 m6 l4 top-spot-item-card">
+            <div class="place_card center">
+                <!-- Card Image -->
+                <div class="campsite-pic">
+                    <img src="{{ posting.file }}" alt="item image" class="card-image">
                 </div>
-                <div class="row">
-                    <div class="col s12">
-                        <div class="row">
-                            <h5>Your Bio</h5>
-                            <div class="input-field col s12">
-                                <textarea id="bio" name="bio"
-                                    class="materialize-textarea" data-length="240"></textarea>
-                                <label for="bio"></label>
-                            </div>
-                        </div>
-                    </div>
+                <div class="campsite-description">
+                    <span class="location-title">{{ posting.name }}</span>
+                    <!-- <p class="location_longlat"> {{ posting.location.coordinates }}</p> -->
+                    <p>Description: {{ posting.description}}</p>
+                    <p><strong>Rating: </strong>
+                        {% for x in range(1, posting.rating | int) %}
+                        <span class="fa fa-star checked"></span>
+                        {% endfor %}</p>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col s12">
-                <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
-                    <i class="material-icons right"></i>
-                </button>
-            </div>
+
+                <a href="{{ url_for('edit_location', location=posting._id) }}" class="edit-location-button">
+                    <span class="edit-button"><i class="fas fa-edit"></i></span></a>
+                    <a href="{{ url_for('delete_post', location=posting._id) }}" class="delete-button" onclick="return confirm('Are you sure you want to delete this item?');">
+                    <span><i class="fas fa-trash-alt"></i></span></a>
             </div>
         </div>
-    </form>
+        {% endfor %}
+    </div>
+        <div class="row locations-row">
+            <h2>Place you've liked </h2>
+            {% for location in liked_locations %}
+            <div class="col s12 m6 l4 top-spot-item-card">
+                <div class="place_card center">
+                    <!-- Card Image -->
+                    <div class="campsite-pic">
+                        <img src="{{ location.file }}" alt="item image" class="card-image">
+                    </div>
+                    <div class="campsite-description">
+                        <span class="location-title">{{ location.name }}</span>
+                        <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
+                        <p>Description: {{ location.description}}</p>
+                        <p><strong>Rating: </strong>
+                            {% for x in range(1, location.rating | int) %}
+                            <span class="fa fa-star checked"></span>
+                            {% endfor %}</p>
+                    </div>
+                    <!-- If user is logged in and has liked the item  -->
+                    {% if session.user in location.liked_by %}
+                    <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}" class="like-button">
+                        <span class="liked-button">&#10084;</span></a>
+                    <!-- If user is logged in and hasn't liked the item -->
+                    {% elif session.user %}
+                    <a href="{{  url_for('likes', location_id=location._id, action='like') }}" class="like-button">
+                        <span class="like-button">&#10084;</span></a>
+                    <!-- If user hasn't logged in -->
+                    {% else %}
+                    <a class="like-button tooltipped" data-position="top"
+                        data-tooltip="Sign In or Sign Up to like an item">
+                        <span class="like-button-disabled">&#10084;</span></a>
+                    {% endif %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
 </div>
 
 {% endblock%}
 
 {% block scripts %}
-<script
-    src="{{user_location_api}}"
-    async>
+<script src="{{user_location_api}}" async>
 </script>
 
 {% endblock %}
