@@ -246,7 +246,7 @@ def user_location():
         if db_location==None:
             mongo.db.locations.insert_one(new_location)
         else:
-             mongo.db.locations.update_one({"_id": ObjectId(location_id)}, new_location)
+             mongo.db.locations.update({"_id": ObjectId(location)}, new_location)
 
 
         flash("Location Added, Thanks for you input")
@@ -313,7 +313,6 @@ def likes(location_id, action):
         mongo.db.locations.update_one({"_id": ObjectId(location_id)},
                                   {'$pull': {'liked_by': user},
                                   '$inc': {'liked_count': -1}})
-
     return redirect(request.referrer)
     # return ('', 204)
 
@@ -325,12 +324,20 @@ def delete_post(location):
     return redirect(request.referrer)
 
 
-@app.route('/edit_location', methods=["GET", "POST"])
-def edit_location():
+@app.route('/view_location/<location_id>')
+def view_location(location_id):
+    location = mongo.db.locations.find_one({"_id": ObjectId(location_id)})
+    print(location)
+    return render_template("view_location.html", location=location)
+
+
+@app.route('/edit_location/<location>', methods=["GET", "POST"])
+def edit_location(location):
     user = mongo.db.users.find_one(
         {"username": session["user"]})
     user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
-    location = request.args.get("location")
+    # location = request.args.get("location_id")
+    # print(location)
     db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
     if request.method == "POST":
         # Upload file to Cloudinary
@@ -361,9 +368,12 @@ def edit_location():
             "file": file,
             "posted_by": session["user"]
         }
-        mongo.db.locations.update_one({"_id": ObjectId(location)}, {"$set": new_location})
-        flash("Location Added, Thanks for you input")
-        return render_template("profile.html", user=user, location_id=db_location)
+
+        mongo.db.locations.update_one({"_id": ObjectId(location)}, {"$set": new_location } )
+        flash("Location Updated!")
+ 
+        return redirect(url_for("profile_page"), user=user, location_id=db_location)
+    
     else:
         return render_template("edit_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
     

@@ -22,7 +22,7 @@
             <!-- database output -->
             <div class="loopcounter"></div>
             <div class="locations">
-                <!-- use .rewind() to all me to use nearpoints cursor again for second loop -->
+                <!-- use .rewind() to allow nearpoints cursor to be used again for second loop -->
                 <div style="display: none">{{ nearpoints.rewind() }}
                 </div>
                 {% for record in nearpoints %}
@@ -30,6 +30,8 @@
                     {{ loop.index }}
                 <div class="row place_card">
                     <div class="col s6">
+                        <a href="{{ url_for('view_location', location_id=record._id )}}">
+
                         <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
                         <div class="location_longlat"> Longitude: {{ record.location.coordinates[0] }}<br>
                             Latitude: {{record.location.coordinates[1] }}</div>
@@ -42,6 +44,7 @@
                         Description: {{ record.description.capitalize() }}<br>
                         <br>
                         Posted by: {{ record.posted_by.capitalize()}}<br>
+                    </a>
                     </div>
                     <!-- "Like button" code found on 
                     https://css-tricks.com/recreating-the-twitter-heart-animation/ -->
