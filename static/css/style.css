@@ -1,5 +1,5 @@
 body {
-    background-image: url(../../static/images/background3.png);
+    background-image: url(../../static/images/background3.jpg);
     background-size: cover;
     height: 100%;
     position: relative;
@@ -83,25 +83,27 @@ nav,
 }
 
 
-.row .place_card{
+.row .place-card{
     color: black;
     background-color: white;
+    box-sizing: border-box; 
     padding: 14px;
     border-radius: 15px;
-    margin: 10px;
     margin-top: 0;
-    margin-right: 20px;
     align-items: center;
-    width: 95%;
     position:relative;
     border: 1px solid black;
     box-shadow: 10px 8px 6px -6px black;
 }
 
-.place_card img {
+.locations-row .col {
+    padding: 0;
+}
+
+.place-card img {
     height: 150px;
     width: 100%;
-    margin-top: 20px;
+    margin-top: 25px;
     object-fit: cover;
     border-radius: 15px;
 }
@@ -132,6 +134,12 @@ nav,
 .profile_header span{
     font-size: 30px;  
 }
+
+.profile-posts .place-card {
+    height: 300px;
+    overflow-y: scroll;
+}
+
 
 .user_profile .profile_card {
     background-color: white;
@@ -277,8 +285,8 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .locations {
     overflow-y: scroll;
     height: calc(100vh - 100px);
-
 }
+
 
 .search-results .col {
     margin: 0;
@@ -294,7 +302,18 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     padding: 0; 
 }
 
+.fa-campground {
+    font-size: 25px;
+}
+.fa-search:before {
+    position: absolute;
+    top: 24px;
+    left: 10px;
+}
 
+.input-field input[type=search] {
+    padding-left: 4rem;
+}
 
 .index-map-section #map {
     height: 300px;
@@ -306,7 +325,6 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     position: absolute;
     color: #888;
     font-size: 1.4em;
-    filter: grayscale(1);
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -318,4 +336,63 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 
 .liked-button {
     color: #e2264d;
+    font-size: 1.4em;
 }
+
+.edit-location-button .fa-edit {
+    align-self: center;
+    position: absolute;
+    color: #888;
+    font-size: 1.4em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    right: 10px;
+    top: 15px;
+}
+
+.delete-button .fa-trash-alt {
+    align-self: center;
+    position: absolute;
+    color: #888;
+    font-size: 1.4em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    right: 40px;
+    top: 15px;
+
+}
+
+.location-view {
+    background-color: white;
+    color:black;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+
+.profile-posts-header {
+    display: flex;
+    align-items:center; 
+    position: relative;
+}
+
+.profile-posts-header i, .fa-plus-square:before  {
+    position: absolute;
+    right: 10px;
+    font-size: 35;
+}
+
+.fa-plus-square:before {
+    font-size: 35px;
+}
+
+
+
+
+
