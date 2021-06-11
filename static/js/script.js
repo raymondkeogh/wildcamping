@@ -120,9 +120,19 @@ function searchResultMap() {
             map: map
         });
         // add an event listener for this marker
-		bindInfoWindow(marker, map, infowindow, "<p class='info-window'>" + feature.name + "</p>"); 
+		bindInfoWindow(marker, map, infowindow,
+            "<div class='info-window'>" +
+            "<div class='col m10 campsite-pic'><img src=" + feature.file + "></div>" +
+             "<p>" + feature.name + "</p>" 
+             + "<br>" 
+             + "<p>" + feature.description + "</p>" +
+            "</div>"
+             ); 
     });
 
+   
+  
+    
    
 
 
