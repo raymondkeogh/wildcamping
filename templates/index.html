@@ -11,12 +11,12 @@
     <div class="row">
         <div class="center-align ">
             <!-- search bar -->
-            <h1><i class="fas fa-campground"></i></h1>
+            <p>Wild <i class="fas fa-campground"></i> Camping</p>
             <div class="searchBar">
                 <form role="form" method='POST' action="{{url_for('get_locations')}}">
                     <div class="input-field">
                         <input id="search" type="search" name="search" required>
-                        <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                        <label class="label-icon" for="search"><i class="fas fa-search"></i></label>
                     </div>
                 </form>
             </div>
@@ -24,9 +24,28 @@
     </div>
     <section class="splash-page row">
         <div class="col l6 s12">
-        <h3>Find and Share the Best Camping Locations</h3>
-        <a href="#topspots"><h4>Explore!</h4></a>
-    </div>
+            <h3>Find and Share the Best Camping Locations</h3>
+            <a href="#topspots"><h4>Explore!</h4></a>
+        </div>
+        <div class="col l6 s12">
+            <div class="place-card center">
+                <!-- Card Image -->
+                <div class="campsite-pic">
+                    <img src="{{ locations[0].file }}" alt="item image" class="card-image">
+                </div>
+                <div class="campsite-description">
+                    <span class="location-title">{{ locations[0].name }}</span>
+                    <p class="location_longlat"> {{ locations[0].location.coordinates }}</p>
+                    <p>Description: {{ locations[0].description}}</p>
+                    <p><strong>Rating: </strong>
+                        {% for x in range(1, locations[0].rating | int) %}
+                        <span class="fa fa-star checked"></span>
+                        {% endfor %}</p>
+                </div>
+                
+            </div>
+        </div>
+    
     </section>
 
     <section class="index-map-section center-align row ">
@@ -42,21 +61,21 @@
     <!-- I used the like button idea from this template to help me create my own one
     https://github.com/LigaMoon/swap-clothes-app/blob/main/templates/index.html -->
     <section class="topspots" id="topspots">
-                <!-- use .rewind() to all me to use locations cursor again for second loop -->
+                <!-- use .rewind() to allow locations cursor be used again for second loop -->
                 <div style="display: none">{{ locations.rewind() }}
                 </div>
         <!-- Campsite display cards -->
         <div class="row locations-row">
             {% for location in locations %}
             <div class="col s12 m6 l4 top-spot-item-card">
-                <div class="place_card center">
+                <div class="place-card center">
                     <!-- Card Image -->
                     <div class="campsite-pic">
                         <img src="{{ location.file }}" alt="item image" class="card-image">
                     </div>
                     <div class="campsite-description">
                         <span class="location-title">{{ location.name }}</span>
-                        <p class="location_longlat"> {{ location.location.coordinates }}</p>
+                        <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
                         <p>Description: {{ location.description}}</p>
                         <p><strong>Rating: </strong>
                             {% for x in range(1, location.rating | int) %}
@@ -66,22 +85,23 @@
                      <!-- If user is logged in and has liked the item  -->
                      {% if session.user in location.liked_by %}
                      <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}" class="like-button">
-                         <span class="liked-button ">❤</span></a>
+                         <span class="liked-button">&#10084;</span></a>
                      <!-- If user is logged in and hasn't liked the item -->
                      {% elif session.user %}
                      <a href="{{  url_for('likes', location_id=location._id, action='like') }}" class="like-button">
-                         <span class="like-button">❤</span></a>
+                         <span class="like-button" >&#10084;</span></a>
                      <!-- If user hasn't logged in -->
                      {% else %}
                      <a class="like-button tooltipped" data-position="top"
                          data-tooltip="Sign In or Sign Up to like an item">
-                         <span class="like-button-disabled">❤</span></a>
+                         <span class="like-button-disabled">&#10084;</span></a>
                      {% endif %}
                 </div>
             </div>
             {% endfor %}
         </div>
     </section>
+</div>
 
     {% endblock %}
 
