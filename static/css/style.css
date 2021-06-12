@@ -89,18 +89,20 @@ nav,
     box-sizing: border-box; 
     padding: 14px;
     border-radius: 15px;
-    margin-top: 0;
+    margin: 5px;
     align-items: center;
     position:relative;
     border: 1px solid black;
     box-shadow: 10px 8px 6px -6px black;
+    max-height: 340px;
+    overflow-x: hidden;
 }
 
 .locations-row .col {
     padding: 0;
 }
 
-.place-card img {
+.campsite-pic img {
     height: 150px;
     width: 100%;
     margin-top: 25px;
@@ -251,6 +253,7 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     padding: 20px;
     min-height: 800px;
     border-radius: 15px;
+    position:relative;
 }
 
 .flashes h4 {
@@ -260,6 +263,9 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .add_location_inputs button {
     margin: 20px;
     border-radius: 15px;
+    position: absolute;
+    bottom: 5px;
+    right: 9px;
 }
 
 #add_location_map {
@@ -270,7 +276,6 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 
 .select-map-area {
     border-radius: 15px;
-
 }
 
 
@@ -281,7 +286,6 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 }
 
 /* Locations result page */
-
 .locations {
     overflow-y: scroll;
     height: calc(100vh - 100px);
@@ -363,7 +367,7 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
-    right: 40px;
+    right: 45px;
     top: 15px;
 
 }
@@ -393,6 +397,24 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 }
 
 
+.info-window {
+    color: black;
+    width:300px;
+}
+
+.location-view {
+    position:relative;
+}
 
 
+.location-view #map {
+    height: 300px;
+}
 
+.location-view img {
+    height: 300px;
+}
+
+.location-view .search-results-map{
+    height: 300px;
+}

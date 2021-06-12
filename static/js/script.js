@@ -5,8 +5,17 @@ $(document).ready(function () {
     });
     $('input#input_text, textarea#location_description').characterCounter();
     $('input#input_text, textarea#location_name').characterCounter();
+    $('.tooltipped').tooltip();
 
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.tooltipped');
+    var instances = M.Tooltip.init(elems, options);
+  });
+
+      
 var add_location_map;
 var marker2 = false;
 // Second map for add_location_map window
@@ -109,7 +118,7 @@ function searchResultMap() {
     var infowindow =  new google.maps.InfoWindow({
 		content: ''
 	});
- 
+    var contentString = 
     locations.forEach(function (feature) {
         var marker = new google.maps.Marker({
             title: feature.name,
@@ -122,13 +131,14 @@ function searchResultMap() {
         // add an event listener for this marker
 		bindInfoWindow(marker, map, infowindow,
             "<div class='info-window'>" +
-            "<div class='col m10 campsite-pic'><img src=" + feature.file + "></div>" +
-             "<p>" + feature.name + "</p>" 
+            "<div class='campsite-pic'><img src=" + feature.file + "><h6>" + feature.name + "</h6>" 
              + "<br>" 
              + "<p>" + feature.description + "</p>" +
             "</div>"
              ); 
     });
+    // figuure out how to add triple quotes in above bindinfowindow
+    // "<a href=\"{{ url_for('view_location', location_id="+ feature._id +")}}\">" +
 
    
   
@@ -203,35 +213,6 @@ function validateForm() {
 }
 
 
-function locationViewMap() {
-    var locationsString = $('#search-coordinates').text()
-    console.log("locationSTring is " + locationsString)
-    var locationsObj = JSON.parse(LocationsString);
-    var locations = locationsObj.coordinates
-    var loclen = locations.length
-
-    centerLat = locations.lat;
-    centerLng = locations.lng;
-
-    map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 8,
-        center: new google.maps.LatLng(centerLat, centerLng),
-        mapTypeId: 'roadmap'
-    });
-
-    var coordinates = {
-        lat: centerLat,
-        lng: centerLng
-    };
-    var marker = new google.maps.Marker({
-            position: {
-                "lat": centerLat,
-                "lng": centerLng
-            },
-            map: map
-    });
-   
-}
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
