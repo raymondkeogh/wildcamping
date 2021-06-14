@@ -31,9 +31,8 @@
             <div class="center-align search-results-map">
                 <div id="map" onload="searchResultMap()"></div>
             </div>
-
             <!-- pass coordinates from python to script in order to draw map from pymongo query -->
-            <div id="search-coordinates" style="display: block">
+            <div id="search-coordinates" style="display: none">
                 { "coordinates":[ 
                     {% for location in nearpoints %} 
                     {   
@@ -47,12 +46,11 @@
         <div class="col m12 l6">
             <!-- database output -->
             <div class="loopcounter"></div>
-            <div class="locations container">
+            <div class="locations">
                 <!-- use .rewind() to allow nearpoints cursor to be used again for second loop -->
                 <div style="display: none">{{ nearpoints.rewind() }}
                 </div>
                 {% for record in nearpoints %}
-               
                     {{ loop.index }}
                 <div class="row place-card">
                     <div class="col s6">
@@ -80,8 +78,6 @@
                         Posted by: {{ record.posted_by.capitalize()}}<br>
                     </a>
                     </div>
-                     <!-- <input id="toggle-heart" type="checkbox"/>
-                    <label for="toggle-heart">❤</label> -->
                      <!-- If user is logged in and has liked the item  -->
                      {% if session.user in record.liked_by %}
                      <a href="{{ url_for('likes', location_id=record._id, action='unlike') }}" class="like-button">
@@ -101,15 +97,13 @@
                 {% endfor %}
             </div>
         </div>
-    </div>
+       
 </div>
-
 {% endblock%}
 
 {% block scripts %}
    <script
         src="{{ location_api }}"
         async>
-    
     </script>
 {% endblock %}

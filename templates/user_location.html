@@ -11,7 +11,7 @@
     <form method="POST" action="{{ url_for('user_location') }}" name="user_location_form" enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="row add_location_inputs">
             <!-- Text input area -->
-            <div class="col s6">
+            <div class="col s12 m6">
                 <div class="row">
                     <h5>Campsite Name:</h5>
                     <div class="input-field col s12">
@@ -28,7 +28,7 @@
                             <h5>Campsite Description</h5>
                             <div class="input-field col s12">
                                 <textarea id="location_description" name="location_description"
-                                    class="materialize-textarea" data-length="240">{{location_id.description}}</textarea>
+                                    class="materialize-textarea" data-length="400">{{location_id.description}}</textarea>
                                 <label for="location_description"></label>
                             </div>
                         </div>
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <!-- map input area -->
-            <div class="select-map-area col s6" onload="initUserMap()">
+            <div class="select-map-area col s12 m6" onload="initUserMap()">
                 <h5>Select location on map</h5>
                 <div id="add_location_map"></div>
                 <div>

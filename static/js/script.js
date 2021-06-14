@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function() {
     var instances = M.Tooltip.init(elems, options);
   });
 
+
       
 var add_location_map;
 var marker2 = false;
@@ -186,7 +187,6 @@ function validateForm() {
     let location_name = document.forms["user_location_form"]["location_name"].value;
     let desc = document.forms["user_location_form"]["location_description"].value;
     let rating = document.forms["user_location_form"]["rating"].value;
-    let img_file = document.forms["user_location_form"]["file"].text;
     let coord = document.forms["user_location_form"]["lat"].value;
 
     if (location_name == "") {
@@ -201,11 +201,7 @@ function validateForm() {
         alert("Please give your location a rating out of 5");
         return false;
     }
-    if (img_file == "") {
-        alert("Please upload a picture of the location");
 
-        return false;
-    }
     if (coord == "") {
         alert("Please locate your campsite in the map window");
         return false;

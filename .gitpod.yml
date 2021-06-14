@@ -10,3 +10,4 @@ vscode:
     - eventyret.bootstrap-4-cdn-snippet
     - kevinglasson.cornflakes-linter
     - hookyqr.beautify
+    - oderwat.indent-rainbow@7.5.0:0a93787199e4df88158a1212818ff543
