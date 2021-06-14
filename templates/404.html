@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block styles %}
+
+<style>
+body {
+    background-image: url(https://res.cloudinary.com/ddmhcc5mk/image/upload/v1623696243/jamie-street-_94HLr_QXo8-unsplash_mcei0d.jpg);
+}
+
+</style>
+
+
+
+
+{% endblock %}
+
+
+{% block content %}
+<div class="container center help-message">
+<h4>Oops, looks like we took a wrong turn,<br> click here to return <a href="{{url_for('home_page')}}">Home</a></h4></div>
+
+{% endblock%}
+
+{% block scripts %}
+<script src="{{user_location_api}}" async>
+</script>
+
+{% endblock %}

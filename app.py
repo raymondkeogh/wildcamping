@@ -46,10 +46,6 @@ def home_page():
     return render_template("index.html", locations=locations)
 
 
-@app.route("/explore")
-def explore():
-    return redirect(url_for("get_locations"))
-
 @app.route("/get_locations", methods=["GET", "POST"])
 def get_locations():
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=searchResultMap&libraries=&v=weekly"
@@ -350,6 +346,10 @@ def edit_location(location):
     else:
         return render_template("edit_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
                 
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
