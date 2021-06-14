@@ -8,46 +8,55 @@
     <div class="row edit_profile_inputs">
         <!-- Text input area -->
         <div class="col s12">
-            <h3>{{ user.username.capitalize() }}'s Profile </h3>
+            <h4>{{ user.username.capitalize() }}'s Profile </h4>
+            <div class="profile-stats">
+            {% for num in popularity%}
+            <p>Number of time your posts have been liked:  {{ num.sum}} </p>
+            <p>Post you've like:  {{my_liked_count}}</p>
+            <p>Locations posted:  {{posted_count}}</p>
+            {% endfor%}
+            </div>
         </div>
     </div>
+
     <div class="row locations-row">
-        <div class="profile-posts-header">
-           
-                <h3>Your posts</h3>
-          <span><a href="{{url_for('user_location')}}" alt="add new location"><i class="fas fa-plus-square tooltipped" data-position="left" data-tooltip="Add New Location"></i></a></span>
-            <hr>
-        </div>
-        {% for posting in posted_locations %}
-        <div class="col s12 m6 l4 top-spot-item-card profile-posts">
+        <h4>Your Posts</h4>
+        <hr>
+        {% for location in posted_locations %}
+        <a href="{{ url_for('view_location', location_id=location._id )}}">
+            <div class="col s12 m6 l4 top-spot-item-card">
             <div class="place-card center">
-             <div class="custom-icon-container">
-                    <a href="{{ url_for('edit_location', location=posting._id) }}" class="edit-location-button">
+                <div class="custom-icon-container">
+                    <a href="{{ url_for('edit_location', location=location._id) }}" class="edit-location-button">
                       <i class="fas fa-edit"></i></a>
-                    <a href="{{ url_for('delete_post', location=posting._id) }}" class="delete-button"
+                    <a href="{{ url_for('delete_post', location=location._id) }}" class="delete-button"
                         onclick="return confirm('Are you sure you want to delete this item?');">
                         <i class="fas fa-trash-alt"></i></a>
                 </div>
                 <!-- Card Image -->
                 <div class="campsite-pic">
-                    <img src="{{ posting.file }}" alt="item image" class="card-image">
+                    <img src="{{ location.file }}" alt="item image" class="card-image">
                 </div>
                 <div class="campsite-description">
-                    <span class="location-title">{{ posting.name }}</span>
-                    <!-- <p class="location_longlat"> {{ posting.location.coordinates }}</p> -->
-                    <p>Description: {{ posting.description}}</p>
+                    <span class="location-title">{{ location.name }}</span>
+                    <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
+                    <p>Description: {{ location.description}}</p>
                     <p><strong>Rating: </strong>
-                        {% for x in range(1, posting.rating | int) %}
+                        {% for x in range(1, location.rating | int) %}
                         <span class="fa fa-star checked"></span>
                         {% endfor %}</p>
                 </div>
             </div>
         </div>
+        </a>
+        {% else %}
+        <h6>No posts yet! <a href="{{url_for('user_location')}}" alt="add new location">Add one here</a></h6>
         {% endfor %}
-
     </div>
+
+
     <div class="row locations-row">
-        <h3>Places you've liked </h3>
+        <h4>Places you've liked </h4>
         <hr>
         {% for location in liked_locations %}
         <a href="{{ url_for('view_location', location_id=location._id )}}">
@@ -82,6 +91,11 @@
             </div>
         </div>
         </a>
+        {% else %}
+        <h6>No likes yet, <a href="{{ url_for('get_locations')}}"> browse </a> some locations and see what tickles your fancy 
+        
+       </h6>
+        
         {% endfor %}
     </div>
 </div>

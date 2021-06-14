@@ -396,7 +396,7 @@ input[type="file"] {
     position: absolute;
     color: #888;
   
-    font-size: 1.4em;
+    font-size: 1.3em;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -411,7 +411,7 @@ input[type="file"] {
     align-self: center;
     position: absolute;
     color: #888;
-    font-size: 1.4em;
+    font-size: 1.3em;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -433,9 +433,12 @@ input[type="file"] {
     border-radius: 20px;
 }
 
+.locations-row h4 {
+    margin-top: 70px; 
+}
+
 .locations-row h6 {
-    margin: 30px;
-   
+    margin:30px;
 }
 
 
@@ -449,6 +452,10 @@ input[type="file"] {
     position: absolute;
     right: 10px;
     font-size: 35;
+}
+
+.profile-stats{
+    font-size:20px;
 }
 
 .fa-plus-square:before {

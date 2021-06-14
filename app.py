@@ -151,7 +151,23 @@ def profile_page():
         {"username": session["user"]})
     liked_locations = mongo.db.locations.find({"liked_by": session["user"]})
     posted_locations = mongo.db.locations.find({"posted_by": session["user"]})
-    return render_template("profile.html", user=user, liked_locations=liked_locations, posted_locations=posted_locations)
+    # location_popularity = posted_locations.liked_count
+    
+
+    popularity = mongo.db.locations.aggregate(
+    [{"$match": {
+        "posted_by": session["user"]}}, {
+            "$group": {
+                "_id": "null", 
+                "sum": {"$sum": "$liked_count"}}}])
+
+    
+    posted_count = posted_locations.count()
+    my_liked_count = liked_locations.count()
+    
+  
+
+    return render_template("profile.html", user=user, liked_locations=liked_locations, popularity=popularity, posted_locations=posted_locations, posted_count=posted_count, my_liked_count=my_liked_count)
 
 
 # @app.route("/profile_page/<username>/user_locations")
@@ -322,8 +338,7 @@ def upload_image(location):
 # return render_template("edit_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
     
 
-           
-
+        
 @app.route('/edit_location/<location>', methods=["GET", "POST"])
 def edit_location(location):
     user = mongo.db.users.find_one(
