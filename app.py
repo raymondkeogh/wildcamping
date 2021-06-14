@@ -43,9 +43,12 @@ cloudinary.config(
 @app.route("/home_page")
 def home_page():
     locations = mongo.db.locations.find().limit(6)
-   
     return render_template("index.html", locations=locations)
 
+
+@app.route("/explore")
+def explore():
+    return redirect(url_for("get_locations"))
 
 @app.route("/get_locations", methods=["GET", "POST"])
 def get_locations():
@@ -59,7 +62,7 @@ def get_locations():
     api_key = {app.geocode_api_key} # Acquire from developer.here.com
     errors = []
     geosearch_data = {}
-    nearpoints = {}
+    nearpoints = mongo.db.locations.find()
 
     if request.method == "POST":
         # get url that the user has entered
@@ -80,8 +83,7 @@ def get_locations():
         return render_template(
         "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints, geosearch_data=geosearch_data)
       
-    return render_template(
-        "locations.html", locations=locations, location_api=location_api, nearpoints=nearpoints)
+    return render_template("locations.html", nearpoints=nearpoints, locations=locations, location_api=location_api)
 
 
 # Renders Json data of locations from Database

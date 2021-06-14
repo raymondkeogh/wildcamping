@@ -24,7 +24,7 @@
     <section class="splash-page row">
         <div class="col l6 s12">
             <h3>Find and Share the Best Camping Locations</h3>
-            <a href="#topspots">
+            <a href="{{ url_for('get_locations')}}">
                 <h4>Explore!</h4>
             </a>
         </div>
@@ -118,6 +118,10 @@
             </div>
             {% endfor %}
         </div>
+        <a href="{{ url_for('get_locations')}}">
+            <div class="btn view-more right">View more
+        </div>
+    </a>
     </section>
 </div>
 
