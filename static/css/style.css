@@ -102,7 +102,11 @@ nav,
     padding: 0;
 }
 
-.campsite-pic img {
+.campsite-pic-upload {
+    position: relative;
+}
+
+.campsite-pic img, .campsite-pic-upload img{
     height: 150px;
     width: 100%;
     margin-top: 25px;
@@ -292,6 +296,7 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 }
 
 
+
 .search-results .col {
     margin: 0;
     padding: 0; 
@@ -343,10 +348,30 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     font-size: 1.4em;
 }
 
-.edit-location-button .fa-edit {
+
+
+/* https://stackoverflow.com/questions/572768/styling-an-input-type-file-button/25825731#25825731 */
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    position: absolute;
+    color: white;
+    bottom: 20px;
+    right: 10px;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.edit-location-button .fa-edit{
     align-self: center;
     position: absolute;
     color: #888;
+  
     font-size: 1.4em;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -354,10 +379,11 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     user-select: none;
     cursor: pointer;
     right: 10px;
-    top: 15px;
+    top: 15px;  
+
 }
 
-.delete-button .fa-trash-alt {
+.delete-button  .fa-trash-alt{
     align-self: center;
     position: absolute;
     color: #888;
@@ -369,8 +395,8 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     cursor: pointer;
     right: 45px;
     top: 15px;
-
 }
+
 
 .location-view {
     background-color: white;
@@ -396,7 +422,6 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     font-size: 35px;
 }
 
-
 .info-window {
     color: black;
     width:300px;
@@ -406,13 +431,13 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     position:relative;
 }
 
-
 .location-view #map {
     height: 300px;
 }
 
 .location-view img {
-    height: 300px;
+    height: 100%;
+    width:100%;
 }
 
 .location-view .search-results-map{

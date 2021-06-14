@@ -8,17 +8,26 @@
 
 {% block content %}
 <div class="container">
-    <form method="POST" action="{{ url_for('edit_location') }}" name="user_location_form" enctype="multipart/form-data" onsubmit="return validateForm()">
+    <form method="POST" action="{{ url_for('upload_image', location=location_id._id)}}" id="user_location_image" name="user_location_image" value="user_location_image"
+        enctype="multipart/form-data">
+        <div class="row campsite-pic-upload col s12">
+            <img src="{{ location_id.file }}" alt="item image" class="card-image">
+            <label for="media" class="custom-file-upload">
+            <i class="fas fa-upload"></i>Upload Image</label>
+            </label>
+            <input id="media" name="file" type="file" onchange="form.submit()"value="{{location_id.file}}"/>
+            </div> 
+    </form>
+    <form method="POST" action="{{ url_for('edit_location', location=location_id._id)}}" name="user_location_form" value="user_location_form"
+        enctype="multipart/form-data" onsubmit="return validateForm()">
         <div class="row add_location_inputs">
             <!-- Text input area -->
-            <div class="col s6">
+            <div class="col s12 m6">
                 <div class="row">
                     <h5>Campsite Name:</h5>
                     <div class="input-field col s12">
-                        <textarea id="location_name" name="location_name" class="materialize-textarea"
-                            data-length="40" required>
-                            {{location_id.name}}
-                        </textarea>
+                        <textarea id="location_name" name="location_name" class="materialize-textarea" data-length="40"
+                            required> {{location_id.name}}</textarea>
                         <label for="location_name"></label>
                     </div>
                 </div>
@@ -28,7 +37,8 @@
                             <h5>Campsite Description</h5>
                             <div class="input-field col s12">
                                 <textarea id="location_description" name="location_description"
-                                    class="materialize-textarea" data-length="240">{{location_id.description}}</textarea>
+                                    class="materialize-textarea"
+                                    data-length="400"> {{location_id.description}}</textarea>
                                 <label for="location_description"></label>
                             </div>
                         </div>
@@ -52,18 +62,17 @@
                         <label for="1">☆</label>
                     </div>
                 </div>
-                <div class="row" id="upload">
-                    Picture File:<input id="media" name="file" type="file" value="{{location_id.file}}"/>{{location_id.file}}
-                </div>
             </div>
             <!-- map input area -->
-            <div class="select-map-area col s6" onload="initUserMap()">
+            <div class="select-map-area col s12 m6" onload="initUserMap()">
                 <h5>Select location on map</h5>
                 <div id="add_location_map"></div>
                 <div>
-                    <input type="text" name="lat" id="lat" readonly="yes" value="{%if location_id %}{{location_id.location.coordinates[1]}}{% endif %}" required>
+                    <input type="text" name="lat" id="lat" readonly="yes"
+                        value="{%if location_id %}{{location_id.location.coordinates[1]}}{% endif %}" required>
                     <label for="lat">Latitude</label>
-                    <input type="text" name="lng" id="lng" readonly="yes" value="{%if location_id %}{{location_id.location.coordinates[0]}}{% endif %}" required>
+                    <input type="text" name="lng" id="lng" readonly="yes"
+                        value="{%if location_id %}{{location_id.location.coordinates[0]}}{% endif %}" required>
                     <label for="lng">Longitude</label>
                 </div>
             </div>
@@ -74,18 +83,14 @@
             </div>
         </div>
     </form>
+  
 
 </div>
 
 {% endblock%}
 
 {% block scripts %}
-<script
-    src="{{user_location_api}}"
-    async>
+<script src="{{user_location_api}}" async>
 </script>
 
 {% endblock %}
-
-
-
