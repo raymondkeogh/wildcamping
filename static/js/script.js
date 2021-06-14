@@ -11,14 +11,14 @@ $(document).ready(function () {
 
 
 document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.tooltipped');
-    var instances = M.Tooltip.init(elems, options);
+    let elems = document.querySelectorAll('.tooltipped');
+    let instances = M.Tooltip.init(elems, options);
   });
 
 
       
-var add_location_map;
-var marker2 = false;
+let add_location_map;
+let marker2 = false;
 // Second map for add_location_map window
 // Created a second function as initializing the maps in 
 // one func resulted in DOM errors and no maps display
@@ -34,7 +34,7 @@ function initUserMap() {
 
     google.maps.event.addListener(add_location_map, 'click', function (event) {
         //Get the location that the user clicked.
-        var clickedLocation = event.latLng;
+        let clickedLocation = event.latLng;
 
         //If the marker hasn't been added
         if (marker2 === false) {
@@ -60,7 +60,7 @@ function initUserMap() {
 
 function markerLocation() {
     //Get location.
-    var currentLocation = marker2.getPosition();
+    let currentLocation = marker2.getPosition();
     //Add lat and lng values to a field that we can save.
     document.getElementById('lat').value = currentLocation.lat(); //latitude
     document.getElementById('lng').value = currentLocation.lng(); //longitude
@@ -94,11 +94,11 @@ document.querySelector("form").addEventListener("submit", (event) => {
 
 // Draw map and add markers based on mongodb query results
 function searchResultMap() {
-    var locationsString = $('#search-coordinates').text()
-    var nLocationsString = locationsString.replace(",]}", "]}");
-    var locationsObj = JSON.parse(nLocationsString);
-    var locations = locationsObj.coordinates;
-    var loclen = locations.length;
+    let locationsString = $('#search-coordinates').text()
+    let nLocationsString = locationsString.replace(",]}", "]}");
+    let locationsObj = JSON.parse(nLocationsString);
+    let locations = locationsObj.coordinates;
+    let loclen = locations.length;
     centerLat = locations[Math.floor(loclen / 2)].lat;
     centerLng = locations[Math.floor(loclen / 2)].lng;
 
@@ -108,18 +108,18 @@ function searchResultMap() {
         mapTypeId: 'roadmap'
     });
 
-    var coordinates = {
+    let coordinates = {
         lat: 40.785845,
         lng: -74.020496
     };
 
-    var infowindow =  new google.maps.InfoWindow({
+    let infowindow =  new google.maps.InfoWindow({
 		content: ''
 	});
 
-    var contentString = 
+    let contentString = 
     locations.forEach(function (feature) {
-        var marker = new google.maps.Marker({
+        let marker = new google.maps.Marker({
             title: feature.name,
             position: {
                 "lat": feature.lat,
@@ -138,16 +138,9 @@ function searchResultMap() {
     });
     // figuure out how to add triple quotes in above bindinfowindow
     // "<a href=\"{{ url_for('view_location', location_id="+ feature._id +")}}\">" +
-
-   
-  
-    
-   
-
-
     // function mark_pins(trucks) {
-    //     var geocoder = new google.maps.Geocoder();
-    //     var markersArray = [];
+    //     let geocoder = new google.maps.Geocoder();
+    //     let markersArray = [];
 
 
     //     for (i = 0; i < loclen; i++) {
@@ -156,7 +149,7 @@ function searchResultMap() {
     //             'address': trucks[i]['address']
     //         }, function (results, status) {
     //             if (status == google.maps.GeocoderStatus.OK) {
-    //                 var marker = new google.maps.Marker({
+    //                 let marker = new google.maps.Marker({
     //                     map: map,
     //                     position: results[0].geometry.location
     //                 });
