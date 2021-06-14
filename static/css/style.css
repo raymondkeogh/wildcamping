@@ -260,6 +260,15 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     position:relative;
 }
 
+new-file-upload {
+    border: 1px solid #ccc;
+    color: white;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
 .flashes h4 {
     line-height: 2;
 }
@@ -302,8 +311,9 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     padding: 0; 
 }
 
-.search-results-map{
+.search-results-map #map{
     min-height: calc(100vh - 260px);
+    border-radius: 15px;
 }
 
 .search-results-map .col{
@@ -327,6 +337,12 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .index-map-section #map {
     height: 300px;
     border-radius: 15px;
+}
+
+.view-more {
+   margin: 20px;
+   border-radius: 15px;
+
 }
 
 .like-button {
@@ -405,6 +421,10 @@ input[type="file"] {
     padding: 20px;
 }
 
+.locations {
+    border-radius: 20px;
+}
+
 
 .profile-posts-header {
     display: flex;
@@ -436,10 +456,18 @@ input[type="file"] {
 }
 
 .location-view img {
-    height: 100%;
+    height: 300px;
+    object-fit: cover;
+    overflow: hidden;
     width:100%;
 }
 
 .location-view .search-results-map{
     height: 300px;
+}
+
+.counter-value {
+    text-align: center;
+    margin: 10px;
+    font-size: 1.4em
 }

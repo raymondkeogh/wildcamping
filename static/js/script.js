@@ -97,13 +97,10 @@ function searchResultMap() {
     var locationsString = $('#search-coordinates').text()
     var nLocationsString = locationsString.replace(",]}", "]}");
     var locationsObj = JSON.parse(nLocationsString);
-    console.log(locationsString);
     var locations = locationsObj.coordinates;
     var loclen = locations.length;
-  
     centerLat = locations[Math.floor(loclen / 2)].lat;
     centerLng = locations[Math.floor(loclen / 2)].lng;
-
 
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 8,
@@ -119,6 +116,7 @@ function searchResultMap() {
     var infowindow =  new google.maps.InfoWindow({
 		content: ''
 	});
+
     var contentString = 
     locations.forEach(function (feature) {
         var marker = new google.maps.Marker({
