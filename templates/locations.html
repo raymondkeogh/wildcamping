@@ -28,6 +28,9 @@
     <div class="col s12">
         <div class="search_count center">
                 <h5>Search Results: {{search_count}}</h5>
+                {% if search_count == 0 %}
+                <p>You can improve your results by being more specific, try adding the County, Post Code or Country to your search</p>
+                {% endif %}
                 </Search>
         </div>
         <div class="col s12 m6">
@@ -69,20 +72,20 @@
                                     <span><i class="fas fa-trash-alt"></i></span></a>
                             </div>
                             {% endif %}
-
-                            <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
-                            <div class="location_longlat"> Longitude: {{ record.location.coordinates[0] }}<br>
-                                Latitude: {{record.location.coordinates[1] }}</div>
+                            <h5 class="location_name">{{ record.name.capitalize() }}</h5><br>
+                            <div class="location_longlat"><strong>Longitude:</strong>  {{ record.location.coordinates[0]|round(3)  }}<br>
+                                <strong>Latitude:</strong> {{record.location.coordinates[1]|round(3)  }}</div>
                             <br>
+
+                           
                             <strong>Rating: </strong>
                             {% for x in range(1, record.rating | int) %}
                             <span class="fa fa-star checked"></span>
                             {% endfor %}
                             <br><br>
-                            <strong>Description:</strong>
                             <p class="description-ellipsis">{{ record.description.capitalize() }}</p><br>
-                            <br>
                             <strong>Posted by:</strong> {{ record.posted_by.capitalize()}}<br>
+                            <a href="{{ url_for('view_location', location_id=record._id )}}">More info</a>
 
                         </div>
                         <!-- If user is logged in and has liked the item  -->
@@ -104,7 +107,7 @@
                             <span class="like-button-disabled">&#10084;</span></a>
                         {% endif %}
                         <div class="col s6 campsite-pic"><img src="{{record.file}}" alt=""></div>
-                        <a href="{{ url_for('view_location', location_id=record._id )}}">More info</a>
+                      
                     </div>
                     {% endfor %}
                 </div>
