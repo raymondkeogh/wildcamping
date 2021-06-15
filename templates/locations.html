@@ -22,39 +22,43 @@
     </div>
 </li>
 {% endblock %}
+
 {% block content %}
-<div>
-    <div class="row search-results">
-        <div class="row search_count center"><h5>Search Results: {{search_count}}</h5></Search> </div>
-        <div class="col s12 l6">
-            <!-- map window -->
-            <div class="center-align search-results-map">
-                <div id="map" onload="searchResultMap()"></div>
-            </div>
-            <!-- pass coordinates from python to script in order to draw map from pymongo query -->
-            <div id="search-coordinates" style="display: none">
-                { "coordinates":[
-                {% for location in nearpoints %}
-                {
-                "lat": {{location.location.coordinates[1]}},
-                "lng": {{location.location.coordinates[0]}},
-                "description": "{{location.description}}",
-                "file": "{{location.file}}",
-                "name": "{{location.name}}" },{% endfor %}]}
-            </div>
+<div class="row search-results">
+    <div class="col s12">
+        <div class="search_count center">
+                <h5>Search Results: {{search_count}}</h5>
+                </Search>
         </div>
-        <div class="col m12 l6">
-            <!-- database output -->
-            <div class="locations">
-                <!-- use .rewind() to allow nearpoints cursor to be used again for second loop -->
-                <div style="display: none">{{ nearpoints.rewind() }}
+        <div class="col s12 m6">
+                <!-- map window -->
+                <div class="center-align search-results-map">
+                    <div id="map" onload="searchResultMap()"></div>
                 </div>
-                <!-- https://stackoverflow.com/questions/7537439/how-to-increment-a-variable-on-a-for-loop-in-jinja-template -->
-                
-                {% for record in nearpoints %}
-                <div class="row place-card">
-                    <div class="col s6">
-                        <a href="{{ url_for('view_location', location_id=record._id )}}">
+                <!-- pass coordinates from python to script in order to draw map from pymongo query -->
+                <div id="search-coordinates" style="display: none">
+                    { "coordinates":[
+                    {% for location in nearpoints %}
+                    {
+                    "lat": {{location.location.coordinates[1]}},
+                    "lng": {{location.location.coordinates[0]}},
+                    "description": "{{location.description}}",
+                    "file": "{{location.file}}",
+                    "name": "{{location.name}}" },{% endfor %}]}
+                </div>
+            </div>
+            <div class="col s12 m6">
+                <!-- database output -->
+                <div class="locations">
+                    <!-- use .rewind() to allow nearpoints cursor to be used again for second loop -->
+                    <div style="display: none">{{ nearpoints.rewind() }}
+                    </div>
+                    <!-- https://stackoverflow.com/questions/7537439/how-to-increment-a-variable-on-a-for-loop-in-jinja-template -->
+
+                    {% for record in nearpoints %}
+                    <div class="row place-card">
+                        <div class="col s6">
+
                             {% if session.user in record.posted_by %}
                             <div>
                                 <a href="{{ url_for('edit_location', location=record._id) }}"
@@ -65,6 +69,7 @@
                                     <span><i class="fas fa-trash-alt"></i></span></a>
                             </div>
                             {% endif %}
+
                             <div class="location_name">Name: {{ record.name.capitalize() }}</div><br>
                             <div class="location_longlat"> Longitude: {{ record.location.coordinates[0] }}<br>
                                 Latitude: {{record.location.coordinates[1] }}</div>
@@ -74,39 +79,42 @@
                             <span class="fa fa-star checked"></span>
                             {% endfor %}
                             <br><br>
-                            <strong>Description:</strong> {{ record.description.capitalize() }}<br>
+                            <strong>Description:</strong>
+                            <p class="description-ellipsis">{{ record.description.capitalize() }}</p><br>
                             <br>
                             <strong>Posted by:</strong> {{ record.posted_by.capitalize()}}<br>
-                        </a>
+
+                        </div>
+                        <!-- If user is logged in and has liked the item  -->
+                        {% if session.user in record.liked_by %}
+
+                        <span class="like-count">{{record.liked_count}}</span>
+                        <a href="{{ url_for('likes', location_id=record._id, action='unlike') }}" class="like-button">
+                            <span class="liked-button">&#10084;</span></a>
+                        <!-- If user is logged in and hasn't liked the item -->
+                        {% elif session.user %}
+                        <span class="like-count">{{record.liked_count}}</span>
+                        <a href="{{  url_for('likes', location_id=record._id, action='like') }}" class="like-button">
+                            <span class="like-button">&#10084;</span></a>
+                        <!-- If user hasn't logged in -->
+                        {% else %}
+                        <span class="like-count">{{record.liked_count}}</span>
+                        <a class="like-button tooltipped" data-position="top"
+                            data-tooltip="Sign In or Sign Up to like an item">
+                            <span class="like-button-disabled">&#10084;</span></a>
+                        {% endif %}
+                        <div class="col s6 campsite-pic"><img src="{{record.file}}" alt=""></div>
+                        <a href="{{ url_for('view_location', location_id=record._id )}}">More info</a>
                     </div>
-                    <!-- If user is logged in and has liked the item  -->
-                    {% if session.user in record.liked_by %}
-                    
-                    <span class="like-count">{{record.liked_count}}</span>
-                    <a href="{{ url_for('likes', location_id=record._id, action='unlike') }}" class="like-button">
-                    <span class="liked-button">&#10084;</span></a>
-                    <!-- If user is logged in and hasn't liked the item -->
-                    {% elif session.user %}
-                    <span class="like-count">{{record.liked_count}}</span>
-                    <a href="{{  url_for('likes', location_id=record._id, action='like') }}" class="like-button">
-                        <span class="like-button">&#10084;</span></a>
-                    <!-- If user hasn't logged in -->
-                    {% else %}
-                    <span class="like-count">{{record.liked_count}}</span>
-                    <a class="like-button tooltipped" data-position="top"
-                        data-tooltip="Sign In or Sign Up to like an item">
-                        <span class="like-button-disabled">&#10084;</span></a>
-                    {% endif %}
-                    <div class="col s6 campsite-pic"><img src="{{record.file}}" alt=""></div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
             </div>
         </div>
-
     </div>
-    {% endblock%}
+</div>
+{% endblock%}
 
-    {% block scripts %}
-    <script src="{{ location_api }}" async>
-    </script>
-    {% endblock %}
+{% block scripts %}
+<script src="{{ location_api }}" async>
+</script>
+{% endblock %}

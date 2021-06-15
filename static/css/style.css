@@ -107,6 +107,13 @@ nav .brand-logo{
     overflow-x: hidden;
 }
 
+.description-ellipsis {
+    white-space: nowrap; 
+    width: 95%; 
+    overflow: hidden;
+    text-overflow: ellipsis; 
+  }
+
 .locations-row .col {
     padding: 0;
 }
@@ -118,21 +125,32 @@ nav .brand-logo{
 .location-title {
     font-size: 20px;
 }
-.campsite-pic-upload {
+
+.campsite-pic img {
+    height: 196px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
     position: relative;
 }
 
-.campsite-pic img, .campsite-pic-upload img{
+.campsite-pic-upload img{
     height: 150px;
     width: 100%;
-    margin-top: 25px;
     object-fit: cover;
     border-radius: 15px;
+    position: relative;
+    margin-top: 20px;
 }
+
 
 .topspots .top-spot-item-card .col{
     height: 400px;
     width: 300px;
+}
+
+.top-spot-item-card img {
+    height: 122px;
 }
 
 .view-more {
@@ -143,6 +161,18 @@ nav .brand-logo{
 /* Profile page */
 .user-bio {
     height: 180px;
+}
+
+#placeholder{
+    height: 150px;
+    width: 150px;
+    position: relative;
+}
+
+.no-content-banner h6{
+    background-color: #193954c9;
+    border-radius: 15px;
+    padding: 20px;
 }
 
 .empty-profile {
@@ -165,7 +195,6 @@ nav .brand-logo{
 
 .profile-posts .place-card {
     height: 300px;
-    overflow-y: scroll;
 }
 
 
@@ -177,9 +206,12 @@ nav .brand-logo{
     margin-top:20px;
 }
 
-#user_profile .custom-file-upload{   
-        bottom: 20px;
-        right: 30px;
+#user_profile .custom-file-upload{ 
+    position: absolute;
+    bottom: 2px;
+    right: 19px;
+    background-color: #00000061;
+    border-radius: 15px;
 }
 
 .fa-edit {
@@ -208,6 +240,21 @@ nav .brand-logo{
     font-size: 35px;
 }
 
+
+
+/* Login page */
+.card-panel {
+    width: 600px;
+    border-radius: 15px;
+    margin: auto;
+}
+
+.orange.darken-4 {
+    border-radius: 15px;
+    width: 200px;
+}
+
+
 /* Edit-profile page */
 .edit-profile-inputs {
     background-color: white;
@@ -217,23 +264,11 @@ nav .brand-logo{
     margin-top: 20px;
 }
 
-.profile-picture {
-    height: 100px;
-    width: 100px;
-    overflow:hidden;
-    position: relative;
-}
-
-.profile-picture img{
-    height:100%;
-}
-
-.profile-picture i {
-    position:absolute;
-    bottom: 5px;
-    right: 5px;
-    color:white;
-    font-size: 20px;
+.profile-pic-upload img{
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 15px;
 }
 
 #bio, .bio{
@@ -358,6 +393,7 @@ new-file-upload {
 .search-results-map #map{
     min-height: calc(100vh - 260px);
     border-radius: 15px;
+    margin-top: 5px;
 }
 
 .search-results-map .col{
@@ -443,8 +479,8 @@ input[type="file"] {
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
-    right: 10px;
-    top: 15px;  
+    right: 58px;
+    bottom: 16px;
 }
 
 .delete-button  .fa-trash-alt{
@@ -457,8 +493,8 @@ input[type="file"] {
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
-    right: 45px;
-    top: 15px;
+    right: 100px;
+    bottom: 15px;
 }
 
 .locations {
