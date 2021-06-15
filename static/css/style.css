@@ -15,9 +15,19 @@ nav,
     background-color: transparent;
 }
 
-.nav-wrapper {
-    margin: 5px;
+nav .brand-logo, nav .brand-logo i {
+    font-size: 1.6rem;
+    float:none;
+    margin: 0;
 }
+nav .brand-logo{
+    margin-left:10px;
+}
+
+.nav-wrapper {
+    background-color: #193954;
+}
+
 
 #map{
     height: calc(100vh - 100px);
@@ -26,7 +36,7 @@ nav,
 }
 
 
-.location_name {
+.location-name {
     font-size: 20px;
 }
 
@@ -127,11 +137,11 @@ nav,
     width: 300px;
 }
 
-.user_bio {
+.user-bio {
     height: 180px;
 }
 
-.empty_profile {
+.empty-profile {
     height: 100px;
     width: 100px;
     border: 1px solid black;
@@ -145,7 +155,7 @@ nav,
     margin:auto;
 }
 
-.profile_header span{
+.profile-header span{
     font-size: 30px;  
 }
 
@@ -155,10 +165,12 @@ nav,
 }
 
 
-.user_profile .profile_card {
+#user_profile {
     background-color: white;
     color: black;
     padding: 30px;
+    border-radius: 15px;
+    margin-top:20px;
 }
 
 .fa-edit {
@@ -167,28 +179,28 @@ nav,
 }
 
 
+/* Edit-profile page */
 
-/* Edit_profile page */
-
-.edit_profile_inputs {
+.edit-profile-inputs {
     background-color: white;
     border-radius: 15px;
     padding: 15px;
     color: black;
+    margin-top: 20px;
 }
 
-.profile_picture {
+.profile-picture {
     height: 100px;
     width: 100px;
     overflow:hidden;
     position: relative;
 }
 
-.profile_picture img{
+.profile-picture img{
     height:100%;
 }
 
-.profile_picture i {
+.profile-picture i {
     position:absolute;
     bottom: 5px;
     right: 5px;
@@ -203,7 +215,7 @@ nav,
 }
 
 
-/* Add_location page */
+/* Add-location page */
 
 .fa-star:before {
     color: #ff8e3d;
@@ -254,10 +266,9 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     border-radius: 15px;
 }
 
-#location_name {
+#location_name { 
     background-color: white;
     border-radius: 15px;
-
 }
 
 .add_location_inputs {
@@ -266,6 +277,7 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     min-height: 800px;
     border-radius: 15px;
     position:relative;
+    margin-top:20px;
 }
 
 new-file-upload {
@@ -329,9 +341,6 @@ new-file-upload {
     padding: 0; 
 }
 
-.fa-campground {
-    font-size: 25px;
-}
 .fa-search:before {
     position: absolute;
     top: 24px;
@@ -353,6 +362,14 @@ new-file-upload {
 
 }
 
+.like-count {
+    position: absolute;
+    color: #888;
+    font-size: 1.1em;
+    right: 50px;
+    bottom: 12px;
+}
+
 .like-button {
     align-self: center;
     position: absolute;
@@ -370,6 +387,15 @@ new-file-upload {
 .liked-button {
     color: #e2264d;
     font-size: 1.4em;
+    align-self: center;
+    position: absolute;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    right: 10px;
+    bottom: 2px;
 }
 
 
@@ -395,7 +421,6 @@ input[type="file"] {
     align-self: center;
     position: absolute;
     color: #888;
-  
     font-size: 1.3em;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -404,7 +429,6 @@ input[type="file"] {
     cursor: pointer;
     right: 10px;
     top: 15px;  
-
 }
 
 .delete-button  .fa-trash-alt{
@@ -419,14 +443,6 @@ input[type="file"] {
     cursor: pointer;
     right: 45px;
     top: 15px;
-}
-
-
-.location-view {
-    background-color: white;
-    color:black;
-    border-radius: 15px;
-    padding: 20px;
 }
 
 .locations {
@@ -455,7 +471,7 @@ input[type="file"] {
 }
 
 .profile-stats{
-    font-size:20px;
+    font-size:16px;
 }
 
 .fa-plus-square:before {
@@ -467,8 +483,14 @@ input[type="file"] {
     width:300px;
 }
 
+
 .location-view {
+    background-color: white;
+    color:black;
+    border-radius: 15px;
+    padding: 20px;
     position:relative;
+    margin-top:20px;
 }
 
 .location-view #map {

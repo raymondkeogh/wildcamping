@@ -35,9 +35,20 @@
                         <span class="fa fa-star checked"></span>
                         {% endfor %}</div>
                 </div>
+                
             </div>
         </div>
+        <div class="location-popularity">{{location_id.liked_count}} 
+            {% if location_id.liked_count > 1 %}
+                Users have liked this location
+            {% elif location_id.liked_count ==1 %}
+                User has liked this location
+            {% else %}
+                Likes so far!
+            {% endif %}
+            </div>
         {% if session.user in location_id.liked_by %}
+      
                      <a href="{{ url_for('likes', location_id=location_id._id, action='unlike') }}" class="like-button">
                          <span class="liked-button">&#10084;</span></a>
                      <!-- If user is logged in and hasn't liked the item -->
