@@ -2,24 +2,50 @@
 
 {% block styles %}
 {% endblock %}
+{% block search %}
+<li>
+    <div class="center row">
+        <div class="col s12 ">
+            <div class="row" id="topbarsearch">
+                <div class="searchBar">
+                    <form role="form" method='POST' action="{{url_for('get_locations')}}">
+                        <div class="input-field col s6 s12">
+
+                            <input id="search" type="search" name="search" placeholder="Search locations" required>
+
+                            <label class="label-icon" for="search"></label><button type="submit" class="btn btn-default"
+                                alt="search button"><i class="fas fa-binoculars"></i></button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</li>
+{% endblock %}
 
 {% block content %}
 <div class="container">
     <div class="row " id="user_profile">
         <!-- Text input area -->
-        <div class="col s12 m6">
+        <div class="col s12 m3">
             <form method="POST" action="{{ url_for('upload_image', location=user._id)}}" id="user_location_image" name="user_location_image" value="user_location_image"
             enctype="multipart/form-data">
-            <div class="row campsite-pic-upload col s12">
-                <img src="{{ user.file }}" alt="item image" class="card-image">
-                <label for="media" class="custom-file-upload">
-                <i class="fas fa-upload"></i>Upload Image</label>
-                </label>
-                <input id="media" name="file" type="file" onchange="form.submit()"value="{{user.file}}"/>
+            <div class="profile-pic-upload">
+                <div id="placeholder">
+                {% if (user.file) %}
+                    <img src="{{ user.file }}" alt="item image" class="card-image">
+                    {% else %}
+                    <img src="{{ url_for('static', filename='images/placeholder.png') }}" alt="Profile image">
+                    {% endif %}
+                    <label for="media" class="custom-file-upload">
+                    <i class="fas fa-upload"></i>Upload Image</label>
+                    </label></div>
+                    <input id="media" name="file" type="file" onchange="form.submit()"value="{{user.file}}"/>
                 </div> 
         </form>
         </div>
-        <div class="col s12 m6" >
+        <div class="col s12 m9" >
             <h5>{{ user.username.capitalize() }}'s Profile </h5>
             <div class="profile-stats">
             {% for num in popularity%}
@@ -32,7 +58,11 @@
     </div>
 
     <div class="row locations-row">
-        <h5>Your Posts (<strong>{{posted_count}}</strong>)</h5>
+        <h5>Your Posts 
+            {% if posted_count %}
+            (<strong>{{posted_count}}</strong>)
+            {% endif %}
+        </h5>
         <hr>
         {% for location in posted_locations %}
         <a href="{{ url_for('view_location', location_id=location._id )}}">
@@ -52,7 +82,9 @@
                 <div class="campsite-description">
                     <span class="location-title">{{ location.name }}</span>
                     <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
-                    <p>{{ location.description}}</p>
+                    <p class="description-ellipsis">
+                        {{ location.description}}
+                    </p>
                     <p><strong>Rating: </strong>
                         {% for x in range(1, location.rating | int) %}
                         <span class="fa fa-star checked"></span>
@@ -61,14 +93,19 @@
             </div>
         </div>
         </a>
+       
         {% else %}
-        <h6>No posts yet! <a href="{{url_for('user_location')}}" alt="add new location">Add one here</a></h6>
+        <div class="no-content-banner">
+        <h6>No posts yet! <a href="{{url_for('user_location')}}" alt="add new location">Add one here&nbsp;  <i class="fas fa-plus-square"></i> </a></h6></div>
         {% endfor %}
     </div>
-
-
     <div class="row locations-row">
-        <h5>Places you've liked (<strong>{{my_liked_count}}</strong>) </h5>
+
+        <h5>Places you've liked
+            {% if posted_count %}
+            (<strong>{{my_liked_count}}</strong>)
+            {% endif %}
+        </h5>
         <hr>
         {% for location in liked_locations %}
         <a href="{{ url_for('view_location', location_id=location._id )}}">
@@ -81,7 +118,8 @@
                 <div class="campsite-description">
                     <span class="location-title">{{ location.name }}</span>
                     <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
-                    <p>Description: {{ location.description}}</p>
+                    <p class="description-ellipsis">
+                    {{ location.description}}</p>
                     <p><strong>Rating: </strong>
                         {% for x in range(1, location.rating | int) %}
                         <span class="fa fa-star checked"></span>
@@ -104,9 +142,9 @@
         </div>
         </a>
         {% else %}
+        <div class="no-content-banner">
         <h6>No likes yet, <a href="{{ url_for('get_locations')}}"> browse </a> some locations and see what tickles your fancy 
-        
-       </h6>
+       </h6></div> 
         
         {% endfor %}
     </div>
