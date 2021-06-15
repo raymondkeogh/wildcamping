@@ -15,7 +15,7 @@ $(document).ready(function () {
 
 document.addEventListener('DOMContentLoaded', function() {
     let elems = document.querySelectorAll('.tooltipped');
-    let instances = M.Tooltip.init(elems, options);
+    let instances = M.Tooltip.init(elems);
   });
 
 
@@ -133,7 +133,8 @@ function searchResultMap() {
         // add an event listener for this marker
 		bindInfoWindow(marker, map, infowindow,
             "<div class='info-window'>" +
-            "<div class='campsite-pic'><img src=" + feature.file + "><h6>" + feature.name + "</h6>" 
+            "<div class='campsite-pic'><img src=" + feature.file + "><h6>" + 
+            feature.name + "</h6>" 
              + "<br>" 
              + "<p>" + feature.description + "</p>" +
             "</div>"
@@ -144,8 +145,6 @@ function searchResultMap() {
     // function mark_pins(trucks) {
     //     let geocoder = new google.maps.Geocoder();
     //     let markersArray = [];
-
-
     //     for (i = 0; i < loclen; i++) {
     //         // iterate each address
     //         geocoder.geocode({
@@ -204,6 +203,6 @@ function validateForm() {
 
 
 
-google.maps.event.addDomListener(window, 'load', initialize);
+// google.maps.event.addDomListener(window, 'load', initialize);
 
 

@@ -476,7 +476,12 @@ input[type="file"] {
 
 .info-window {
     color: black;
-    width:300px;
+    width:150px; 
+}
+
+.info-window img{
+    height: 60px;
+    margin-top: 2px;
 }
 
 .location-view {

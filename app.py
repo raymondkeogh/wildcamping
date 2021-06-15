@@ -281,9 +281,6 @@ def upload_image(location):
             app.logger.info(type(upload_result))
         if (request.referrer == profile_request):
             mongo.db.users.update_one({"_id": ObjectId(location)}, {"$set": {"file": upload_result["url"]}})
-            print("********************")
-            print("Winning!")
-            print("********************")
             return redirect(url_for("profile_page"))
         else:
             mongo.db.locations.update_one({"_id": ObjectId(location)}, {"$set": {"file": upload_result["url"]}})
