@@ -5,22 +5,34 @@
 
 {% block content %}
 <div class="container">
-    <div class="row edit_profile_inputs">
+    <div class="row " id="user_profile">
         <!-- Text input area -->
-        <div class="col s12">
-            <h4>{{ user.username.capitalize() }}'s Profile </h4>
+        <div class="col s12 m6">
+            <form method="POST" action="{{ url_for('upload_image', location=user._id)}}" id="user_location_image" name="user_location_image" value="user_location_image"
+            enctype="multipart/form-data">
+            <div class="row campsite-pic-upload col s12">
+                <img src="{{ user.file }}" alt="item image" class="card-image">
+                <label for="media" class="custom-file-upload">
+                <i class="fas fa-upload"></i>Upload Image</label>
+                </label>
+                <input id="media" name="file" type="file" onchange="form.submit()"value="{{user.file}}"/>
+                </div> 
+        </form>
+        </div>
+        <div class="col s12 m6" >
+            <h5>{{ user.username.capitalize() }}'s Profile </h5>
             <div class="profile-stats">
             {% for num in popularity%}
-            <p>Number of time your posts have been liked:  {{ num.sum}} </p>
-            <p>Post you've like:  {{my_liked_count}}</p>
-            <p>Locations posted:  {{posted_count}}</p>
+            <p>Number of times your posts have been liked: <strong>  {{ num.sum}}</strong> </p>
+            <p>Posts you've liked: <strong> {{my_liked_count}}</strong></p>
+            <p>Locations posted: <strong> {{posted_count}}</strong> </p>
             {% endfor%}
             </div>
         </div>
     </div>
 
     <div class="row locations-row">
-        <h4>Your Posts</h4>
+        <h5>Your Posts (<strong>{{posted_count}}</strong>)</h5>
         <hr>
         {% for location in posted_locations %}
         <a href="{{ url_for('view_location', location_id=location._id )}}">
@@ -40,7 +52,7 @@
                 <div class="campsite-description">
                     <span class="location-title">{{ location.name }}</span>
                     <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
-                    <p>Description: {{ location.description}}</p>
+                    <p>{{ location.description}}</p>
                     <p><strong>Rating: </strong>
                         {% for x in range(1, location.rating | int) %}
                         <span class="fa fa-star checked"></span>
@@ -56,7 +68,7 @@
 
 
     <div class="row locations-row">
-        <h4>Places you've liked </h4>
+        <h5>Places you've liked (<strong>{{my_liked_count}}</strong>) </h5>
         <hr>
         {% for location in liked_locations %}
         <a href="{{ url_for('view_location', location_id=location._id )}}">

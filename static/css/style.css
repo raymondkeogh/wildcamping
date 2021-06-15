@@ -8,6 +8,8 @@ body {
     background-attachment: fixed;
 }
 
+
+/* navbar */
 nav,
 .collapsible {
     box-shadow: none;
@@ -35,7 +37,6 @@ nav .brand-logo{
     margin:0px;
 }
 
-
 .location-name {
     font-size: 20px;
 }
@@ -54,8 +55,7 @@ nav .brand-logo{
 
 .input-field {
     display: inline-block;
-    position: relative;
-   
+    position: relative;  
 }
 
 .input-field button {
@@ -72,8 +72,7 @@ nav .brand-logo{
     padding: 0;
 }
 
-
-
+/* Homepage */
 .splash-page {
     background-color: rgba(255, 255, 255, 0.753) ;
     color: black;
@@ -92,7 +91,6 @@ nav .brand-logo{
     text-align: center;
     color: white;
 }
-
 
 .row .place-card{
     color: black;
@@ -137,6 +135,12 @@ nav .brand-logo{
     width: 300px;
 }
 
+.view-more {
+    margin: 20px;
+    border-radius: 15px;
+}
+
+/* Profile page */
 .user-bio {
     height: 180px;
 }
@@ -173,14 +177,38 @@ nav .brand-logo{
     margin-top:20px;
 }
 
+#user_profile .custom-file-upload{   
+        bottom: 20px;
+        right: 30px;
+}
+
 .fa-edit {
     font-size: 30px;  
     color:black;
 }
 
 
-/* Edit-profile page */
+.profile-posts-header {
+    display: flex;
+    align-items:center; 
+    position: relative;
+}
 
+.profile-posts-header i, .fa-plus-square:before  {
+    position: absolute;
+    right: 10px;
+    font-size: 35;
+}
+
+.profile-stats{
+    font-size:16px;
+}
+
+.fa-plus-square:before {
+    font-size: 35px;
+}
+
+/* Edit-profile page */
 .edit-profile-inputs {
     background-color: white;
     border-radius: 15px;
@@ -206,14 +234,12 @@ nav .brand-logo{
     right: 5px;
     color:white;
     font-size: 20px;
-
 }
 
 #bio, .bio{
     height: 180px;
     border: 1px solid black;
 }
-
 
 /* Add-location page */
 
@@ -324,8 +350,6 @@ new-file-upload {
     height: calc(100vh - 100px);
 }
 
-
-
 .search-results .col {
     margin: 0;
     padding: 0; 
@@ -354,12 +378,6 @@ new-file-upload {
 .index-map-section #map {
     height: 300px;
     border-radius: 15px;
-}
-
-.view-more {
-   margin: 20px;
-   border-radius: 15px;
-
 }
 
 .like-count {
@@ -397,8 +415,6 @@ new-file-upload {
     right: 10px;
     bottom: 2px;
 }
-
-
 
 /* https://stackoverflow.com/questions/572768/styling-an-input-type-file-button/25825731#25825731 */
 
@@ -458,31 +474,10 @@ input[type="file"] {
 }
 
 
-.profile-posts-header {
-    display: flex;
-    align-items:center; 
-    position: relative;
-}
-
-.profile-posts-header i, .fa-plus-square:before  {
-    position: absolute;
-    right: 10px;
-    font-size: 35;
-}
-
-.profile-stats{
-    font-size:16px;
-}
-
-.fa-plus-square:before {
-    font-size: 35px;
-}
-
 .info-window {
     color: black;
     width:300px;
 }
-
 
 .location-view {
     background-color: white;
@@ -513,7 +508,6 @@ input[type="file"] {
     margin: 10px;
     font-size: 1.4em
 }
-
 
 .help-message {
     background-color: white;

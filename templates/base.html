@@ -21,9 +21,12 @@
 
     <header>
         <!-- main nav bar -->
-        <nav>
+        <div class="navbar-fixed">
+        <nav> 
             <div class="nav-wrapper">
-                <a href="{{url_for('home_page')}}" class="brand-logo"><span></span>Wild </span><i class="fas fa-campground"></i><span> Camping</span></a>
+                <div class="brand-logo">
+                    <a href="{{url_for('home_page')}}"><span></span>Wild </span><i class="fas fa-campground"></i><span> Camping</span></a>
+                </div>
 
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 
@@ -44,7 +47,7 @@
                 </ul>
             </div>
         </nav>
-
+    </div>
         <!-- mobile nav bar -->
         <ul class="sidenav" id="mobile-demo">
             <li><a href="{{url_for('home_page')}}">Home</a></li>

@@ -6,6 +6,9 @@ $(document).ready(function () {
     $('input#input_text, textarea#location_description').characterCounter();
     $('input#input_text, textarea#location_name').characterCounter();
     $('.tooltipped').tooltip();
+    setTimeout(function() {
+        $('.flashes').fadeOut('slow');
+    }, 4000);
 
 });
 
