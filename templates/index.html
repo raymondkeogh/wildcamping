@@ -30,30 +30,27 @@
         </div>
         <div class="col l6 s12">
             <a href="{{ url_for('view_location', location_id=locations[0]._id )}}">
-
                 <div class="place-card center">
                     <!-- Card Image -->
+                    {% for record in random_location%}
                     <div class="campsite-pic">
-                        <img src="{{ locations[0].file }}" alt="item image" class="card-image">
+                        <img src="{{record.file}}" alt="item image" class="card-image">
                     </div>
                     <div class="campsite-description">
-                        <span class="location-title">{{ locations[0].name }}</span>
-                        <p class="location_longlat"> {{ locations[0].location.coordinates }}</p>
-                        <p>Description: {{ locations[0].description}}</p>
+                        <p class="description-ellipsis">{{ record.description}}</p>
+                        
                         <p><strong>Rating: </strong>
-                            {% for x in range(1, locations[0].rating | int) %}
+                            {% for x in range(1, record.rating | int) %}
                             <span class="fa fa-star checked"></span>
                             {% endfor %}</p>
                     </div>
-
+                    {% endfor %}
                 </div>
             </a>
         </div>
-
     </section>
-
     <section class="index-map-section center-align row ">
-        <h2 class="center-align">Top Spots <i class="fas fa-fire-alt"></i></h2>
+        <h3 class="center-align top-spot-heading">Top Spots <i class="fas fa-fire-alt"></i></h3>
         <div class="col s12 m12 l12" id="map" onload="searchResultMap()"></div>
         <div id="search-coordinates" style="display: none">
             { "coordinates":[
@@ -92,8 +89,7 @@
                         </div>
                         <div class="campsite-description">
                             <span class="location-title">{{ location.name }}</span>
-                            <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
-                            <p>Description: {{ location.description}}</p>
+                            <p class="description-ellipsis">{{ location.description}}</p>
                             <p><strong>Rating: </strong>
                                 {% for x in range(1, location.rating | int) %}
                                 <span class="fa fa-star checked"></span>
@@ -118,10 +114,10 @@
             </div>
             {% endfor %}
         </div>
+        <div class="top-spot-footer">
         <a href="{{ url_for('get_locations')}}">
-            <div class="btn view-more right">View more
+            <div class="btn view-more center center-align">View more</div></a>
         </div>
-    </a>
     </section>
 </div>
 
