@@ -13,6 +13,7 @@
             <div id="map" onload="viewLocationMap()">
             </div>
         </div>
+        <!-- coordinates and deatils for map and infowindow -->
         <div id="search-coordinates" style="display: none">
             { "coordinates":[
             {
@@ -28,41 +29,44 @@
                 <h5>{{location_id.name}}</h5>
                 <div class="input-field col s12">
                     {{location_id.description}}
-                    <div>Latitude: {{location_id.location.coordinates[1]}}<br>
-                        Longitude: {{location_id.location.coordinates[0]}}</div>
+                    <div><strong>Latitude:</strong>  {{location_id.location.coordinates[1]}}<br>
+                        <strong>Longitude:</strong>  {{location_id.location.coordinates[0]}}</div>
                     <div><strong>Rating: </strong>
                         {% for x in range(1, location_id.rating | int) %}
                         <span class="fa fa-star checked"></span>
                         {% endfor %}</div>
+                        <div><strong>Posted by:</strong> {{location_id.posted_by}}</div>
                 </div>
-                
+
             </div>
         </div>
-        <div class="location-popularity">{{location_id.liked_count}} 
+
+        <!-- Display like count on location card -->
+        <div class="location-popularity">{{location_id.liked_count}}
             {% if location_id.liked_count > 1 %}
-                Users have liked this location
+            Users have liked this location
             {% elif location_id.liked_count ==1 %}
-                User has liked this location
+            User has liked this location
             {% else %}
-                Likes so far!
+            Likes so far!
             {% endif %}
-            </div>
+        </div>
+        <!-- Check if user has liked the location -->
         {% if session.user in location_id.liked_by %}
-      
-                     <a href="{{ url_for('likes', location_id=location_id._id, action='unlike') }}" class="like-button">
-                         <span class="liked-button">&#10084;</span></a>
-                     <!-- If user is logged in and hasn't liked the item -->
-                     {% elif session.user %}
-                     <a href="{{  url_for('likes', location_id=location_id._id, action='like') }}" class="like-button">
-                         <span class="like-button" >&#10084;</span></a>
-                     <!-- If user hasn't logged in -->
-                     {% else %}
-                     <a class="like-button tooltipped" data-position="top"
-                         data-tooltip="Sign In or Sign Up to like an item">
-                         <span class="like-button-disabled">&#10084;</span></a>
-                     {% endif %}
+
+        <a href="{{ url_for('likes', location_id=location_id._id, action='unlike') }}" class="like-button">
+            <span class="liked-button">&#10084;</span></a>
+        <!-- If user is logged in and hasn't liked the item -->
+        {% elif session.user %}
+        <a href="{{  url_for('likes', location_id=location_id._id, action='like') }}" class="like-button">
+            <span class="like-button">&#10084;</span></a>
+        <!-- If user hasn't logged in -->
+        {% else %}
+        <a class="like-button tooltipped" data-position="top" data-tooltip="Sign In or Sign Up to like an item">
+            <span class="like-button-disabled">&#10084;</span></a>
+        {% endif %}
     </div>
-    
+
 </div>
 </div>
 
