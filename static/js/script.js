@@ -271,10 +271,11 @@ if (fi.files.length > 0) {
         alert("File size too big, please upload a smaller file");
           return false;
       }
-  
+      
       document.getElementById('fp').innerHTML =
             document.getElementById('fp').innerHTML + '<br /> ' +
                 '<b>' + "File Size: " + Math.round((fsize / 1024)) + '</b> KB';
+      document.user_location_image.submit()
     }
 }
 }
