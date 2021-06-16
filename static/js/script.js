@@ -128,6 +128,7 @@ document.querySelector("form").addEventListener("submit", (event) => {
     const options = {
         method: "POST",
         body: formData,
+        fetch_format: auto
     };
 
     fetch("http://127.0.0.1:5000/upload", options)
@@ -148,7 +149,6 @@ function searchResultMap() {
     let locationsString = $('#search-coordinates').text()
     let firstString = locationsString.replace(/\s+/g,' ').trim();
     let nLocationsString = firstString.replace(",]}", "]}");
-    console.log(nLocationsString)
     let locationsObj = JSON.parse(nLocationsString);
     let locations = locationsObj.coordinates;
     let loclen = locations.length;
@@ -251,6 +251,32 @@ function validateForm() {
         alert("Please locate your campsite in the map window");
         return false;
     }
+}
+
+
+// File Size validation
+// https://www.encodedna.com/jquery/get-file-size-before-uploading-using-javascript-and-jquery.html
+
+function GetFileSize() {
+let fi = document.getElementById('media'); // GET THE FILE INPUT.
+
+// VALIDATE OR CHECK IF ANY FILE IS SELECTED.
+if (fi.files.length > 0) {
+    // RUN A LOOP TO CHECK EACH SELECTED FILE.
+    for (let i = 0; i <= fi.files.length - 1; i++) {
+        let fsize = fi.files.item(i).size; // THE SIZE OF THE FILE.
+      console.log(fsize)
+
+      if (fsize >= 10485760) {
+        alert("File size too big, please upload a smaller file");
+          return false;
+      }
+  
+      document.getElementById('fp').innerHTML =
+            document.getElementById('fp').innerHTML + '<br /> ' +
+                '<b>' + "File Size: " + Math.round((fsize / 1024)) + '</b> KB';
+    }
+}
 }
 
 // google.maps.event.addDomListener(window, 'load', initialize);
