@@ -301,7 +301,8 @@ def upload_image(location):
             upload_result = cloudinary.uploader.upload(file_to_upload)
             app.logger.info(upload_result)
             app.logger.info(type(upload_result))
-        if (request.referrer == profile_request):
+        if (request.referrer == profile_request or
+                request.referrer == profile_request_heroku):
             mongo.db.users.update_one({"_id": ObjectId(location)}, {
                                       "$set": {"file": upload_result["url"]}})
 
