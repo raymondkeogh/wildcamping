@@ -45,10 +45,11 @@ cloudinary.config(
 @app.route("/home_page")
 def home_page():
     locations = mongo.db.locations.find().limit(6)
+    location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=searchResultMap&libraries=&v=weekly"
     random_location = mongo.db.locations.aggregate(
         [{"$sample": {"size": 1}}])
     return render_template(
-        "index.html", random_location=random_location, locations=locations)
+        "index.html", random_location=random_location,location_api=location_api, locations=locations)
 
 # Search results page / locations.html
 
@@ -56,6 +57,7 @@ def home_page():
 @app.route("/get_locations", methods=["GET", "POST"])
 def get_locations():
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=searchResultMap&libraries=&v=weekly"
+
     locations = mongo.db.locations.find()
     # Code used to get coordinates from search address
     # https://developer.here.com/documentation/geocoding-search-api/dev_guide/topics/endpoint-geocode-brief.html
@@ -186,7 +188,10 @@ def logout():
 # Input new custom loctions for user
 @app.route("/user_location", methods=["GET", "POST"])
 def user_location():
-    user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
+    # user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=&v=weekly"
+
+
+    location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=places&v=weekly"
     user = mongo.db.users.find_one(
         {"username": session["user"]})
     location = request.args.get("location_id")
@@ -231,7 +236,7 @@ def user_location():
         return redirect(url_for("profile_page", user=user, location_id=db_location))
     else:
         return render_template(
-            "user_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
+            "user_location.html", location_id=db_location, user=user, location_api=location_api)
 
 
 # Take location_id and action from location cards and add like/unlike to db
@@ -272,14 +277,21 @@ def view_location(location_id):
 @app.route('/upload_image/<location>', methods=["GET", "POST"])
 def upload_image(location):
     profile_request = "https://8080-amethyst-crow-u769d91j.ws-eu09.gitpod.io/profile_page"
+    print("request referrer is >>>>>>>>>>>>>>>>>>>>>>" + request.referrer)
 
     if (request.referrer == profile_request):
         db_location = mongo.db.users.find_one({"_id": ObjectId(location)})
+        print("******************")
+        print("users update")
+        print("******************")
     else:
+        print("******************")
+        print("locations update")
+        print("******************")
         db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
     user = mongo.db.users.find_one(
         {"username": session["user"]})
-    user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
+    user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=&v=weekly"
     if request.method == "POST":
         # Upload file to Cloudinary
         app.logger.info('in upload route')
@@ -291,6 +303,7 @@ def upload_image(location):
         file_to_upload = request.files['file']
         app.logger.info('%s file_to_upload', file_to_upload)
         if file_to_upload:
+            print("*************File to upload**********")
             upload_result = cloudinary.uploader.upload(file_to_upload)
             app.logger.info(upload_result)
             app.logger.info(type(upload_result))
@@ -302,7 +315,9 @@ def upload_image(location):
         else:
             mongo.db.locations.update_one({"_id": ObjectId(location)}, {
                                           "$set": {"file": upload_result["url"]}})
-            return redirect(url_for("edit_location", location=location))
+            
+            return ('', 204)
+            # return redirect(url_for("edit_location", location=location))
 
     return render_template("edit_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
 
@@ -312,7 +327,10 @@ def upload_image(location):
 def edit_location(location):
     user = mongo.db.users.find_one(
         {"username": session["user"]})
-    user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initUserMap&libraries=&v=weekly"
+    # user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=&v=weekly"
+
+    location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=places&v=weekly"
+  
     db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
     if request.method == "POST":
         lat = float(request.form.get("lat"))
@@ -329,7 +347,7 @@ def edit_location(location):
         flash("Location Updated!")
         return redirect(url_for("profile_page"))
     else:
-        return render_template("edit_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
+        return render_template("edit_location.html", location_id=db_location, user=user, location_api=location_api)
 
 
 # 404 Page
