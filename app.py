@@ -268,7 +268,7 @@ def likes(location_id, action):
 def delete_post(location):
     user = session['user']
     mongo.db.locations.remove({"_id": ObjectId(location)})
-    return redirect(request.referrer)
+    return redirect(url_for("profile_page"))
 
 
 # Opens up location in its own window
@@ -283,17 +283,11 @@ def view_location(location_id):
 @app.route('/upload_image/<location>', methods=["GET", "POST"])
 def upload_image(location):
     profile_request = "https://8080-amethyst-crow-u769d91j.ws-eu09.gitpod.io/profile_page"
-    print("request referrer is >>>>>>>>>>>>>>>>>>>>>>" + request.referrer)
+    profile_request_heroku = "https://wild-camping.herokuapp.com/profile_page"
 
-    if (request.referrer == profile_request):
+    if (request.referrer == profile_request or request.referrer == profile_request_heroku):
         db_location = mongo.db.users.find_one({"_id": ObjectId(location)})
-        print("******************")
-        print("users update")
-        print("******************")
-    else:
-        print("******************")
-        print("locations update")
-        print("******************")
+    else: 
         db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
     user = mongo.db.users.find_one(
         {"username": session["user"]})
@@ -309,7 +303,6 @@ def upload_image(location):
         file_to_upload = request.files['file']
         app.logger.info('%s file_to_upload', file_to_upload)
         if file_to_upload:
-            print("*************File to upload**********")
             upload_result = cloudinary.uploader.upload(file_to_upload)
             app.logger.info(upload_result)
             app.logger.info(type(upload_result))
@@ -321,9 +314,7 @@ def upload_image(location):
         else:
             mongo.db.locations.update_one({"_id": ObjectId(location)}, {
                                           "$set": {"file": upload_result["url"]}})
-            
             return ('', 204)
-            # return redirect(url_for("edit_location", location=location))
 
     return render_template("edit_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
 

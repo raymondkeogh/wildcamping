@@ -8,13 +8,9 @@
 
 {% block content %}
 <div class=" container">
-    <section class="splash-page row">
+    <section class="splash-page row" id="splash-page">
         <div class="col l6 s12">
             <h3>Find and Share the Best Camping Locations</h3>
-            <a href="{{ url_for('get_locations')}}">
-                <h4>Explore!</h4>
-            </a>
-            <div class="row">
                 <div class="center-align ">
                     <!-- search bar -->
                     <div class="searchBar">
@@ -26,27 +22,26 @@
                         </form>
                     </div>
                 </div>
-            </div>
         </div>
-        <div class="col l6 s12">
-            <a href="{{ url_for('view_location', location_id=locations[0]._id )}}">
-                <div class="place-card center">
+        <div class="col l6 s12 card-container">
+            {% for record in random_location%}
+                <div class="card place-card center">
                     <!-- Card Image -->
-                    {% for record in random_location%}
+                    <a href="{{ url_for('view_location', location_id=record._id )}}">
                     <div class="campsite-pic">
                         <img src="{{record.file}}" alt="item image" class="card-image">
                     </div>
                     <div class="campsite-description">
                         <p class="description-ellipsis">{{ record.description}}</p>
-                        
                         <p><strong>Rating: </strong>
                             {% for x in range(0, record.rating | int) %}
                             <span class="fa fa-star checked"></span>
                             {% endfor %}</p>
                     </div>
-                    {% endfor %}
+                </a>
+                  
                 </div>
-            </a>
+                {% endfor %}
         </div>
     </section>
     <section class="index-map-section center-align row ">

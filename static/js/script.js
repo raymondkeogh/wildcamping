@@ -128,7 +128,6 @@ document.querySelector("form").addEventListener("submit", (event) => {
     const options = {
         method: "POST",
         body: formData,
-        fetch_format: auto
     };
 
     fetch("http://127.0.0.1:5000/upload", options)
@@ -226,26 +225,6 @@ function bindInfoWindow(marker, map, infowindow, html) {
 		infowindow.open(map, marker); 
 	}); 
 } 
-
-// Get previous rating from location record
-function getRating(){
-  let rating = document.getElementById('previous-rating').innerText;
-  document.getElementById(rating).checked = true;
-
-
-
-  if (document.querySelector('input[type="radio"]')) {
-    document.querySelectorAll('input[type="radio"]').forEach((elem) => {
-      elem.addEventListener("change", function(event) {
-        var item = event.target.value;
-        document.getElementById("previous-rating").innerHTML  = item
-      });
-    });
-  }
- 
-}
-getRating()
-
 
 function validateForm() {
 

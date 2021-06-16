@@ -60,9 +60,7 @@
                     <div class="row place-card">
                         <div class="col s6">
                             <h5 class="location_name">{{ record.name.capitalize() }}</h5><br>
-                            <div class="location_longlat"><strong>Longitude:</strong>  {{ record.location.coordinates[0]|round(3)  }}<br>
-                                <strong>Latitude:</strong> {{record.location.coordinates[1]|round(3)  }}</div>
-                            <br>
+                           
                             <strong>Rating: </strong>
                             {% for x in range(0, record.rating | int) %}
                             <span class="fa fa-star checked"></span>
@@ -70,8 +68,7 @@
                             <br><br>
                             <p class="description-ellipsis">{{ record.description.capitalize() }}</p><br>
                             <strong>Posted by:</strong> {{ record.posted_by.capitalize()}}<br>
-                            <a href="{{ url_for('view_location', location_id=record._id )}}">More info</a>
-
+                            <a class="waves-effect waves-light btn" href="{{ url_for('view_location', location_id=record._id )}}">More info</a>
                         </div>
                         <!-- If user is logged in and has liked the item  -->
                         {% if session.user in record.liked_by %}

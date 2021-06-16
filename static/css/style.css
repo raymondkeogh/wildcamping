@@ -1,5 +1,5 @@
 body {
-    background-image: url(../../static/images/background3.jpg);
+    background-image: url(../../static/images/background.png);
     background-size: cover;
     height: 100%;
     position: relative;
@@ -33,12 +33,6 @@ nav .brand-logo {
 }
 
 
-#map {
-    height: calc(100vh - 100px);
-    padding: 0px;
-    margin: 0px;
-}
-
 .location-name {
     font-size: 20px;
 }
@@ -51,13 +45,13 @@ nav .brand-logo {
     background-color: white;
     border-radius: 15px;
     height: 40px;
-    width: 300px;
-    margin: 10px
+    width: 255px;
+    position: relative;
+    margin: 10px;
 }
 
 .input-field {
     display: inline-block;
-    position: relative;
 }
 
 .input-field button {
@@ -74,15 +68,35 @@ nav .brand-logo {
     padding: 0;
 }
 
+@media screen and (max-width: 800px) {
+
+    #search {
+        background-color: white;
+        border-radius: 15px;
+        height: 40px;
+        width: 177px;
+        position: relative;
+        margin: 0;
+    }
+
+    #splash-page {
+        padding: 10px;
+    }
+}
+
 /* Homepage */
+
+
 .splash-page {
     background-color: rgba(255, 255, 255, 0.753);
     color: black;
+
     padding: 40px;
     margin-top: 40px;
     margin-bottom: 40px;
     border-radius: 15px;
     min-height: 400px;
+    text-align: center;
 }
 
 .splash-page h4 {
@@ -94,6 +108,27 @@ nav .brand-logo {
     color: white;
     box-shadow: 10px 8px 6px -6px black;
 }
+
+#splash-page .btn {
+    border-radius: 15px;
+    font-size: 1.4em;
+    margin-bottom: 19px;
+    width: 170px;
+}
+/* 
+.input-field button {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 40px;
+    width: 50px;
+    border-radius: 0 15px 15px 0;
+    padding: 0;
+    margin: 10px;
+} */
 
 .row .place-card {
     color: black;
@@ -205,13 +240,16 @@ nav .brand-logo {
     height: 300px;
 }
 
-
 #user_profile {
     background-color: white;
     color: black;
     padding: 30px;
     border-radius: 15px;
     margin-top: 20px;
+}
+
+#user_profile h5 {
+    color: #193954;
 }
 
 #user_profile .custom-file-upload {
@@ -242,6 +280,16 @@ nav .brand-logo {
     font-size: 24px;
 }
 
+@media screen and (max-width: 600px) {
+    #placeholder {
+        width: 100%;
+
+    }
+
+    #user_profile {
+        padding: 20px;
+    }
+}
 
 
 /* Login page */
@@ -350,6 +398,7 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     padding: 0;
 }
 
+
 new-file-upload {
     border: 1px solid #ccc;
     color: white;
@@ -358,6 +407,7 @@ new-file-upload {
     cursor: pointer;
     font-size: 20px;
 }
+
 
 .flashes h4 {
     line-height: 2;
@@ -394,12 +444,14 @@ new-file-upload {
 
 #pac-input {
     background-color: white;
-    margin-top: 9px;
+    margin: 15px;
     border-radius: 15px;
-    color: black
+    color: black;
+    width: 95%;
 }
 
-#lat, #lng {
+#lat,
+#lng {
     max-width: 350px;
     color: white;
 }
@@ -408,6 +460,7 @@ new-file-upload {
     .forms-container h5 {
         font-size: 1.4rem;
     }
+
     #pac-input {
         left: 0;
     }
@@ -426,10 +479,11 @@ new-file-upload {
 }
 
 .search-results-map #map {
-    min-height: calc(100vh - 260px);
+    height: calc(100vh - 100px);
     border-radius: 15px;
     margin-top: 5px;
 }
+
 
 .search-results-map .col {
     margin: 0;
@@ -438,7 +492,7 @@ new-file-upload {
 
 .fa-search:before {
     position: absolute;
-    top: 24px;
+    top: 15px;
     left: 10px;
 }
 
@@ -574,7 +628,7 @@ input[type="file"] {
     width: 150px;
 }
 
-.info-window img {
+.info-window .campsite-pic img {
     height: 60px;
     margin-top: 2px;
 }
@@ -615,4 +669,13 @@ input[type="file"] {
     border-radius: 15px;
     margin-top: 40px;
     padding: 40px;
+}
+
+@media screen and (max-width: 600px) {
+    #pac-input {
+        margin: 7px;
+    }
+    #upload {
+        margin: 20px 0 54px 0
+}
 }

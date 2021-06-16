@@ -14,8 +14,8 @@
             enctype="multipart/form-data">
             <!-- map input area -->
             <div class="select-map-area" onload="initAutocomplete()">
-               <h5>Select location on map</h5>
-                <input id="pac-input" class="controls" type="text" placeholder="Search Box" />
+                <h5>Select location on map</h5>
+                <input id="pac-input" class="controls" type="text" placeholder=" Search Box" />
                 <div id="map"></div>
             </div>
         </form>
@@ -47,38 +47,40 @@
                 <div class="col s12 m6">
                     <h5>Rating</h5>
                     <div class="rating left">
-                        <input type="radio" name="rating" value="5" id="5" >
+                        <input type="radio" name="rating" value="5" id="5">
                         <label for="5">☆</label>
-                        <input type="radio" name="rating" value="4" id="4" >
+                        <input type="radio" name="rating" value="4" id="4">
                         <label for="4">☆</label>
-                        <input type="radio" name="rating" value="3" id="3" >
+                        <input type="radio" name="rating" value="3" id="3">
                         <label for="3">☆</label>
-                        <input type="radio" name="rating" value="2" id="2" >
+                        <input type="radio" name="rating" value="2" id="2">
                         <label for="2">☆</label>
-                        <input type="radio" name="rating" value="1" id="1" >
+                        <input type="radio" name="rating" value="1" id="1">
                         <label for="1">☆</label>
                     </div>
                 </div>
-
                 <div class="col s12" id="upload">
                     <label for="media" class="new-file-upload btn center">
                         <i class="fas fa-upload"></i>Upload Image</label>
                     </label>
-                    <input id="media" name="file" type="file" value="{{location_id.file}}"  onchange="GetFileSize()"/>{{location_id.file}}
+                    <input id="media" name="file" type="file" value="{{location_id.file}}"
+                        onchange="GetFileSize()" />{{location_id.file}}
                     <p id="fp"></p>
                 </div>
 
                 <div class="col s12">
                     <div>
-                    <input type="text" name="lat" id="lat" readonly="yes"
-                        value="{%if location_id %}{{ location_id.location.coordinates[1]|round(3)  }}{% endif %}" required>
-                    <label for="lat">Latitude</label>
+                        <input type="text" name="lat" id="lat" readonly="yes"
+                            value="{%if location_id %}{{ location_id.location.coordinates[1]|round(3)  }}{% endif %}"
+                            required>
+                        <label for="lat">Latitude</label>
                     </div>
                     <div>
-                    <input type="text" name="lng" id="lng" readonly="yes"
-                        value="{%if location_id %}{{ location_id.location.coordinates[0]|round(3)  }}{% endif %}" required>
-                    <label for="lng">Longitude</label>
-                </div>
+                        <input type="text" name="lng" id="lng" readonly="yes"
+                            value="{%if location_id %}{{ location_id.location.coordinates[0]|round(3)  }}{% endif %}"
+                            required>
+                        <label for="lng">Longitude</label>
+                    </div>
                 </div>
                 <div class="col s12">
                     <button class="btn waves-effect waves-light right" type="submit" name="action">Submit
@@ -86,16 +88,14 @@
                     </button>
                 </div>
             </div>
-    </form>
-</div>
+        </form>
+    </div>
 </div>
 {% endblock%}
 
 {% block scripts %}
 
-<script
-    src="{{location_api}}"
-    async>
+<script src="{{location_api}}" async>
 </script>
 
 {% endblock %}
