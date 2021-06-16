@@ -9,7 +9,6 @@
                 <div class="searchBar">
                     <form role="form" method='POST' action="{{url_for('get_locations')}}">
                         <div class="input-field col s6 s12">
-
                             <input id="search" type="search" name="search" placeholder="Search locations" required>
 
                             <label class="label-icon" for="search"></label><button type="submit" class="btn btn-default"
@@ -65,7 +64,7 @@
                                 <strong>Latitude:</strong> {{record.location.coordinates[1]|round(3)  }}</div>
                             <br>
                             <strong>Rating: </strong>
-                            {% for x in range(1, record.rating | int) %}
+                            {% for x in range(0, record.rating | int) %}
                             <span class="fa fa-star checked"></span>
                             {% endfor %}
                             <br><br>

@@ -10,7 +10,6 @@
                 <div class="searchBar">
                     <form role="form" method='POST' action="{{url_for('get_locations')}}">
                         <div class="input-field col s6 s12">
-
                             <input id="search" type="search" name="search" placeholder="Search locations" required>
 
                             <label class="label-icon" for="search"></label><button type="submit" class="btn btn-default"
@@ -79,7 +78,7 @@
                         {{ location.description}}
                     </p>
                     <p><strong>Rating: </strong>
-                        {% for x in range(1, location.rating | int) %}
+                        {% for x in range(0, location.rating | int) %}
                         <span class="fa fa-star checked"></span>
                         {% endfor %}</p>
                 </div>
@@ -114,7 +113,7 @@
                     <p class="description-ellipsis">
                     {{ location.description}}</p>
                     <p><strong>Rating: </strong>
-                        {% for x in range(1, location.rating | int) %}
+                        {% for x in range(0, location.rating | int) %}
                         <span class="fa fa-star checked"></span>
                         {% endfor %}</p>
                 </div>

@@ -51,7 +51,7 @@
                     <div><strong>Latitude:</strong>  {{location_id.location.coordinates[1]}}<br>
                         <strong>Longitude:</strong>  {{location_id.location.coordinates[0]}}</div>
                     <div><strong>Rating: </strong>
-                        {% for x in range(1, location_id.rating | int) %}
+                        {% for x in range(0, location_id.rating | int) %}
                         <span class="fa fa-star checked"></span>
                         {% endfor %}</div>
                         <div><strong>Posted by:</strong> {{location_id.posted_by}}</div>
