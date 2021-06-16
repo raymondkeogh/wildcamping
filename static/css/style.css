@@ -17,13 +17,15 @@ nav,
     background-color: transparent;
 }
 
-nav .brand-logo, nav .brand-logo i {
+nav .brand-logo,
+nav .brand-logo i {
     font-size: 1.6rem;
-    float:none;
+    float: none;
     margin: 0;
 }
-nav .brand-logo{
-    margin-left:10px;
+
+nav .brand-logo {
+    margin-left: 10px;
 }
 
 .nav-wrapper {
@@ -31,10 +33,10 @@ nav .brand-logo{
 }
 
 
-#map{
+#map {
     height: calc(100vh - 100px);
-    padding:0px;
-    margin:0px;
+    padding: 0px;
+    margin: 0px;
 }
 
 .location-name {
@@ -55,13 +57,13 @@ nav .brand-logo{
 
 .input-field {
     display: inline-block;
-    position: relative;  
+    position: relative;
 }
 
 .input-field button {
-    position:absolute;
-    right:0;
-    top:0;
+    position: absolute;
+    right: 0;
+    top: 0;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -74,9 +76,9 @@ nav .brand-logo{
 
 /* Homepage */
 .splash-page {
-    background-color: rgba(255, 255, 255, 0.753) ;
+    background-color: rgba(255, 255, 255, 0.753);
     color: black;
-    padding:40px;
+    padding: 40px;
     margin-top: 40px;
     margin-bottom: 40px;
     border-radius: 15px;
@@ -84,23 +86,24 @@ nav .brand-logo{
 }
 
 .splash-page h4 {
-    background-color: rgb(9, 6, 65);
+    background-color: #193954;
     border-radius: 15px;
     padding: 10px;
     width: 200px;
     text-align: center;
     color: white;
+    box-shadow: 10px 8px 6px -6px black;
 }
 
-.row .place-card{
+.row .place-card {
     color: black;
     background-color: white;
-    box-sizing: border-box; 
+    box-sizing: border-box;
     padding: 14px;
     border-radius: 15px;
     margin: 5px;
     align-items: center;
-    position:relative;
+    position: relative;
     border: 1px solid black;
     box-shadow: 10px 8px 6px -6px black;
     max-height: 314px;
@@ -108,17 +111,18 @@ nav .brand-logo{
 }
 
 .description-ellipsis {
-    white-space: nowrap; 
-    width: 95%; 
+    white-space: nowrap;
+    width: 95%;
     overflow: hidden;
-    text-overflow: ellipsis; 
-  }
+    text-overflow: ellipsis;
+    margin: 0;
+}
 
 .locations-row .col {
     padding: 0;
 }
 
-.campsite-description{
+.campsite-description {
     color: black;
 }
 
@@ -134,7 +138,7 @@ nav .brand-logo{
     position: relative;
 }
 
-.campsite-pic-upload img{
+.campsite-pic-upload img {
     height: 150px;
     width: 100%;
     object-fit: cover;
@@ -144,7 +148,7 @@ nav .brand-logo{
 }
 
 
-.topspots .top-spot-item-card .col{
+.topspots .top-spot-item-card .col {
     height: 400px;
     width: 300px;
 }
@@ -154,7 +158,7 @@ nav .brand-logo{
 }
 
 .view-more {
-    margin: 20px;
+    margin: 5px;
     border-radius: 15px;
 }
 
@@ -163,16 +167,20 @@ nav .brand-logo{
     height: 180px;
 }
 
-#placeholder{
+#placeholder {
     height: 150px;
     width: 150px;
     position: relative;
 }
 
-.no-content-banner h6{
+.no-content-banner h6 {
     background-color: #193954c9;
     border-radius: 15px;
     padding: 20px;
+}
+
+.no-content-banner a {
+    color: white;
 }
 
 .empty-profile {
@@ -181,16 +189,16 @@ nav .brand-logo{
     border: 1px solid black;
     text-align: center;
     padding: 15px;
-    display: inline-block;   
+    display: inline-block;
 }
 
 .fa-camera-retro {
-    font-size: 30px; 
-    margin:auto;
+    font-size: 30px;
+    margin: auto;
 }
 
-.profile-header span{
-    font-size: 30px;  
+.profile-header span {
+    font-size: 30px;
 }
 
 .profile-posts .place-card {
@@ -203,10 +211,10 @@ nav .brand-logo{
     color: black;
     padding: 30px;
     border-radius: 15px;
-    margin-top:20px;
+    margin-top: 20px;
 }
 
-#user_profile .custom-file-upload{ 
+#user_profile .custom-file-upload {
     position: absolute;
     bottom: 2px;
     right: 19px;
@@ -215,29 +223,23 @@ nav .brand-logo{
 }
 
 .fa-edit {
-    font-size: 30px;  
-    color:black;
+    font-size: 30px;
+    color: black;
 }
 
 
 .profile-posts-header {
     display: flex;
-    align-items:center; 
+    align-items: center;
     position: relative;
 }
 
-.profile-posts-header i, .fa-plus-square:before  {
-    position: absolute;
-    right: 10px;
-    font-size: 35;
-}
-
-.profile-stats{
-    font-size:16px;
+.profile-stats {
+    font-size: 16px;
 }
 
 .fa-plus-square:before {
-    font-size: 35px;
+    font-size: 24px;
 }
 
 
@@ -264,14 +266,15 @@ nav .brand-logo{
     margin-top: 20px;
 }
 
-.profile-pic-upload img{
+.profile-pic-upload img {
     height: 150px;
     width: 100%;
     object-fit: cover;
     border-radius: 15px;
 }
 
-#bio, .bio{
+#bio,
+.bio {
     height: 180px;
     border: 1px solid black;
 }
@@ -327,18 +330,24 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     border-radius: 15px;
 }
 
-#location_name { 
+#location_name {
     background-color: white;
     border-radius: 15px;
 }
 
-.add_location_inputs {
+.forms-container {
     background-color: #26485d;
     padding: 20px;
     min-height: 800px;
+    max-width: 800px;
     border-radius: 15px;
-    position:relative;
-    margin-top:20px;
+    position: relative;
+    margin: 20px 0;
+}
+
+.forms-container .col {
+    margin: 0;
+    padding: 0;
 }
 
 new-file-upload {
@@ -362,7 +371,11 @@ new-file-upload {
     right: 9px;
 }
 
-#add_location_map {
+.add_location_inputs textarea {
+    padding: 10px;
+}
+
+#map {
     height: 400px;
     margin: 1px;
     border-radius: 15px;
@@ -379,6 +392,28 @@ new-file-upload {
     border-radius: 15px;
 }
 
+#pac-input {
+    background-color: white;
+    margin-top: 9px;
+    border-radius: 15px;
+    color: black
+}
+
+#lat, #lng {
+    max-width: 350px;
+    color: white;
+}
+
+@media screen and (max-width: 600px) {
+    .forms-container h5 {
+        font-size: 1.4rem;
+    }
+    #pac-input {
+        left: 0;
+    }
+}
+
+
 /* Locations result page */
 .locations {
     overflow-y: scroll;
@@ -387,18 +422,18 @@ new-file-upload {
 
 .search-results .col {
     margin: 0;
-    padding: 0; 
+    padding: 0;
 }
 
-.search-results-map #map{
+.search-results-map #map {
     min-height: calc(100vh - 260px);
     border-radius: 15px;
     margin-top: 5px;
 }
 
-.search-results-map .col{
+.search-results-map .col {
     margin: 0;
-    padding: 0; 
+    padding: 0;
 }
 
 .fa-search:before {
@@ -414,6 +449,23 @@ new-file-upload {
 .index-map-section #map {
     height: 300px;
     border-radius: 15px;
+}
+
+.top-spot-heading {
+    background-color: #193954c9;
+    border-radius: 15px 15px 0 0;
+    padding: 20px;
+}
+
+
+.top-spot-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #193954c9;
+    border-radius: 0 0 15px 15px;
+    padding: 22px;
+    margin-bottom: 20px;
 }
 
 .like-count {
@@ -469,7 +521,7 @@ input[type="file"] {
     cursor: pointer;
 }
 
-.edit-location-button .fa-edit{
+.edit-location-button .fa-edit {
     align-self: center;
     position: absolute;
     color: #888;
@@ -483,7 +535,7 @@ input[type="file"] {
     bottom: 16px;
 }
 
-.delete-button  .fa-trash-alt{
+.delete-button .fa-trash-alt {
     align-self: center;
     position: absolute;
     color: #888;
@@ -502,31 +554,38 @@ input[type="file"] {
 }
 
 .locations-row h4 {
-    margin-top: 70px; 
+    margin-top: 70px;
 }
 
 .locations-row h6 {
-    margin:30px;
+    margin: 30px;
 }
 
+#upload {
+    white-space: nowrap;
+    width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 20px 0 20px 0;
+}
 
 .info-window {
     color: black;
-    width:150px; 
+    width: 150px;
 }
 
-.info-window img{
+.info-window img {
     height: 60px;
     margin-top: 2px;
 }
 
 .location-view {
     background-color: white;
-    color:black;
+    color: black;
     border-radius: 15px;
     padding: 20px;
-    position:relative;
-    margin-top:20px;
+    position: relative;
+    margin-top: 20px;
 }
 
 .location-view #map {
@@ -537,10 +596,10 @@ input[type="file"] {
     height: 300px;
     object-fit: cover;
     overflow: hidden;
-    width:100%;
+    width: 100%;
 }
 
-.location-view .search-results-map{
+.location-view .search-results-map {
     height: 300px;
 }
 
@@ -554,6 +613,6 @@ input[type="file"] {
     background-color: white;
     color: black;
     border-radius: 15px;
-    margin-top:40px;
+    margin-top: 40px;
     padding: 40px;
 }

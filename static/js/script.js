@@ -19,23 +19,71 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
 
-      
-let add_location_map;
-let marker2 = false;
-// Second map for add_location_map window
-// Created a second function as initializing the maps in 
-// one func resulted in DOM errors and no maps display
-function initUserMap() {
-    // Tutorial that helped create marker locations 
-    // https://thisinterestsme.com/google-maps-api-location-picker-example/
+  let marker2 = false;
 
-    add_location_map = new google.maps.Map(document.getElementById('add_location_map'), {
-        center: new google.maps.LatLng(52.357971, -6.516758),
-        zoom: 7,
-        mapTypeId: 'roadmap'
+  function initAutocomplete() {
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: { lat: -33.8688, lng: 151.2195 },
+      zoom: 13,
+      mapTypeId: "roadmap",
+      disableDefaultUI: true
     });
-
-    google.maps.event.addListener(add_location_map, 'click', function (event) {
+    // Create the search box and link it to the UI element.
+    const input = document.getElementById("pac-input");
+    const searchBox = new google.maps.places.SearchBox(input);
+    map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+    // Bias the SearchBox results towards current map's viewport.
+    map.addListener("bounds_changed", () => {
+      searchBox.setBounds(map.getBounds());
+    });
+    let markers = [];
+    // Listen for the event fired when the user selects a prediction and retrieve
+    // more details for that place.
+    searchBox.addListener("places_changed", () => {
+      const places = searchBox.getPlaces();
+  
+      if (places.length == 0) {
+        return;
+      }
+      // Clear out the old markers.
+      markers.forEach((marker) => {
+        marker.setMap(null);
+      });
+      markers = [];
+      // For each place, get the icon, name and location.
+      const bounds = new google.maps.LatLngBounds();
+      places.forEach((place) => {
+        if (!place.geometry || !place.geometry.location) {
+          console.log("Returned place contains no geometry");
+          return;
+        }
+        const icon = {
+          url: place.icon,
+          size: new google.maps.Size(71, 71),
+          origin: new google.maps.Point(0, 0),
+          anchor: new google.maps.Point(17, 34),
+          scaledSize: new google.maps.Size(25, 25),
+        };
+        // Create a marker for each place.
+        markers.push(
+          new google.maps.Marker({
+            map,
+            icon,
+            title: place.name,
+            position: place.geometry.location,
+          })
+        );
+  
+        if (place.geometry.viewport) {
+          // Only geocodes have viewport.
+          bounds.union(place.geometry.viewport);
+        } else {
+          bounds.extend(place.geometry.location);
+        }
+      });
+      map.fitBounds(bounds);
+    });
+    google.maps.event.addListener(map, 'click', function (event) {
         //Get the location that the user clicked.
         let clickedLocation = event.latLng;
 
@@ -44,7 +92,7 @@ function initUserMap() {
             //Create the marker.
             marker2 = new google.maps.Marker({
                 position: clickedLocation,
-                map: add_location_map,
+                map: map,
                 draggable: true //make it draggable
             });
             //Listen for drag events!
@@ -58,8 +106,8 @@ function initUserMap() {
         //Get the marker's location.
         markerLocation();
     });
-}
-
+    
+  }
 
 function markerLocation() {
     //Get location.
@@ -142,6 +190,8 @@ function searchResultMap() {
     });
     // figuure out how to add triple quotes in above bindinfowindow
     // "<a href=\"{{ url_for('view_location', location_id="+ feature._id +")}}\">" +
+
+    
     // function mark_pins(trucks) {
     //     let geocoder = new google.maps.Geocoder();
     //     let markersArray = [];
@@ -200,8 +250,6 @@ function validateForm() {
         return false;
     }
 }
-
-
 
 // google.maps.event.addDomListener(window, 'load', initialize);
 
