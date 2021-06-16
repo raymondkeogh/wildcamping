@@ -142,7 +142,6 @@ nav .brand-logo {
     border: 1px solid black;
     box-shadow: 10px 8px 6px -6px black;
     max-height: 314px;
-    overflow-x: hidden;
 }
 
 .description-ellipsis {
@@ -478,6 +477,10 @@ new-file-upload {
     padding: 0;
 }
 
+.search_count img {
+    height: 144px;
+}
+
 .search-results-map #map {
     height: calc(100vh - 100px);
     border-radius: 15px;
@@ -527,7 +530,7 @@ new-file-upload {
     color: #888;
     font-size: 1.1em;
     right: 50px;
-    bottom: 12px;
+    bottom: 7px;
 }
 
 .like-button {
@@ -541,7 +544,7 @@ new-file-upload {
     user-select: none;
     cursor: pointer;
     right: 10px;
-    bottom: 2px;
+    bottom: -2px;
 }
 
 .liked-button {
@@ -555,7 +558,7 @@ new-file-upload {
     user-select: none;
     cursor: pointer;
     right: 10px;
-    bottom: 2px;
+    bottom: -2px;
 }
 
 /* https://stackoverflow.com/questions/572768/styling-an-input-type-file-button/25825731#25825731 */
@@ -656,6 +659,11 @@ input[type="file"] {
 .location-view .search-results-map {
     height: 300px;
 }
+
+@media screen and (min-width: 992px) {
+    .hiding-search {
+        display: none;
+    }
 
 .counter-value {
     text-align: center;

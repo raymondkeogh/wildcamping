@@ -10,7 +10,6 @@
                     <form role="form" method='POST' action="{{url_for('get_locations')}}">
                         <div class="input-field col s6 s12">
                             <input id="search" type="search" name="search" placeholder="Search locations" required>
-
                             <label class="label-icon" for="search"></label><button type="submit" class="btn btn-default"
                                 alt="search button"><i class="fas fa-binoculars"></i></button>
                         </div>
@@ -25,10 +24,21 @@
 {% block content %}
 <div class="row search-results">
     <div class="col s12">
+         <!-- search bar -->
+                    <div class="hiding-search searchBar center">
+                        <form role="form" method='POST' action="{{url_for('get_locations')}}">
+                            <div class="input-field">
+                                <input id="search" type="search" name="search" required>
+                                <label class="label-icon" for="search"><i class="fas fa-search"></i></label>
+                            </div>
+                        </form>
+                    </div>
         <div class="search_count center">
                 <h5>Search Results: {{search_count}}</h5>
                 {% if search_count == 0 %}
+                <img src="{{ url_for('static', filename='images/searching.png') }}" alt="inspector clueso picture" class="">
                 <p>You can improve your results by being more specific, try adding the County, Post Code or Country to your search</p>
+               
                 {% endif %}
                 </Search>
         </div>
@@ -60,7 +70,6 @@
                     <div class="row place-card">
                         <div class="col s6">
                             <h5 class="location_name">{{ record.name.capitalize() }}</h5><br>
-                           
                             <strong>Rating: </strong>
                             {% for x in range(0, record.rating | int) %}
                             <span class="fa fa-star checked"></span>
@@ -89,7 +98,6 @@
                             <span class="like-button-disabled">&#10084;</span></a>
                         {% endif %}
                         <div class="col s6 campsite-pic"><img src="{{record.file}}" alt=""></div>
-                      
                     </div>
                     {% endfor %}
                 </div>
