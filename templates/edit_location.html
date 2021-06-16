@@ -12,14 +12,13 @@
             <!-- map input area -->
             <div class="select-map-area" onload="initAutocomplete()">
                 <h5>Select location on map</h5>
-                <input id="pac-input" class="controls" type="text" placeholder="Search Box" />
+                <input id="pac-input" class="controls" type="text" placeholder=" Search Box" />
                 <div id="map"></div>
-
             </div>
         </form>
         <form method="POST" action="{{ url_for('edit_location', location=location_id._id)}}" name="user_location_form"
             value="user_location_form" enctype="multipart/form-data" onsubmit="return validateForm()">
-            <div class="row add_location_inputs" >
+            <div class="row add_location_inputs">
                 <!-- Text input area -->
                 <div class="col s12 m6">
                     <h5>Campsite Name:</h5>
@@ -42,7 +41,8 @@
                 https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 -->
 
                 <div class="col s12 m6">
-                    <h5>Rating</h5> <p id="previous-rating" style="display:block;">
+                    <h5>Rating</h5>
+                    <p id="previous-rating" style="display:block;">
                         {{location_id.rating}}</p>
                     <div class="rating left">
                         <input type="radio" name="rating" value="5" id="5">
@@ -86,7 +86,7 @@
                     <i class="fas fa-upload"></i>Upload Image</label>
                 </label>
                 <input id="media" name="file" type="file" value="{{location_id.file}}"
-                    onchange="GetFileSize()"/>{{location_id.file}}
+                    onchange="GetFileSize()" />{{location_id.file}}
                 <p id="fp"></p>
             </div>
         </form>
@@ -97,6 +97,22 @@
 
 {% block scripts %}
 <script src="{{location_api}}" async>
+</script>
+<script>
+    // Get previous rating from location record
+    function getRating() {
+        let rating = document.getElementById('previous-rating').innerText;
+        document.getElementById(rating).checked = true;
+        if (document.querySelector('input[type="radio"]')) {
+            document.querySelectorAll('input[type="radio"]').forEach((elem) => {
+                elem.addEventListener("change", function (event) {
+                    var item = event.target.value;
+                    document.getElementById("previous-rating").innerHTML = item
+                });
+            });
+        }
+    }
+    getRating()
 </script>
 
 {% endblock %}
