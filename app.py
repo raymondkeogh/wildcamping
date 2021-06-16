@@ -267,7 +267,7 @@ def delete_post(location):
 
 
 # Opens up location in its own window
-@app.route('/view_location/<location_id>')
+@app.route('/view_location/<location_id>', methods=["GET"])
 def view_location(location_id):
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=searchResultMap&libraries=&v=weekly"
     location = mongo.db.locations.find_one({"_id": ObjectId(location_id)})
@@ -282,7 +282,7 @@ def upload_image(location):
 
     if (request.referrer == profile_request or request.referrer == profile_request_heroku):
         db_location = mongo.db.users.find_one({"_id": ObjectId(location)})
-    else: 
+    else:
         db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
     user = mongo.db.users.find_one(
         {"username": session["user"]})
@@ -305,7 +305,6 @@ def upload_image(location):
                 request.referrer == profile_request_heroku):
             mongo.db.users.update_one({"_id": ObjectId(location)}, {
                                       "$set": {"file": upload_result["url"]}})
-
             return redirect(url_for("profile_page"))
         else:
             mongo.db.locations.update_one({"_id": ObjectId(location)}, {
@@ -353,4 +352,4 @@ def page_not_found(e):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=False)
+            debug=True)
