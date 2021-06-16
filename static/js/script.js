@@ -227,6 +227,26 @@ function bindInfoWindow(marker, map, infowindow, html) {
 	}); 
 } 
 
+// Get previous rating from location record
+function getRating(){
+  let rating = document.getElementById('previous-rating').innerText;
+  document.getElementById(rating).checked = true;
+
+
+
+  if (document.querySelector('input[type="radio"]')) {
+    document.querySelectorAll('input[type="radio"]').forEach((elem) => {
+      elem.addEventListener("change", function(event) {
+        var item = event.target.value;
+        document.getElementById("previous-rating").innerHTML  = item
+      });
+    });
+  }
+ 
+}
+getRating()
+
+
 function validateForm() {
 
     let location_name = document.forms["user_location_form"]["location_name"].value;
