@@ -184,6 +184,12 @@ def logout():
     session.pop("user")
     return redirect(url_for("login"))
 
+@app.route("/map_search", methods=["POST"])
+def map_search():
+    
+    return ('', 204)
+
+
 
 # Input new custom loctions for user
 @app.route("/user_location", methods=["GET", "POST"])
