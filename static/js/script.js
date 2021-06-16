@@ -146,7 +146,9 @@ document.querySelector("form").addEventListener("submit", (event) => {
 // Draw map and add markers based on mongodb query results
 function searchResultMap() {
     let locationsString = $('#search-coordinates').text()
-    let nLocationsString = locationsString.replace(",]}", "]}");
+    let firstString = locationsString.replace(/\s+/g,' ').trim();
+    let nLocationsString = firstString.replace(",]}", "]}");
+    console.log(nLocationsString)
     let locationsObj = JSON.parse(nLocationsString);
     let locations = locationsObj.coordinates;
     let loclen = locations.length;
