@@ -52,8 +52,6 @@ def home_page():
         "index.html", random_location=random_location,location_api=location_api, locations=locations)
 
 # Search results page / locations.html
-
-
 @app.route("/get_locations", methods=["GET", "POST"])
 def get_locations():
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=searchResultMap&libraries=&v=weekly"
@@ -174,9 +172,6 @@ def profile_page():
     my_liked_count = liked_locations.count()
     return render_template("profile.html", user=user, liked_locations=liked_locations, popularity=popularity, posted_locations=posted_locations, posted_count=posted_count, my_liked_count=my_liked_count)
 
-# Logout page
-# @app.route("/profile_page/<username>/user_locations")
-
 
 @app.route("/logout")
 def logout():
@@ -283,7 +278,7 @@ def view_location(location_id):
 @app.route('/upload_image/<location>', methods=["GET", "POST"])
 def upload_image(location):
     profile_request = "https://8080-amethyst-crow-u769d91j.ws-eu09.gitpod.io/profile_page"
-    profile_request_heroku = "https://wild-camping.herokuapp.com/profile_page"
+    profile_request_heroku = "https://wild-camping.herokuapp.com/profile_page*"
 
     if (request.referrer == profile_request or request.referrer == profile_request_heroku):
         db_location = mongo.db.users.find_one({"_id": ObjectId(location)})
