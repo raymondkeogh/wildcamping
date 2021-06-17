@@ -32,10 +32,10 @@ let marker2 = false;
 function initAutocomplete() {
   const map = new google.maps.Map(document.getElementById("map"), {
     center: {
-      lat: -33.8688,
-      lng: 151.2195
+      lat: 53.51130892627445,
+      lng: -7.626680568008748
     },
-    zoom: 13,
+    zoom: 8,
     mapTypeId: "roadmap",
     disableDefaultUI: true
   });
@@ -149,8 +149,8 @@ function searchResultMap() {
   });
 
   let coordinates = {
-    lat: 40.785845,
-    lng: -74.020496
+    lat: 53.51130892627445,
+    lng: -7.626680568008748
   };
 
   let infowindow = new google.maps.InfoWindow({

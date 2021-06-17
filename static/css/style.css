@@ -10,11 +10,16 @@ body {
     background-attachment: fixed;
 }
 
-#nav-list li a{
+#nav-list li a {
     font-size: 1.4rem;
 }
 
-h1, h2, h3, h4, h5, h6{
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Baloo Tammudu 2', 'Roboto';
 }
 
@@ -40,7 +45,7 @@ nav .brand-logo {
 }
 
 .nav-wrapper.scrolled {
-    font-family: 'Baloo Tammudu 2', 'Roboto'; 
+    font-family: 'Baloo Tammudu 2', 'Roboto';
     background-color: #193954ba;
     transition: background-color 200ms linear;
 }
@@ -54,7 +59,7 @@ nav .brand-logo {
 }
 
 .search-field {
-    position:relative;
+    position: relative;
 }
 
 .search-field label i {
@@ -96,15 +101,17 @@ nav .brand-logo {
 }
 
 @media screen and (max-width: 800px) {
-    nav .brand-logo, nav .brand-logo i {
+
+    nav .brand-logo,
+    nav .brand-logo i {
         font-size: 1.3rem;
     }
 
-    #camp-logo .fa-campground{
+    #camp-logo .fa-campground {
         font-size: 1.8rem;
     }
 
-    .add-edit-title h4{
+    .add-edit-title h4 {
         font-size: 1.7rem;
         margin-bottom: 0;
     }
@@ -127,10 +134,10 @@ nav .brand-logo {
 .splash-page h3 {
     border-radius: 15px;
     color: #193954;
-    font-family:'Baloo Tammudu 2', 'Roboto'  
+    font-family: 'Baloo Tammudu 2', 'Roboto'
 }
 
-#splash-page .fa-campground:before{
+#splash-page .fa-campground:before {
     color: #193954;
     font-size: 1.7rem;
 }
@@ -141,7 +148,7 @@ nav .brand-logo {
     width: 170px;
 }
 
-.input-field input{
+.input-field input {
     background-color: white;
 }
 
@@ -180,7 +187,7 @@ nav .brand-logo {
 
 .location-title {
     font-size: 20px;
-    font-family:'Baloo Tammudu 2', 'Roboto'
+    font-family: 'Baloo Tammudu 2', 'Roboto'
 }
 
 .campsite-pic img {
@@ -231,9 +238,11 @@ nav .brand-logo {
         margin-bottom: 0;
     }
 
-    #splash-page h3{
-        font-size: 2.1rem;;
+    #splash-page h3 {
+        font-size: 2.1rem;
+        ;
     }
+
     #splash-page {
         padding: 10px;
     }
@@ -341,14 +350,14 @@ nav .brand-logo {
     margin: auto;
 }
 
-.input-field .prefix ~ input {
+.input-field .prefix~input {
     border-radius: 15px;
     padding-left: 10px;
 }
 
 .input-field input {
-    background-color: #e8f0fe!important;
-    width:300px;
+    background-color: #e8f0fe !important;
+    width: 300px;
 }
 
 .orange.darken-4 {
@@ -356,7 +365,7 @@ nav .brand-logo {
     width: 200px;
 }
 
-#login-signup{
+#login-signup {
     width: 600px
 }
 
@@ -368,7 +377,7 @@ nav .brand-logo {
 }
 
 @media screen and (max-width: 300px) {
-    #login-signup{
+    #login-signup {
         width: 200px
     }
 }
@@ -468,7 +477,7 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 
 #forms-container {
     background-color: #26485d;
-    padding: 20px;
+    padding: 10px;
     min-height: 800px;
     max-width: 800px;
     border-radius: 15px;
@@ -486,8 +495,16 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     width: 200px;
     object-fit: cover;
     overflow: hidden;
-    float:left;
-    
+    float: left;
+}
+
+#forms-container .btn {
+    border-radius: 15px;
+}
+
+#upload .btn {
+    background-color: #ff8282;
+    margin-left: 40px;
 }
 
 
@@ -503,8 +520,8 @@ new-file-upload {
 
 .flashes h4 {
     line-height: 2;
-    font-family: 'Baloo Tammudu 2', 'Roboto'; 
-    
+    font-family: 'Baloo Tammudu 2', 'Roboto';
+
 }
 
 .add_location_inputs button {
@@ -527,6 +544,7 @@ new-file-upload {
 
 .select-map-area {
     border-radius: 15px;
+    text-align: left;
 }
 
 
@@ -550,8 +568,8 @@ new-file-upload {
     color: white;
 }
 
-@media screen and (max-width: 600px) {
-    .forms-container h5 {
+@media screen and (min-width: 900px) {
+    #forms-container h5 {
         font-size: 1.4rem;
     }
 
@@ -601,7 +619,7 @@ new-file-upload {
     background-color: #193954c9;
     border-radius: 15px 15px 0 0;
     padding: 20px;
-    font-family:'Baloo Tammudu 2', 'Roboto'
+    font-family: 'Baloo Tammudu 2', 'Roboto'
 }
 
 
@@ -766,6 +784,7 @@ input[type="file"] {
 .location-description {
     margin-bottom: 20px;
 }
+
 .location-view .search-results-map {
     height: 300px;
 }
@@ -794,11 +813,13 @@ input[type="file"] {
     #pac-input {
         margin: 7px;
     }
+
     #upload {
         margin: 20px 0 54px 0
     }
+
     .location-view {
         padding: 13px;
     }
-    
+
 }

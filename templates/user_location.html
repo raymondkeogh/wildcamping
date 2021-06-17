@@ -1,23 +1,21 @@
 {% extends "base.html" %}
 
 {% block styles %}
-
-
 {% endblock %}
+
 {% block content %}
 <div class="container">
     <div class="row">
         <div class="col">
             <div class="add-edit-title">
-                <h4>Add Location</h4>
+                <h4>Add Location<h4>
             </div>
-        </div>
-        <div id="forms-container" class="col">
+        <div id="forms-container">
             <form id="map_search" method="POST" action="{{ url_for('map_search') }}" name="map_search"
                 enctype="multipart/form-data">
                 <!-- map input area -->
                 <div class="select-map-area" onload="initAutocomplete()">
-                    <h5>Select location on map</h5>
+                    <h5>Select location on map :<h5>
                     <input id="pac-input" class="controls" type="text" placeholder=" Search Box" />
                     <div id="map"></div>
                 </div>
@@ -37,7 +35,7 @@
                         </div>
                     </div>
                     <div class="col s12 m8 input-field">
-                        <h5>Campsite Description</h5>
+                        <h5>Campsite Description :</h5>
                         <div class="input-field col s12">
                             <textarea id="location_description" name="location_description" class="materialize-textarea"
                                 data-length="400">{{location_id.description}}</textarea>
@@ -66,7 +64,7 @@
                         <label for="media" class="new-file-upload btn center">
                             <i class="fas fa-upload"></i>Upload Image</label>
                         </label>
-                        <input id="media" name="file" type="file" value="{{location_id.file}}"
+                        <input id="media" name="file" type="file"
                             onchange="GetFileSize('location')" />{{location_id.file}}
                         <p id="fp"></p>
                     </div>               
@@ -91,8 +89,8 @@
                     </div>
                 </div>
             </form>
-        
         </div>
+    </div>
     </div>
 </div>
 {% endblock%}
