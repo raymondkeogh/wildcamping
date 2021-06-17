@@ -277,7 +277,7 @@ def view_location(location_id):
 # Allows for seperate uploads of photos whether updating profile or creating new one
 @app.route('/upload_image/<location>', methods=["GET", "POST"])
 def upload_image(location):
-    profile_request = "https://8080-amethyst-crow-u769d91j.ws-eu09.gitpod.io/profile_page"
+    profile_request = "https://8080-amethyst-crow-u769d91j.ws-eu08.gitpod.io/profile_page"
     profile_request_heroku = "https://wild-camping.herokuapp.com/profile_page"
 
     if (request.referrer == profile_request or request.referrer == profile_request_heroku):

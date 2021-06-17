@@ -159,7 +159,6 @@ nav .brand-logo {
     align-items: center;
     position: relative;
     border: 1px solid black;
-    box-shadow: 10px 8px 6px -6px black;
     max-height: 314px;
 }
 
@@ -624,18 +623,19 @@ new-file-upload {
     bottom: 7px;
 }
 
-.like-button {
+
+.like-button-disabled {
+    color: #acacac;
+    cursor: default;
+    font-size: 1.4em;
     align-self: center;
     position: absolute;
-    color: #888;
-    font-size: 1.4em;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-    cursor: pointer;
-    right: 10px;
-    bottom: -2px;
+    right: 21px;
+    bottom: 7px;
 }
 
 .liked-button {
@@ -648,9 +648,25 @@ new-file-upload {
     -ms-user-select: none;
     user-select: none;
     cursor: pointer;
-    right: 10px;
-    bottom: -2px;
+    right: 21px;
+    bottom: 7px;
 }
+
+
+.like-button {
+    align-self: center;
+    position: absolute;
+    color: #888;
+    font-size: 1.4em;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    cursor: pointer;
+    right: 21px;
+    bottom: 7px;
+}
+
 
 /* https://stackoverflow.com/questions/572768/styling-an-input-type-file-button/25825731#25825731 */
 
