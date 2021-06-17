@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&family=Roboto&display=swap');
+
 body {
     background-image: url(../../static/images/background.png);
     background-size: cover;
@@ -8,8 +10,17 @@ body {
     background-attachment: fixed;
 }
 
+#nav-list li a{
+    font-size: 1.4rem;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'Baloo Tammudu 2', 'Roboto';
+}
 
 /* navbar */
+
+
 nav,
 .collapsible {
     box-shadow: none;
@@ -19,7 +30,7 @@ nav,
 
 nav .brand-logo,
 nav .brand-logo i {
-    font-size: 1.6rem;
+    font-size: 2rem;
     float: none;
     margin: 0;
 }
@@ -28,10 +39,11 @@ nav .brand-logo {
     margin-left: 10px;
 }
 
-.nav-wrapper {
-    background-color: #193954;
+.nav-wrapper.scrolled {
+    font-family: 'Baloo Tammudu 2', 'Roboto'; 
+    background-color: #193954ba;
+    transition: background-color 200ms linear;
 }
-
 
 .location-name {
     font-size: 20px;
@@ -39,6 +51,21 @@ nav .brand-logo {
 
 .landing-page {
     padding: 100px;
+}
+
+.search-field {
+    position:relative;
+}
+
+.search-field label i {
+    color: black;
+    position: absolute;
+    right: 30px;
+    top: 10px;
+}
+
+.search-field label i:focus {
+    color: red;
 }
 
 #search {
@@ -69,28 +96,25 @@ nav .brand-logo {
 }
 
 @media screen and (max-width: 800px) {
-
-    #search {
-        background-color: white;
-        border-radius: 15px;
-        height: 40px;
-        width: 177px;
-        position: relative;
-        margin: 0;
+    nav .brand-logo, nav .brand-logo i {
+        font-size: 1.3rem;
     }
 
-    #splash-page {
-        padding: 10px;
+    #camp-logo .fa-campground{
+        font-size: 1.8rem;
+    }
+
+    .add-edit-title h4{
+        font-size: 1.7rem;
+        margin-bottom: 0;
     }
 }
 
 /* Homepage */
 
-
 .splash-page {
     background-color: rgba(255, 255, 255, 0.753);
     color: black;
-
     padding: 40px;
     margin-top: 40px;
     margin-bottom: 40px;
@@ -99,36 +123,31 @@ nav .brand-logo {
     text-align: center;
 }
 
-.splash-page h4 {
-    background-color: #193954;
+
+.splash-page h3 {
     border-radius: 15px;
-    padding: 10px;
-    width: 200px;
-    text-align: center;
-    color: white;
-    box-shadow: 10px 8px 6px -6px black;
+    color: #193954;
+    font-family:'Baloo Tammudu 2', 'Roboto'  
+}
+
+#splash-page .fa-campground:before{
+    color: #193954;
+    font-size: 1.7rem;
 }
 
 #splash-page .btn {
     border-radius: 15px;
     font-size: 1.4em;
-    margin-bottom: 19px;
     width: 170px;
 }
-/* 
-.input-field button {
-    position: absolute;
-    right: 0;
-    top: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 40px;
-    width: 50px;
-    border-radius: 0 15px 15px 0;
-    padding: 0;
-    margin: 10px;
-} */
+
+.input-field input{
+    background-color: white;
+}
+
+#splash-page .place-card {
+    margin: 15px;
+}
 
 .row .place-card {
     color: black;
@@ -162,6 +181,7 @@ nav .brand-logo {
 
 .location-title {
     font-size: 20px;
+    font-family:'Baloo Tammudu 2', 'Roboto'
 }
 
 .campsite-pic img {
@@ -194,6 +214,30 @@ nav .brand-logo {
 .view-more {
     margin: 5px;
     border-radius: 15px;
+}
+
+
+@media screen and (max-width: 800px) {
+
+    #search {
+        background-color: white;
+        border-radius: 15px;
+        height: 40px;
+        width: 212px;
+        position: relative;
+        margin: 8px;
+    }
+
+    #splash-page .btn {
+        margin-bottom: 0;
+    }
+
+    #splash-page h3{
+        font-size: 2.1rem;;
+    }
+    #splash-page {
+        padding: 10px;
+    }
 }
 
 /* Profile page */
@@ -298,11 +342,44 @@ nav .brand-logo {
     margin: auto;
 }
 
+.input-field .prefix ~ input {
+    border-radius: 15px;
+    padding-left: 10px;
+}
+
+.input-field input {
+    background-color: #e8f0fe!important;
+    width:300px;
+}
+
 .orange.darken-4 {
     border-radius: 15px;
     width: 200px;
 }
 
+#login-signup{
+    width: 600px
+}
+
+
+#login-btn {
+    margin-left: auto;
+    margin-right: auto;
+    width: 250px;
+}
+
+@media screen and (max-width: 300px) {
+    #login-signup{
+        width: 200px
+    }
+}
+
+/* @media only screen and (max-width: 992px)
+    {
+    .input-field .prefix ~ input {
+        width: 300px
+       
+    } */
 
 /* Edit-profile page */
 .edit-profile-inputs {
@@ -330,6 +407,10 @@ nav .brand-logo {
 
 .fa-star:before {
     color: #ff8e3d;
+}
+
+.add-edit-title {
+    text-align: center;
 }
 
 /* Code used for star rating got from  
@@ -382,7 +463,11 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
     border-radius: 15px;
 }
 
-.forms-container {
+.waves-effect {
+    border-radius: 15px;
+}
+
+#forms-container {
     background-color: #26485d;
     padding: 20px;
     min-height: 800px;
@@ -395,6 +480,15 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .forms-container .col {
     margin: 0;
     padding: 0;
+}
+
+#forms-container img {
+    height: 200px;
+    width: 200px;
+    object-fit: cover;
+    overflow: hidden;
+    float:left;
+    
 }
 
 
@@ -410,6 +504,8 @@ new-file-upload {
 
 .flashes h4 {
     line-height: 2;
+    font-family: 'Baloo Tammudu 2', 'Roboto'; 
+    
 }
 
 .add_location_inputs button {
@@ -493,12 +589,6 @@ new-file-upload {
     padding: 0;
 }
 
-.fa-search:before {
-    position: absolute;
-    top: 15px;
-    left: 10px;
-}
-
 .input-field input[type=search] {
     padding-left: 4rem;
 }
@@ -512,6 +602,7 @@ new-file-upload {
     background-color: #193954c9;
     border-radius: 15px 15px 0 0;
     padding: 20px;
+    font-family:'Baloo Tammudu 2', 'Roboto'
 }
 
 
@@ -656,6 +747,9 @@ input[type="file"] {
     width: 100%;
 }
 
+.location-description {
+    margin-bottom: 20px;
+}
 .location-view .search-results-map {
     height: 300px;
 }
@@ -664,6 +758,7 @@ input[type="file"] {
     .hiding-search {
         display: none;
     }
+}
 
 .counter-value {
     text-align: center;
@@ -685,5 +780,9 @@ input[type="file"] {
     }
     #upload {
         margin: 20px 0 54px 0
-}
+    }
+    .location-view {
+        padding: 13px;
+    }
+    
 }
