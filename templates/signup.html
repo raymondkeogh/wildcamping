@@ -3,14 +3,14 @@
 
    
     <div class="row container">
-        <form class="col s12 m6 offset-m2" method="POST" action="{{ url_for('signup') }}">
+        <form class="col s12 m6 offset-m2" method="POST" name="signup-form" action="{{ url_for('signup') }}" onsubmit="return validateSignup()">
             <h3 class="center-align">Sign Up</h3>
             <div class="center">
                 <!-- username text entry-->
                 <div class="row">
 					<div class="input-field col s12">
 						<i class="fas fa-user-plus prefix orange-text text-darken-4"></i>
-						<input id="username" name="username" type="text" class="validate">
+						<input id="username" name="username" type="text" class="validate"> 
 						<label for="username">Username</label>
 					</div>
                 </div>

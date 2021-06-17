@@ -65,7 +65,6 @@ function initAutocomplete() {
     const bounds = new google.maps.LatLngBounds();
     places.forEach((place) => {
       if (!place.geometry || !place.geometry.location) {
-        console.log("Returned place contains no geometry");
         return;
       }
       const icon = {
@@ -214,6 +213,8 @@ function bindInfoWindow(marker, map, infowindow, html) {
   });
 }
 
+
+
 //File Upload functions
 
 // Cloudinary File upload service
@@ -234,12 +235,25 @@ if (el) {
   });
 }
 
-function validateForm() {
+// Sign up validation
+function validateSignup()
+{
+let x= document.forms["signup-form"]["username"].value;
+let y= document.forms["signup-form"]["password"].value;
+ if (x==null || x=="" && y==null || y=="")
+ {
+  alert("Username or Password must not be empty");
+  return false;
+  }
+ }
 
+// Location input validation
+function validateForm() {
   let location_name = document.forms["user_location_form"]["location_name"].value;
   let desc = document.forms["user_location_form"]["location_description"].value;
   let rating = document.forms["user_location_form"]["rating"].value;
   let coord = document.forms["user_location_form"]["lat"].value;
+  let file = document.forms["user_location_form"]["media"].value;
   
   if (location_name == "") {
     alert("Please add a Name for your location");
@@ -256,6 +270,10 @@ function validateForm() {
 
   if (coord == "") {
     alert("Please locate your campsite in the map window");
+    return false;
+  }
+  if (file == "") {
+    alert("Please upload a photo to your location");
     return false;
   }
 }
@@ -290,5 +308,7 @@ function GetFileSize(caller) {
     }
   }
 }
+
+
 
       // google.maps.event.addDomListener(window, 'load', initialize);
