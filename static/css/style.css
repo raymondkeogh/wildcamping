@@ -24,8 +24,6 @@ h6 {
 }
 
 /* navbar */
-
-
 nav,
 .collapsible {
     box-shadow: none;
@@ -118,7 +116,6 @@ nav .brand-logo {
 }
 
 /* Homepage */
-
 .splash-page {
     background-color: rgba(255, 255, 255, 0.753);
     color: black;
@@ -129,7 +126,6 @@ nav .brand-logo {
     min-height: 400px;
     text-align: center;
 }
-
 
 .splash-page h3 {
     border-radius: 15px;
@@ -207,7 +203,6 @@ nav .brand-logo {
     margin-top: 20px;
 }
 
-
 .topspots .top-spot-item-card .col {
     height: 400px;
     width: 300px;
@@ -224,7 +219,6 @@ nav .brand-logo {
 
 
 @media screen and (max-width: 800px) {
-
     #search {
         background-color: white;
         border-radius: 15px;
@@ -251,6 +245,12 @@ nav .brand-logo {
 /* Profile page */
 .user-bio {
     height: 180px;
+}
+
+.counter-value {
+    text-align: center;
+    margin: 10px;
+    font-size: 1.4em
 }
 
 #placeholder {
@@ -369,7 +369,6 @@ nav .brand-logo {
     width: 600px
 }
 
-
 #login-btn {
     margin-left: auto;
     margin-right: auto;
@@ -381,13 +380,6 @@ nav .brand-logo {
         width: 200px
     }
 }
-
-/* @media only screen and (max-width: 992px)
-    {
-    .input-field .prefix ~ input {
-        width: 300px
-       
-    } */
 
 /* Edit-profile page */
 .edit-profile-inputs {
@@ -412,7 +404,6 @@ nav .brand-logo {
 }
 
 /* Add-location page */
-
 .fa-star:before {
     color: #ff8e3d;
 }
@@ -793,12 +784,6 @@ input[type="file"] {
     .hiding-search {
         display: none;
     }
-}
-
-.counter-value {
-    text-align: center;
-    margin: 10px;
-    font-size: 1.4em
 }
 
 .help-message {
