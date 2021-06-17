@@ -189,7 +189,6 @@ def map_search():
 # Input new custom loctions for user
 @app.route("/user_location", methods=["GET", "POST"])
 def user_location():
-    # user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=&v=weekly"
 
 
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=places&v=weekly"

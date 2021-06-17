@@ -72,17 +72,17 @@ The site owner advances their own goals by providing this functionality, potenti
 **Site Owner Goal:**
 
  1. As a site owner I want create a knowledge bank of good camping locations
- 2. As a site owner I want to encourage responsible camping practices.
 
 The mockup for this site was done on Balsamiq Wireframes 
 and can be viewed below 
 
 - [Desktop Homepage](static/images/wireframes/index_page.png).  
-- [](static/images/wireframes/.png).  
-- [](static/images/wireframes/.png).  
-- [](static/images/wireframes/.png).  
-- [](static/images/wireframes/.png).  
-- [](static/images/wireframes/.png).  
+- [Profile_Page](static/images/wireframes/profile_page.png).  
+- [Add_Location Page](static/images/wireframes/user_location.png).  
+- [Search_Results_Page](static/images/wireframes/add_location_mobile.png).  
+- [Search_Results_Page](static/images/wireframes/add_location_tablet.png). 
+
+The full selection of wireframes can be viewed in PDF for [here](static/images/wireframes/wild_camping_wireframes)
 
 
 

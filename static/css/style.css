@@ -76,7 +76,6 @@ nav .brand-logo {
     border-radius: 15px;
     height: 40px;
     width: 255px;
-    position: relative;
     margin: 10px;
 }
 
@@ -187,7 +186,7 @@ nav .brand-logo {
 }
 
 .campsite-pic img {
-    height: 196px;
+    height: 122px;
     width: 100%;
     object-fit: cover;
     border-radius: 15px;
@@ -223,9 +222,13 @@ nav .brand-logo {
         background-color: white;
         border-radius: 15px;
         height: 40px;
-        width: 212px;
+        width: 78%;
         position: relative;
-        margin: 8px;
+        margin: 10px;
+    }
+
+    .input-container {
+        position: relative;
     }
 
     #splash-page .btn {
@@ -464,6 +467,7 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 
 .waves-effect {
     border-radius: 15px;
+    margin-top: 10px;
 }
 
 #forms-container {
@@ -628,8 +632,8 @@ new-file-upload {
     position: absolute;
     color: #888;
     font-size: 1.1em;
-    right: 50px;
-    bottom: 7px;
+    right: 55px;
+    bottom: 13px;
 }
 
 
