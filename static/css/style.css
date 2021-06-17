@@ -636,7 +636,7 @@ new-file-upload {
 .like-button-disabled {
     color: #acacac;
     cursor: default;
-    font-size: 1.4em;
+    font-size: 30px;
     align-self: center;
     position: absolute;
     -webkit-user-select: none;
@@ -644,12 +644,12 @@ new-file-upload {
     -ms-user-select: none;
     user-select: none;
     right: 21px;
-    bottom: 7px;
+    bottom: -2px;
 }
 
 .liked-button {
     color: #e2264d;
-    font-size: 1.4em;
+    font-size: 30px;
     align-self: center;
     position: absolute;
     -webkit-user-select: none;
@@ -666,7 +666,7 @@ new-file-upload {
     align-self: center;
     position: absolute;
     color: #888;
-    font-size: 1.4em;
+    font-size: 30px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -698,7 +698,7 @@ input[type="file"] {
     align-self: center;
     position: absolute;
     color: #888;
-    font-size: 1.3em;
+    font-size: 24px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
@@ -712,7 +712,7 @@ input[type="file"] {
     align-self: center;
     position: absolute;
     color: #888;
-    font-size: 1.3em;
+    font-size: 24px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;

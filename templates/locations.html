@@ -84,18 +84,18 @@
 
                         <span class="like-count">{{record.liked_count}}</span>
                         <a href="{{ url_for('likes', location_id=record._id, action='unlike') }}">
-                            <span class="liked-button">&#10084;</span></a>
+                            <span class="liked-button"><i class="fas fa-heart"></i></span></a>
                         <!-- If user is logged in and hasn't liked the item -->
                         {% elif session.user %}
                         <span class="like-count">{{record.liked_count}}</span>
                         <a href="{{  url_for('likes', location_id=record._id, action='like') }}">
-                            <span class="like-button">&#10084;</span></a>
+                            <span class="like-button"><i class="fas fa-heart"></i></span></a>
                         <!-- If user hasn't logged in -->
                         {% else %}
                         <span class="like-count">{{record.liked_count}}</span>
                         <a class="tooltipped" data-position="top"
                             data-tooltip="Sign In or Sign Up to like an item">
-                            <span class="like-button-disabled">&#10084;</span></a>
+                            <span class="like-button-disabled"><i class="fas fa-heart"></i></span></a>
                         {% endif %}
                         <div class="col s6 campsite-pic"><img src="{{record.file}}" alt="{{record.name}}"></div>
                     </div>

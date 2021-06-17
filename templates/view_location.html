@@ -80,15 +80,15 @@
         {% if session.user in location_id.liked_by %}
 
         <a href="{{ url_for('likes', location_id=location_id._id, action='unlike') }}">
-            <span class="liked-button">&#10084;</span></a>
+            <span class="liked-button"><i class="fas fa-heart"></i></span></a>
         <!-- If user is logged in and hasn't liked the item -->
         {% elif session.user %}
         <a href="{{  url_for('likes', location_id=location_id._id, action='like') }}">
-            <span class="like-button">&#10084;</span></a>
+            <span class="like-button"><i class="fas fa-heart"></i></span></a>
         <!-- If user hasn't logged in -->
         {% else %}
         <a class="tooltipped" data-position="top" data-tooltip="Sign In or Sign Up to like an item">
-            <span class="like-button-disabled">&#10084;</span></a>
+            <span class="like-button-disabled"><i class="fas fa-heart"></i></span></a>
         {% endif %}
         {% endif %}
     </div>
