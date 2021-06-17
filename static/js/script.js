@@ -236,15 +236,21 @@ if (el) {
 }
 
 // Sign up validation
-function validateSignup()
-{
-let x= document.forms["signup-form"]["username"].value;
-let y= document.forms["signup-form"]["password"].value;
- if (x==null || x=="" && y==null || y=="")
- {
-  alert("Username or Password must not be empty");
-  return false;
-  }
+function validateSignup(){
+  let error = "";
+  let illegalChars =/\W/g; // allow letters, numbers, and underscores
+  let username= document.forms["signup-form"]["username"].value;
+  let y= document.forms["signup-form"]["password"].value;
+    if (username == "") {
+        alert("Please enter Username");
+        return false;
+    } else if ((username.length < 5) || (username.length > 15)) {
+      alert("Username must have 5-15 characters");
+        return false;
+    } else if (illegalChars.test(username)) {
+      alert("Please enter valid Username. Use only number and letters. Email addresses cannot be used");
+      return false;
+    } 
  }
 
 // Location input validation
