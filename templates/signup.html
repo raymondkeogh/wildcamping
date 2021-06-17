@@ -1,11 +1,11 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <h3 class="center-align">Sign Up</h3>
-
-    <div class="row">
-        <form class="col s12 m8 offset-m2" method="POST" action="{{ url_for('signup') }}">
-            <div class="card-panel">
+   
+    <div class="row container">
+        <form class="col s12 m6 offset-m2" method="POST" action="{{ url_for('signup') }}">
+            <h3 class="center-align">Sign Up</h3>
+            <div class="center">
                 <!-- username text entry-->
                 <div class="row">
 					<div class="input-field col s12">
@@ -23,21 +23,22 @@
                     </div>
                 </div>
                 <!-- register -->
-                <div class="row">
-                    <button type="submit" class="col s12 btn-large orange darken-4 text-shadow">
+                <div class="row" id="login-btn">
+                    <button type="submit" class="col s12 btn-large orange darken-4 text-shadow center">
                         Sign Up <i class="fas fa-sign-in-alt"></i>
                     </button>
                 </div>
             </div>
+            <div class="row">
+                <div class="col s12">
+                    <p class="center-align">
+                        Already got an Account?
+                        <a href="{{ url_for('login') }}">Log in here!</a>
+                    </p>
+                </div>
+            </div>
         </form>
-    </div>
-      <div class="row">
-        <div class="col s12">
-            <p class="center-align">
-                Already got an Account?
-                <a href="{{ url_for('login') }}">Log in here!</a>
-            </p>
-        </div>
-    </div>
+</div>
+      
 
 {% endblock %}

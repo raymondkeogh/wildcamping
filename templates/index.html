@@ -11,13 +11,16 @@
     <section class="splash-page row" id="splash-page">
         <div class="col l6 s12">
             <h3>Find and Share the Best Camping Locations</h3>
+            <i class="fas fa-campground"></i>
                 <div class="center-align ">
                     <!-- search bar -->
                     <div class="searchBar">
                         <form role="form" method='POST' action="{{url_for('get_locations')}}">
-                            <div class="input-field">
+                            <div class="search-field">
                                 <input id="search" type="search" name="search" required>
-                                <label class="label-icon" for="search"><i class="fas fa-search"></i></label>
+                                <label class="label-icon" for="search"></label>
+                                <button type="submit" class="btn btn-default"
+                                alt="search button"><i class="fas fa-search"></i></button>
                             </div>
                         </form>
                     </div>
@@ -29,9 +32,10 @@
                     <!-- Card Image -->
                     <a href="{{ url_for('view_location', location_id=record._id )}}">
                     <div class="campsite-pic">
-                        <img src="{{record.file}}" alt="item image" class="card-image">
+                        <img src="{{record.file}}" alt="{{record.name}}" class="card-image">
                     </div>
                     <div class="campsite-description">
+                        <span class="location-title">{{ record.name }}</span>
                         <p class="description-ellipsis">{{ record.description}}</p>
                         <p><strong>Rating: </strong>
                             {% for x in range(0, record.rating | int) %}
@@ -71,9 +75,8 @@
                     <div class="place-card center">
 
                         <!-- Card Image -->
-                        test
                         <div class="campsite-pic">
-                            <img src="{{ location.file }}" alt="item image" class="card-image">
+                            <img src="{{ location.file }}" alt="{{location.name}}" class="card-image">
                         </div>
                         <div class="campsite-description">
                             <span class="location-title">{{ location.name }}</span>
@@ -85,15 +88,15 @@
                         </div>
                         <!-- If user is logged in and has liked the item  -->
                         {% if session.user in location.liked_by %}
-                        <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}" class="like-button">
+                        <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}">
                             <span class="liked-button">&#10084;</span></a>
                         <!-- If user is logged in and hasn't liked the item -->
                         {% elif session.user %}
-                        <a href="{{  url_for('likes', location_id=location._id, action='like') }}" class="like-button">
+                        <a href="{{  url_for('likes', location_id=location._id, action='like') }}">
                             <span class="like-button">&#10084;</span></a>
                         <!-- If user hasn't logged in -->
                         {% else %}
-                        <a class="like-button tooltipped" data-position="top"
+                        <a class="tooltipped" data-position="top"
                             data-tooltip="Sign In or Sign Up to like an item">
                             <span class="like-button-disabled">&#10084;</span></a>
                         {% endif %}

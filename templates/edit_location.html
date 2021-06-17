@@ -5,8 +5,9 @@
 
 {% block content %}
 <div class="container">
-    <h4>Edit Location</h4>
-    <div class="forms-container">
+    <div class="add-edit-title">
+    <h4>Edit Location</h4></div>
+    <div id="forms-container" class="col">
         <form id="map_search" method="POST" action="{{ url_for('map_search') }}" name="map_search"
             enctype="multipart/form-data">
             <!-- map input area -->

@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         type="text/css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" class="css" type="text/css">
-
+  
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
 
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/favicon.png') }}"/>
@@ -29,12 +29,12 @@
         <nav> 
             <div class="nav-wrapper">
                 <div class="brand-logo">
-                    <a href="{{url_for('home_page')}}"><span></span>Wild </span><i class="fas fa-campground"></i><span> Camping</span></a>
+                    <a href="{{url_for('home_page')}}"><span></span>Wild </span><i id="camp-logo" class="fas fa-campground"></i><span> Camping</span></a>
                 </div>
 
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
                 
-                <ul class="right hide-on-med-and-down">
+                <ul class="right hide-on-med-and-down" id="nav-list">
                     <!-- Display search bar in header if on locations.html for more space -->
                     {% block search %}
                     {% endblock %}

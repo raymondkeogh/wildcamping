@@ -19,7 +19,7 @@
         {% endif %}
         
         <div class="select-map-area col s12 m6">
-            <img src="{{location_id.file}}" alt="">
+            <img src="{{location_id.file}}" alt="{{location_id.name}}">
         </div>
         <div class="center-align col s12 m6">
             <div id="map" onload="viewLocationMap()">
@@ -49,9 +49,10 @@
                 </div>
                 {% endif %}
                 {% endif %}
-                <h5>{{location_id.name}}</h5>
+                <div class="location-title">
+                <h5>{{location_id.name}}</h5></div>
                 <div class="input-field col s12">
-                    {{location_id.description}}
+                   <div class="location-description"> {{location_id.description}}</div>
                     <div><strong>Latitude:</strong>  {{location_id.location.coordinates[1]}}<br>
                         <strong>Longitude:</strong>  {{location_id.location.coordinates[0]}}</div>
                     <div><strong>Rating: </strong>
@@ -78,15 +79,15 @@
         {% if session.user %}
         {% if session.user in location_id.liked_by %}
 
-        <a href="{{ url_for('likes', location_id=location_id._id, action='unlike') }}" class="like-button">
+        <a href="{{ url_for('likes', location_id=location_id._id, action='unlike') }}">
             <span class="liked-button">&#10084;</span></a>
         <!-- If user is logged in and hasn't liked the item -->
         {% elif session.user %}
-        <a href="{{  url_for('likes', location_id=location_id._id, action='like') }}" class="like-button">
+        <a href="{{  url_for('likes', location_id=location_id._id, action='like') }}">
             <span class="like-button">&#10084;</span></a>
         <!-- If user hasn't logged in -->
         {% else %}
-        <a class="like-button tooltipped" data-position="top" data-tooltip="Sign In or Sign Up to like an item">
+        <a class="tooltipped" data-position="top" data-tooltip="Sign In or Sign Up to like an item">
             <span class="like-button-disabled">&#10084;</span></a>
         {% endif %}
         {% endif %}

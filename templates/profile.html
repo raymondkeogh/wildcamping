@@ -117,14 +117,17 @@
                         <span class="fa fa-star checked"></span>
                         {% endfor %}</p>
                 </div>
+                
                 <!-- If user is logged in and has liked the item  -->
                 {% if session.user in location.liked_by %}
-                <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}" class="like-button">
+                <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}" >
                     <span class="liked-button">&#10084;</span></a>
+                
                 <!-- If user is logged in and hasn't liked the item -->
-                {% elif session.user %}
-                <a href="{{  url_for('likes', location_id=location._id, action='like') }}" class="like-button">
+                {% elif session.user not in location.liked_by %}
+                <a href="{{  url_for('likes', location_id=location._id, action='like') }}" >
                     <span class="like-button">&#10084;</span></a>
+                
                 <!-- If user hasn't logged in -->
                 {% else %}
                 <a class="like-button tooltipped" data-position="top" data-tooltip="Sign In or Sign Up to like an item">
