@@ -18,7 +18,7 @@
             </div>
         </form>
         <form method="POST" action="{{ url_for('edit_location', location=location_id._id)}}" name="user_location_form"
-            value="user_location_form" enctype="multipart/form-data" onsubmit="return validateForm()">
+            value="user_location_form" enctype="multipart/form-data" onsubmit="return GetFileSize('location')">
             <div class="row add_location_inputs">
                 <!-- Text input area -->
                 <div class="col s12 m6">

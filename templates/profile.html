@@ -40,7 +40,8 @@
                     <label for="media" class="custom-file-upload">
                     <i class="fas fa-upload"></i>Upload Image</label>
                     </label></div>
-                    <input id="media" name="file" type="file" onchange="form.submit()"value="{{user.file}}"/>
+                    <input id="media" name="file" type="file" onchange="GetFileSize('profile')" value="{{user.file}}"/>
+                    <p id="fp"></p>
                 </div> 
         </form>
         </div>

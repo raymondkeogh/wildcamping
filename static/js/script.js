@@ -128,35 +128,7 @@ function markerLocation() {
   document.getElementById('lng').value = currentLocation.lng(); //longitude
 }
 
-// Cloudinary File upload service
 
-// Fix found for null error https://stackoverflow.com/questions/26107125/cannot-read-property-addeventlistener-of-null
-var el = document.querySelector("form");
-if (el) {
-  addEventListener("submit", (event) => {
-    // event.preventDefault();
-    const fileInput = document.querySelector("#media");
-    const formData = new FormData();
-
-    formData.append("file", fileInput.files[0]);
-
-    const options = {
-      method: "POST",
-      body: formData,
-    };
-    
-    fetch("http://127.0.0.1:5000/upload", options)
-      .then((response) => {
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
-}
 
 
 // Draw map and add markers based on mongodb query results
@@ -242,16 +214,33 @@ function bindInfoWindow(marker, map, infowindow, html) {
   });
 }
 
-function validateForm(caller="") {
+//File Upload functions
+
+// Cloudinary File upload service
+// Fix found for null error https://stackoverflow.com/questions/26107125/cannot-read-property-addeventlistener-of-null
+var el = document.querySelector("form");
+if (el) {
+  addEventListener("submit", (event) => {
+    // event.preventDefault();
+    const fileInput = document.querySelector("#media");
+    const formData = new FormData();
+
+    formData.append("file", fileInput.files[0]);
+
+    const options = {
+      method: "POST",
+      body: formData,
+    };
+  });
+}
+
+function validateForm() {
 
   let location_name = document.forms["user_location_form"]["location_name"].value;
   let desc = document.forms["user_location_form"]["location_description"].value;
   let rating = document.forms["user_location_form"]["rating"].value;
   let coord = document.forms["user_location_form"]["lat"].value;
   
-  if (caller == "uploadingfile"){
-    return false;
-  }
   if (location_name == "") {
     alert("Please add a Name for your location");
     return false;
@@ -274,10 +263,9 @@ function validateForm(caller="") {
 
 // File Size validation
 // https://www.encodedna.com/jquery/get-file-size-before-uploading-using-javascript-and-jquery.html
-
-function GetFileSize() {
+let caller = ""
+function GetFileSize(caller) {
   let fi = document.getElementById('media'); // GET THE FILE INPUT.
-  let caller = "uploadingfile";
   // VALIDATE OR CHECK IF ANY FILE IS SELECTED.
   if (fi.files.length > 0) {
     // RUN A LOOP TO CHECK EACH SELECTED FILE.
@@ -291,12 +279,16 @@ function GetFileSize() {
       document.getElementById('fp').innerHTML =
         document.getElementById('fp').innerHTML + '<br /> ' +
         '<b>' + "File Size: " + Math.round((fsize / 1024)) + '</b> KB';
-     console.log(document.user_location_image)
      
     //  catch error if form has been unfilled and ensure validation is checked before submit is performed
-     if (validateForm(caller)) {
+    if (caller=="location"){
+      if (validateForm()) {
+        document.user_location_image.submit()
+       } 
+    }
+    else if (caller == "profile"){
       document.user_location_image.submit()
-     }  
+       } 
     }
   }
 }
