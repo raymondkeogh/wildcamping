@@ -12,13 +12,21 @@ $(document).ready(function () {
 
 });
 
+// https://stackoverflow.com/questions/23706003/changing-nav-bar-color-after-scrolling
+$(function () {
+  $(document).scroll(function () {
+    var $nav = $(".nav-wrapper");
+    $nav.toggleClass('scrolled', $(this).scrollTop() > $nav.height());
+  });
+});
+
 
 document.addEventListener('DOMContentLoaded', function () {
   let elems = document.querySelectorAll('.tooltipped');
   let instances = M.Tooltip.init(elems);
 });
 
-
+// Google map API Initialization with search feature
 let marker2 = false;
 
 function initAutocomplete() {
@@ -122,7 +130,7 @@ function markerLocation() {
 
 // Cloudinary File upload service
 
-// https://stackoverflow.com/questions/26107125/cannot-read-property-addeventlistener-of-null
+// Fix found for null error https://stackoverflow.com/questions/26107125/cannot-read-property-addeventlistener-of-null
 var el = document.querySelector("form");
 if (el) {
   addEventListener("submit", (event) => {
@@ -136,7 +144,7 @@ if (el) {
       method: "POST",
       body: formData,
     };
-
+    
     fetch("http://127.0.0.1:5000/upload", options)
       .then((response) => {
         return response.json();
@@ -234,13 +242,16 @@ function bindInfoWindow(marker, map, infowindow, html) {
   });
 }
 
-function validateForm() {
+function validateForm(caller="") {
 
   let location_name = document.forms["user_location_form"]["location_name"].value;
   let desc = document.forms["user_location_form"]["location_description"].value;
   let rating = document.forms["user_location_form"]["rating"].value;
   let coord = document.forms["user_location_form"]["lat"].value;
-
+  
+  if (caller == "uploadingfile"){
+    return false;
+  }
   if (location_name == "") {
     alert("Please add a Name for your location");
     return false;
@@ -266,25 +277,28 @@ function validateForm() {
 
 function GetFileSize() {
   let fi = document.getElementById('media'); // GET THE FILE INPUT.
-
+  let caller = "uploadingfile";
   // VALIDATE OR CHECK IF ANY FILE IS SELECTED.
   if (fi.files.length > 0) {
     // RUN A LOOP TO CHECK EACH SELECTED FILE.
     for (let i = 0; i <= fi.files.length - 1; i++) {
       let fsize = fi.files.item(i).size; // THE SIZE OF THE FILE.
-      console.log(fsize)
-
       if (fsize >= 10485760) {
         alert("File size too big, please upload a smaller file");
         return false;
       }
-
+      
       document.getElementById('fp').innerHTML =
         document.getElementById('fp').innerHTML + '<br /> ' +
         '<b>' + "File Size: " + Math.round((fsize / 1024)) + '</b> KB';
+     console.log(document.user_location_image)
+     
+    //  catch error if form has been unfilled and ensure validation is checked before submit is performed
+     if (validateForm(caller)) {
       document.user_location_image.submit()
+     }  
     }
   }
 }
 
-// google.maps.event.addDomListener(window, 'load', initialize);
+      // google.maps.event.addDomListener(window, 'load', initialize);
