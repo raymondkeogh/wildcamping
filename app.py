@@ -316,30 +316,35 @@ def upload_image(location):
 # Edit user created locations
 @app.route('/edit_location/<location>', methods=["GET", "POST"])
 def edit_location(location):
-    user = mongo.db.users.find_one(
-        {"username": session["user"]})
-    # user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=&v=weekly"
+    # Checks user is logged in
+    if "user" in session:
+        # Gets session user
+        session_user = session["user"]
+        user = mongo.db.users.find_one(
+            {"username": session["user"]})
 
-    location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=places&v=weekly"
-  
-    db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
-    if request.method == "POST":
-        lat = float(request.form.get("lat"))
-        lng = float(request.form.get("lng"))
-        new_location = {
-            "name": request.form.get("location_name"),
-            "description": request.form.get("location_description"),
-            "rating": request.form.get("rating"),
-            "location": {"type": "Point", "coordinates": [lng, lat]},
-            "posted_by": session["user"]
-        }
-        mongo.db.locations.update_one(
-            {"_id": ObjectId(location)}, {"$set": new_location})
-        flash("Location Updated!")
-        return redirect(url_for("profile_page"))
-    else:
-        return render_template("edit_location.html", location_id=db_location, user=user, location_api=location_api)
-
+        location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=places&v=weekly"
+    
+        db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
+        if db_location["posted_by"] == session_user:
+            if request.method == "POST":
+                lat = float(request.form.get("lat"))
+                lng = float(request.form.get("lng"))
+                new_location = {
+                    "name": request.form.get("location_name"),
+                    "description": request.form.get("location_description"),
+                    "rating": request.form.get("rating"),
+                    "location": {"type": "Point", "coordinates": [lng, lat]},
+                    "posted_by": session["user"]
+                }
+                mongo.db.locations.update_one(
+                    {"_id": ObjectId(location)}, {"$set": new_location})
+                flash("Location Updated!")
+                return redirect(url_for("profile_page"))
+            else:
+                return render_template("edit_location.html", location_id=db_location, user=user, location_api=location_api)
+        return redirect(render_template("404.html"))
+    return redirect(render_template("404.html"))
 
 # 404 Page
 # https://stackoverflow.com/questions/29516093/how-to-redirect-to-a-external-404-page-python-flask
