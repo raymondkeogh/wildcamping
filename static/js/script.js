@@ -275,11 +275,9 @@ function GetFileSize(caller) {
         alert("File size too big, please upload a smaller file");
         return false;
       }
-      
       document.getElementById('fp').innerHTML =
         document.getElementById('fp').innerHTML + '<br /> ' +
         '<b>' + "File Size: " + Math.round((fsize / 1024)) + '</b> KB';
-     
     //  catch error if form has been unfilled and ensure validation is checked before submit is performed
     if (caller=="location"){
       if (validateForm()) {

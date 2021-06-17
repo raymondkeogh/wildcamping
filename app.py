@@ -278,11 +278,8 @@ def view_location(location_id):
 @app.route('/upload_image/<location>', methods=["GET", "POST"])
 def upload_image(location):
     profile_request = "https://8080-amethyst-crow-u769d91j.ws-eu08.gitpod.io/profile_page"
-    profile_request_heroku = "https://wild-camping.herokuapp.com/profile_page"
-    if (True):
-        print("************************")
-        print("WHAYYYYYYYY")
-        print("************************")
+    profile_request_heroku = "https://wild-camping.herokuapp.com/profile_page" 
+    if (request.referrer == profile_request or request.referrer == profile_request_heroku):
         db_location = mongo.db.users.find_one({"_id": ObjectId(location)})
     else:
         db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})

@@ -18,7 +18,7 @@
             </div>
         </form>
         <form method="POST" action="{{ url_for('edit_location', location=location_id._id)}}" name="user_location_form"
-            value="user_location_form" enctype="multipart/form-data" onsubmit="return GetFileSize('location')">
+            value="user_location_form" enctype="multipart/form-data" onchange="return GetFileSize('location')">
             <div class="row add_location_inputs">
                 <!-- Text input area -->
                 <div class="col s12 m6">
@@ -81,17 +81,17 @@
             </div>
         </form>
         <form method="POST" action="{{ url_for('upload_image', location=location_id._id)}}" id="user_location_image"
-            name="user_location_image" value="user_location_image" enctype="multipart/form-data">
-            <div class="col s12" id="upload">
-                <label for="media" class="new-file-upload btn center">
-                    <i class="fas fa-upload"></i>Upload Image</label>
-                </label>
-                <input id="media" name="file" type="file" value="{{location_id.file}}"
-                    onchange="GetFileSize()" />{{location_id.file}}
-                <p id="fp"></p>
-            </div>
-        </form>
-    </div>
+        name="user_location_image" value="user_location_image" enctype="multipart/form-data">
+        <div class="col s12" id="upload">
+            <label for="media" class="new-file-upload btn center">
+                <i class="fas fa-upload"></i>Upload Image</label>
+            </label>
+            <input id="media" name="file" type="file" value="{{location_id.file}}"
+                onchange="GetFileSize('profile')" />{{location_id.file}}
+            <p id="fp"></p>
+        </div>
+    </form>    
+</div>
 </div>
 
 {% endblock%}
