@@ -177,7 +177,7 @@ nav .brand-logo {
             align-items: center;
     position: relative;
     border: 1px solid black;
-    max-height: 314px;
+    height: 300px;
 }
 
 .description-ellipsis {
@@ -383,6 +383,17 @@ nav .brand-logo {
     margin: auto;
 }
 
+.signup-login-help a{
+    color: #02138a;
+    background-color: #ffffff99;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.signup-login-help span{
+    margin: 10px;
+}
+
 .input-field .prefix~input {
     border-radius: 15px;
     padding-left: 10px;
@@ -538,7 +549,7 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 
 #upload .btn {
     background-color: #ff8282;
-    margin-left: 40px;
+    margin-left: 58px;
 }
 
 

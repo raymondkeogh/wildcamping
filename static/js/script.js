@@ -250,7 +250,6 @@ function validateForm() {
   }
 }
 
-
 // File Size validation
 // https://www.encodedna.com/jquery/get-file-size-before-uploading-using-javascript-and-jquery.html
 let caller = "";

@@ -27,8 +27,8 @@
     <div class="row " id="user_profile">
         <!-- Text input area -->
         <div class="col s12 m3">
-            <form method="POST" action="{{ url_for('upload_image', location=user._id)}}" id="user_location_image"
-                name="user_location_image" enctype="multipart/form-data">
+            <form method="POST" action="{{ url_for('upload_profile_image', location=user._id)}}"
+                id="user_location_image" name="user_location_image" enctype="multipart/form-data">
                 <div class="profile-pic-upload">
                     <div id="placeholder">
                         {% if (user.file) %}
@@ -39,7 +39,7 @@
                         <label for="media" class="custom-file-upload">
                             <i class="fas fa-upload"></i>Upload Image</label>
                         </label></div>
-                    <input id="media" name="file" type="file" onchange="GetFileSize('profile')"/>
+                    <input id="media" name="file" type="file" onchange="GetFileSize('profile')" />
                     <p id="fp"></p>
                 </div>
             </form>
@@ -73,7 +73,6 @@
                     </div>
                     <div class="campsite-description">
                         <span class="location-title">{{ location.name }}</span>
-                        <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
                         <p class="description-ellipsis">
                             {{ location.description}}
                         </p>
@@ -81,11 +80,11 @@
                             {% for x in range(0, location.rating | int) %}
                             <span class="fa fa-star checked"></span>
                             {% endfor %}</p>
+                            {{location.posted_by}}
                     </div>
                 </div>
             </div>
         </a>
-
         {% else %}
         <div class="no-content-banner">
             <h6>No posts yet! <a href="{{url_for('user_location')}}">Add one here&nbsp; <i
@@ -111,7 +110,6 @@
                     </div>
                     <div class="campsite-description">
                         <span class="location-title">{{ location.name }}</span>
-                        <!-- <p class="location_longlat"> {{ location.location.coordinates }}</p> -->
                         <p class="description-ellipsis">
                             {{ location.description}}</p>
                         <p><strong>Rating: </strong>
@@ -132,8 +130,7 @@
 
                     <!-- If user hasn't logged in -->
                     {% else %}
-                    <a class="tooltipped" data-position="top"
-                        data-tooltip="Sign In or Sign Up to like an item">
+                    <a class="tooltipped" data-position="top" data-tooltip="Sign In or Sign Up to like an item">
                         <span class="like-button-disabled"><i class="fas fa-heart"></i></span></a>
                     {% endif %}
                 </div>
@@ -147,7 +144,6 @@
             </a>
             </h6>
         </div>
-
         {% endfor %}
     </div>
 </div>

@@ -79,9 +79,10 @@
                             <strong>Posted by:</strong> {{ record.posted_by.capitalize()}}<br>
                             <a class="waves-effect waves-light btn" href="{{ url_for('view_location', location_id=record._id )}}">More info</a>
                         </div>
+
+                        <!-- Code for Like button logic https://github.com/LigaMoon/swap-clothes-app/ -->
                         <!-- If user is logged in and has liked the item  -->
                         {% if session.user in record.liked_by %}
-
                         <span class="like-count">{{record.liked_count}}</span>
                         <a href="{{ url_for('likes', location_id=record._id, action='unlike') }}">
                             <span class="liked-button"><i class="fas fa-heart"></i></span></a>

@@ -139,7 +139,6 @@ def login():
         session_user = session["user"]
         user = mongo.db.users.find_one(
             {"username": session["user"]})
-        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
 
     
     if request.method == "POST":
@@ -179,7 +178,8 @@ def profile_page():
                 "sum": {"$sum": "$liked_count"}}}])
     posted_count = posted_locations.count()
     my_liked_count = liked_locations.count()
-    return render_template("profile.html", user=user, liked_locations=liked_locations, popularity=popularity, posted_locations=posted_locations, posted_count=posted_count, my_liked_count=my_liked_count)
+    return render_template("profile.html", user=user,
+                           liked_locations=liked_locations, popularity=popularity, posted_locations=posted_locations, posted_count=posted_count, my_liked_count=my_liked_count)
 
 
 @app.route("/logout")
@@ -189,17 +189,13 @@ def logout():
     return redirect(url_for("login"))
 
 @app.route("/map_search", methods=["POST"])
-def map_search():
-    
+def map_search(): 
     return ('', 204)
-
 
 
 # Input new custom loctions for user
 @app.route("/user_location", methods=["GET", "POST"])
 def user_location():
-
-
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=places&v=weekly"
     user = mongo.db.users.find_one(
         {"username": session["user"]})
@@ -235,17 +231,22 @@ def user_location():
             "liked_count": 0
         }
 
-        if db_location == None:
+        if db_location is None:
             mongo.db.locations.insert_one(new_location)
         else:
             mongo.db.locations.update(
                 {"_id": ObjectId(location)}, new_location)
         flash("Location Added, Thanks for you input")
 
-        return redirect(url_for("profile_page", user=user, location_id=db_location))
+        return redirect(url_for("profile_page",
+                                user=user,
+                                location_id=db_location))
     else:
         return render_template(
-            "user_location.html", location_id=db_location, user=user, location_api=location_api)
+            "user_location.html",
+            location_id=db_location,
+            user=user,
+            location_api=location_api)
 
 
 # Take location_id and action from location cards and add like/unlike to db
@@ -279,20 +280,14 @@ def delete_post(location):
 def view_location(location_id):
     location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=searchResultMap&libraries=&v=weekly"
     location = mongo.db.locations.find_one({"_id": ObjectId(location_id)})
-    return render_template("view_location.html", location_id=location, location_api=location_api)
+    return render_template("view_location.html",
+                           location_id=location, location_api=location_api)
 
 
 # Allows for seperate uploads of photos whether updating profile or creating new one
 @app.route('/upload_image/<location>', methods=["GET", "POST"])
 def upload_image(location):
-   
-    profile_request = "https://8080-amethyst-crow-u769d91j.ws-eu08.gitpod.io/profile_page"
-    profile_request_heroku_https = "http://wild-camping.herokuapp.com/profile_page"
-    profile_request_heroku = "https://wild-camping.herokuapp.com/profile_page"
-    if (True):
-        db_location = mongo.db.users.find_one({"_id": ObjectId(location)})
-    else:
-        db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
+    db_location = mongo.db.locations.find_one({"_id": ObjectId(location)})
     user = mongo.db.users.find_one(
         {"username": session["user"]})
     user_location_api = f"https://maps.googleapis.com/maps/api/js?key={app.api_key}&callback=initAutocomplete&libraries=&v=weekly"
@@ -310,17 +305,38 @@ def upload_image(location):
             upload_result = cloudinary.uploader.upload(file_to_upload)
             app.logger.info(upload_result)
             app.logger.info(type(upload_result))
-        if (request.referrer == profile_request or
-                request.referrer == profile_request_heroku):
-            mongo.db.users.update_one({"_id": ObjectId(location)}, {
-                                      "$set": {"file": upload_result["url"]}})
-            return redirect(url_for("profile_page"))
-        else:
             mongo.db.locations.update_one({"_id": ObjectId(location)}, {
                                           "$set": {"file": upload_result["url"]}})
             return ('', 204)
 
-    return render_template("edit_location.html", location_id=db_location, user=user, user_location_api=user_location_api)
+    return render_template("locations.html", location_id=db_location, user=user, user_location_api=user_location_api)
+
+
+
+# Allows for seperate uploads of photos whether updating profile or creating new one
+@app.route('/upload_profile_image/<location>', methods=["GET", "POST"])
+def upload_profile_image(location):
+    user = mongo.db.users.find_one(
+        {"username": session["user"]})
+    if request.method == "POST":
+        # Upload file to Cloudinary
+        app.logger.info('in upload route')
+        cloudinary.config(
+            cloud_name=os.getenv('CLOUD_NAME'),
+            api_key=os.getenv('CLOUD_API_KEY'),
+            api_secret=os.getenv('CLOUD_API_SECRET'))
+        upload_result = None
+        file_to_upload = request.files['file']
+        app.logger.info('%s file_to_upload', file_to_upload)
+        if file_to_upload:
+            upload_result = cloudinary.uploader.upload(file_to_upload)
+            app.logger.info(upload_result)
+            app.logger.info(type(upload_result))
+            mongo.db.users.update_one({"_id": ObjectId(location)}, {
+                                      "$set": {"file": upload_result["url"]}})
+            return redirect(url_for("profile_page"))
+
+    return redirect(url_for("profile_page"))
 
 
 # Edit user created locations
@@ -353,9 +369,13 @@ def edit_location(location):
                 flash("Location Updated!")
                 return redirect(url_for("profile_page"))
             else:
-                return render_template("edit_location.html", location_id=db_location, user=user, location_api=location_api)
+                return render_template("edit_location.html",
+                                       location_id=db_location,
+                                       user=user,
+                                       location_api=location_api)
         return redirect(render_template("404.html"))
     return redirect(render_template("404.html"))
+
 
 # 404 Page
 # https://stackoverflow.com/questions/29516093/how-to-redirect-to-a-external-404-page-python-flask
@@ -367,4 +387,4 @@ def page_not_found(e):
 if __name__ == "__main__":
     app.run(host=os.environ.get("IP"),
             port=int(os.environ.get("PORT")),
-            debug=True)
+            debug=False)
