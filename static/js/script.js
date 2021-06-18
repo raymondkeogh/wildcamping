@@ -85,7 +85,6 @@ function initAutocomplete() {
       );
 
       if (place.geometry.viewport) {
-        // Only geocodes have viewport.
         bounds.union(place.geometry.viewport);
       } else {
         bounds.extend(place.geometry.location);
@@ -128,18 +127,17 @@ function markerLocation() {
 }
 
 
-
-
+let map;
 // Draw map and add markers based on mongodb query results
 function searchResultMap() {
-  let locationsString = $('#search-coordinates').text()
+  let locationsString = $('#search-coordinates').text();
   let firstString = locationsString.replace(/\s+/g, ' ').trim();
   let nLocationsString = firstString.replace(",]}", "]}");
   let locationsObj = JSON.parse(nLocationsString);
   let locations = locationsObj.coordinates;
   let loclen = locations.length;
-  centerLat = locations[Math.floor(loclen / 2)].lat;
-  centerLng = locations[Math.floor(loclen / 2)].lng;
+  let centerLat = locations[Math.floor(loclen / 2)].lat;
+  let centerLng = locations[Math.floor(loclen / 2)].lng;
 
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 8,
@@ -176,34 +174,6 @@ function searchResultMap() {
         "</div>"
       );
     });
-  // figuure out how to add triple quotes in above bindinfowindow
-  // "<a href=\"{{ url_for('view_location', location_id="+ feature._id +")}}\">" +
-
-
-  // function mark_pins(trucks) {
-  //     let geocoder = new google.maps.Geocoder();
-  //     let markersArray = [];
-  //     for (i = 0; i < loclen; i++) {
-  //         // iterate each address
-  //         geocoder.geocode({
-  //             'address': trucks[i]['address']
-  //         }, function (results, status) {
-  //             if (status == google.maps.GeocoderStatus.OK) {
-  //                 let marker = new google.maps.Marker({
-  //                     map: map,
-  //                     position: results[0].geometry.location
-  //                 });
-  //                 marker.setMap(map);
-  //                 bounds.extend(results[0].geometry.location);
-  //                 map.fitBounds(bounds);
-  //             } else {
-  //                 alert('Internal error: ' + status + address);
-  //             }
-  //         });
-  //     }
-  // }
-  // console.log(centerOfmyAdd);
-
 }
 
 function bindInfoWindow(marker, map, infowindow, html) {
@@ -213,10 +183,7 @@ function bindInfoWindow(marker, map, infowindow, html) {
   });
 }
 
-
-
 //File Upload functions
-
 // Cloudinary File upload service
 // Fix found for null error https://stackoverflow.com/questions/26107125/cannot-read-property-addeventlistener-of-null
 var el = document.querySelector("form");
@@ -240,7 +207,6 @@ function validateSignup(){
   let error = "";
   let illegalChars =/\W/g; // allow letters, numbers, and underscores
   let username= document.forms["signup-form"]["username"].value;
-  let y= document.forms["signup-form"]["password"].value;
     if (username == "") {
         alert("Please enter Username");
         return false;
@@ -287,7 +253,7 @@ function validateForm() {
 
 // File Size validation
 // https://www.encodedna.com/jquery/get-file-size-before-uploading-using-javascript-and-jquery.html
-let caller = ""
+let caller = "";
 function GetFileSize(caller) {
   let fi = document.getElementById('media'); // GET THE FILE INPUT.
   // VALIDATE OR CHECK IF ANY FILE IS SELECTED.
@@ -305,16 +271,12 @@ function GetFileSize(caller) {
     //  catch error if form has been unfilled and ensure validation is checked before submit is performed
     if (caller=="location"){
       if (validateForm()) {
-        document.user_location_image.submit()
+        document.user_location_image.submit();
        } 
     }
     else if (caller == "profile"){
-      document.user_location_image.submit()
+      document.user_location_image.submit();
        } 
     }
   }
 }
-
-
-
-      // google.maps.event.addDomListener(window, 'load', initialize);
