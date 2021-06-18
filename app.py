@@ -133,6 +133,15 @@ def signup():
 # Login function
 @app.route("/login", methods=["GET", "POST"])
 def login():
+
+    if "user" in session:
+        # Gets session user
+        session_user = session["user"]
+        user = mongo.db.users.find_one(
+            {"username": session["user"]})
+        print("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$")
+
+    
     if request.method == "POST":
         # Check if username already exists
         existing_user = mongo.db.users.find_one(
@@ -317,6 +326,7 @@ def upload_image(location):
 @app.route('/edit_location/<location>', methods=["GET", "POST"])
 def edit_location(location):
     # Checks user is logged in
+    # Code Thanks to Jack T in the CodeInstitute
     if "user" in session:
         # Gets session user
         session_user = session["user"]

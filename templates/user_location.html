@@ -71,15 +71,14 @@
                     <div class="col s12">
                         <div>
                             <input type="text" name="lat" id="lat" readonly="yes"
-                                value="{%if location_id %}{{ location_id.location.coordinates[1]|round(3)  }}{% endif %}"
+                               
                                 required>
-                            <label for="lat">Latitude</label>
+                            <label  value="{%if location_id %}{{ location_id.location.coordinates[1]|round(3)  }}{% endif %}" for="lat">Latitude</label>
                         </div>
                         <div>
-                            <input type="text" name="lng" id="lng" readonly="yes"
-                                value="{%if location_id %}{{ location_id.location.coordinates[0]|round(3)  }}{% endif %}"
-                                required>
-                            <label for="lng">Longitude</label>
+                            <input type="text" name="lng" id="lng" readonly="yes" required>
+                            <input type="text" name="lng" id="lng" readonly="yes" required>
+                            <label  for="lng">Longitude</label>
                         </div>
                     </div>
                     <div class="col s12">

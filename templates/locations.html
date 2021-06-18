@@ -7,7 +7,7 @@
         <div class="col s12 ">
             <div class="row" id="topbarsearch">
                 <div class="searchBar">
-                    <form role="form" method='POST' action="{{url_for('get_locations')}}">
+                    <form method='POST' action="{{url_for('get_locations')}}">
                         <div class="input-field col s6 s12">
                             <input id="search" type="search" name="search" placeholder="Search locations" required>
                             <label class="label-icon" for="search"></label><button type="submit" class="btn btn-default"
@@ -26,15 +26,14 @@
     <div class="col s12">
          <!-- search bar -->
                     <div class="hiding-search searchBar center">
-                        <form role="form" method='POST' action="{{url_for('get_locations')}}">
+                        <form method='POST' action="{{url_for('get_locations')}}">
                             <div class="input-field col s6 s12">
                                 <input id="search" type="search" name="search" placeholder="Search locations" required>
                                 <label class="label-icon" for="search"></label>
                             </div>
                         </form>
                     </div>
-        <div class="search_count center">
-            TEST
+        <div class="search_count center">   
                 <h5>Search Results: {{search_count}}</h5>
                 {% if search_count == 0 %}
                 <img src="{{ url_for('static', filename='images/searching.png') }}" alt="inspector clueso picture" class="">

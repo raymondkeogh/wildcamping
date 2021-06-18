@@ -12,25 +12,24 @@
         <div class="col l6 s12">
             <h3>Find and Share the Best Camping Locations</h3>
             <i class="fas fa-campground"></i>
-                <div class="center-align ">
-                    <!-- search bar -->
-                    <div class="searchBar">
-                        <form role="form" method='POST' action="{{url_for('get_locations')}}">
-                            <div class="search-field">
-                                <input id="search" type="search" name="search" required>
-                                <label class="label-icon" for="search"></label>
-                                <button type="submit" class="btn btn-default"
-                                alt="search button"><i class="fas fa-search"></i></button>
-                            </div>
-                        </form>
-                    </div>
+            <div class="center-align ">
+                <!-- search bar -->
+                <div class="searchBar">
+                    <form method='POST' action="{{url_for('get_locations')}}">
+                        <div class="search-field">
+                            <input id="search" type="search" name="search" required>
+                            <label class="label-icon" for="search"></label>
+                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                        </div>
+                    </form>
                 </div>
+            </div>
         </div>
         <div class="col l6 s12 card-container">
             {% for record in random_location%}
-                <div class="card place-card center">
-                    <!-- Card Image -->
-                    <a href="{{ url_for('view_location', location_id=record._id )}}">
+            <div class="card place-card center">
+                <!-- Card Image -->
+                <a href="{{ url_for('view_location', location_id=record._id )}}">
                     <div class="campsite-pic">
                         <img src="{{record.file}}" alt="{{record.name}}" class="card-image">
                     </div>
@@ -43,9 +42,9 @@
                             {% endfor %}</p>
                     </div>
                 </a>
-                  
-                </div>
-                {% endfor %}
+
+            </div>
+            {% endfor %}
         </div>
     </section>
     <section class="index-map-section center-align row ">
@@ -55,15 +54,15 @@
             { "coordinates":[
             {% for location in locations %}
             { "lat": {{location.location.coordinates[1]}},
-              "lng": {{location.location.coordinates[0]}},
-              "description": "{{location.description}}",
-              "file": "{{location.file}}",
-              "name": "{{location.name}}" },{% endfor %}]}
+            "lng": {{location.location.coordinates[0]}},
+            "description": "{{location.description}}",
+            "file": "{{location.file}}",
+            "name": "{{location.name}}" },{% endfor %}]}
         </div>
     </section>
     <!-- I used the like button idea from this template to help me create my own one
     https://github.com/LigaMoon/swap-clothes-app/blob/main/templates/index.html -->
-    <section class="topspots" id="topspots">
+    <div class="topspots" id="topspots">
         <!-- use .rewind() to allow locations cursor be used again for second loop -->
         <div style="display: none">{{ locations.rewind() }}
         </div>
@@ -71,9 +70,9 @@
         <div class="row locations-row">
             {% for location in locations %}
             <div class="col s12 m6 l4 top-spot-item-card">
-                <a href="{{ url_for('view_location', location_id=location._id )}}">
-                    <div class="place-card center">
 
+                <div class="place-card center">
+                    <a href="{{ url_for('view_location', location_id=location._id )}}">
                         <!-- Card Image -->
                         <div class="campsite-pic">
                             <img src="{{ location.file }}" alt="{{location.name}}" class="card-image">
@@ -86,30 +85,32 @@
                                 <span class="fa fa-star checked"></span>
                                 {% endfor %}</p>
                         </div>
-                        <!-- If user is logged in and has liked the item  -->
-                        {% if session.user in location.liked_by %}
-                        <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}">
-                            <span class="liked-button"><i class="fas fa-heart"></i></span></a>
-                        <!-- If user is logged in and hasn't liked the item -->
-                        {% elif session.user %}
-                        <a href="{{  url_for('likes', location_id=location._id, action='like') }}">
-                            <span class="like-button"><i class="fas fa-heart"></i></span></a>
-                        <!-- If user hasn't logged in -->
-                        {% else %}
-                        <a class="tooltipped" data-position="top"
-                            data-tooltip="Sign In or Sign Up to like an item">
-                            <span class="like-button-disabled"><i class="fas fa-heart"></i></span></a>
-                        {% endif %}
-                    </div>
-                </a>
+                    </a>
+
+                    <!-- If user is logged in and has liked the item  -->
+                    {% if session.user in location.liked_by %}
+                    <a href="{{ url_for('likes', location_id=location._id, action='unlike') }}">
+                        <span class="liked-button"><i class="fas fa-heart"></i></span></a>
+                    <!-- If user is logged in and hasn't liked the item -->
+                    {% elif session.user %}
+                    <a href="{{  url_for('likes', location_id=location._id, action='like') }}">
+                        <span class="like-button"><i class="fas fa-heart"></i></span></a>
+                    <!-- If user hasn't logged in -->
+                    {% else %}
+                    <a class="tooltipped" data-position="top" data-tooltip="Sign In or Sign Up to like an item">
+                        <span class="like-button-disabled"><i class="fas fa-heart"></i></span></a>
+                    {% endif %}
+                </div>
+
             </div>
             {% endfor %}
         </div>
         <div class="top-spot-footer">
-        <a href="{{ url_for('get_locations')}}">
-            <div class="btn view-more center center-align">View more</div></a>
+            <a href="{{ url_for('get_locations')}}">
+                <div class="btn view-more center center-align">View more</div>
+            </a>
         </div>
-    </section>
+    </div>
 </div>
 
 {% endblock %}

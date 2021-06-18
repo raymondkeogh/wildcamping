@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
@@ -10,6 +10,9 @@
     <!-- <link rel="preconnect" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
         type="text/css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;1,300&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" class="css" type="text/css">
   
     <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
@@ -28,7 +31,7 @@
         <nav> 
             <div class="nav-wrapper">
                 <div class="brand-logo">
-                    <a href="{{url_for('home_page')}}"><span></span>Wild </span><i id="camp-logo" class="fas fa-campground"></i><span> Camping</span></a>
+                    <a href="{{url_for('home_page')}}"><span>Wild  </span><i id="camp-logo" class="fas fa-campground"></i><span>Camping</span></a>
                 </div>
 
                 <a href="#" data-target="mobile-demo" class="sidenav-trigger right"><i class="fas fa-bars"></i></a>
@@ -64,7 +67,7 @@
             {% endif %}
         </ul>
     </header>
-    <section>
+    <div>
         <!-- Flash Messages -->
         {% with messages = get_flashed_messages()%}
         {% if messages %}
@@ -75,7 +78,7 @@
         {% endfor %}
         {% endif %}
         {% endwith%}
-    </section>
+    </div>
     {% block content %}
     {% endblock %}
 

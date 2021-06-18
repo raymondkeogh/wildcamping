@@ -8,7 +8,7 @@
         <div class="col s12 ">
             <div class="row" id="topbarsearch">
                 <div class="searchBar">
-                    <form role="form" method='POST' action="{{url_for('get_locations')}}">
+                    <form method='POST' action="{{url_for('get_locations')}}">
                         <div class="input-field col s6 s12">
                             <input id="search" type="search" name="search" placeholder="Search locations" required>
 
@@ -28,7 +28,7 @@
         <!-- Text input area -->
         <div class="col s12 m3">
             <form method="POST" action="{{ url_for('upload_image', location=user._id)}}" id="user_location_image"
-                name="user_location_image" value="user_location_image" enctype="multipart/form-data">
+                name="user_location_image" enctype="multipart/form-data">
                 <div class="profile-pic-upload">
                     <div id="placeholder">
                         {% if (user.file) %}
@@ -39,12 +39,12 @@
                         <label for="media" class="custom-file-upload">
                             <i class="fas fa-upload"></i>Upload Image</label>
                         </label></div>
-                    <input id="media" name="file" type="file" onchange="GetFileSize('profile')" value="{{user.file}}" />
+                    <input id="media" name="file" type="file" onchange="GetFileSize('profile')"/>
                     <p id="fp"></p>
                 </div>
             </form>
         </div>
-        <div class="col s12 m9">
+        <div class="col s12 m7" id="profile-text">
             <h5>{{ user.username.capitalize() }}'s Profile </h5>
             <div class="profile-stats">
                 {% for num in popularity%}
@@ -88,7 +88,7 @@
 
         {% else %}
         <div class="no-content-banner">
-            <h6>No posts yet! <a href="{{url_for('user_location')}}" alt="add new location">Add one here&nbsp; <i
+            <h6>No posts yet! <a href="{{url_for('user_location')}}">Add one here&nbsp; <i
                         class="fas fa-plus-square"></i> </a></h6>
         </div>
         {% endfor %}
@@ -155,7 +155,5 @@
 {% endblock%}
 
 {% block scripts %}
-<script src="{{user_location_api}}" async>
-</script>
 
 {% endblock %}

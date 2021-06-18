@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+Tammudu+2&family=Roboto&display=swap');
-
 body {
     background-image: url(../../static/images/background.png);
     background-size: cover;
@@ -254,6 +252,10 @@ nav .brand-logo {
     text-align: center;
     margin: 10px;
     font-size: 1.4em
+}
+
+#profile-text  {
+    margin-left: 50px;
 }
 
 #placeholder {
@@ -740,7 +742,7 @@ input[type="file"] {
 
 #upload {
     white-space: nowrap;
-    width: 60%;
+    width: 332px;
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 20px 0 20px 0;
