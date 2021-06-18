@@ -4,7 +4,7 @@
 [2]:  https://raymondkeogh.github.io/wildcamping/ "Redirect to homepage"
 
 
-![image](assets/images/<multi-screenshot>)
+![image](static/images/siterender.png)
 
 
 **WildCamping Website**
@@ -116,30 +116,25 @@ The full selection of wireframes can be viewed in PDF for [here](static/images/w
 
 - **Profile Page** – Displays user profile bio and saved locations.
 
-<****>
-
-
-**Constraints:**  
-
-<****>
-
-----------
 
 **STRUCTURE**
 
 ----------
 
-1.	The Game - The homepage will contain the main game simulation and all of the controlling elements. It should be immediately apparent to the user how to interact with the site. There will be a canvas section that takes input from the users mouse or touch input to fill the arrays initial state. A small box will show the number of generations/cycles the simulation has completed. There will be buttons for 'Start' 'Pause', 'Clear', 'Randomize' and 'Rainbow' as well as a colour choosing element and a speed slider. 
-    - As an external user I want to easily interactive with the game.
-    - As an external user I want to be able to start and stop the game easily.
-    - As a site owner I want to present a clean and engaging experience to the user.
- 
-        ![](assets/testing/<****>.png). 
+1.	The spash page of Wild Camping will disiplay a random card selection of some of the locations in the database. Scrolling down will review a map with markers to these locations. There will be a selection 6 cards below this with location pictures and previews of the descriptions. The search bar will be at the top of the page and a search button
+    - As an external user I want to find good camping locations.
+    - As an external user I want to share information on a good camping location.
 
-2. The Menu - This will be located top right of the screen offering the user choices between 'Play' and 'About the game'. 
+2. The Menu will display if not logged in "Home", "Login" and "SignUp" and if logged in will display "Add Location", "Profile" "Home and "Logout"
 
-   - As a site owner I would like the user to interact easily with the site. 
 
+3. The Profile page will Be broken into three sections. A profile card with some stats about the users activity. A section for posts that the user has created and section with posts that the user has liked. 
+    - As an external user I create a collection of my favourite camping locations.
+
+4. The View location page will be a simple card displaying the Name, Description, Rating, Location and Picture of the campsite. This card will display a like button to logged in users and edit or delete to the user who created the post.
+
+5. The Add Location page will have a simple form with fields for Name and Description, a star rating selection area, a map to search for the location and drop a pin, a button to upload a photo and a submit button. 
+    - As a site owner I want create a knowledge bank of good camping locations
 
 
 ----------
@@ -148,27 +143,24 @@ The full selection of wireframes can be viewed in PDF for [here](static/images/w
 
 ----------
 
-This website is primarily to allow people engage and enjoy the simulation.  With that in mind the site will veer towards a more playful theme. The simulation itself is reminiscent of earlier computer game graphics and so retro themes can be employed to reinforce this. 
 
 **Colours:** 
-
- - An earthy colour pallette will be used to aligning with the theme of the site. 
-
+    - I have got gone for muted colours with this site. I used the nighttime image of the campsite used in the background for inspiration. The dark blue or navy colours evoke the atmospheric feeling of being under the night sky. 
 **Typography:** 
 
- - <****>. 
+    -  I chose the 'Baloo Tammudu 2' as the main font for its soft lines. 'Roboto' is the backup font, not so soft but similar in structure. 
 
 **Effects:**
 
- - <****>
+ -  
 
 **Imagery:** 
 
- - <****>
+ - The imagery on the site is quite simple, using the nighttime image of campsite as the background reinforces the sites function. 
 
 **Deviations from design:**
 
-<****>
+- There were minor layout deviations from the original design and the homepage was redesigned to include more information for the user. 
 
 
 Technologies
@@ -184,6 +176,10 @@ Technologies
  - [**GitHub**](https://github.com/) – Used for hosting the files used for the website.
  - [**Git**](https://git-scm.com/) – Version control used to track changes, commit and push code to
    Github.
+ - [**Python**](https://www.python.org/download/releases/3.0/)
+ - [**Flask**](https://flask.palletsprojects.com/en/2.0.x/)
+ - [**Javascript**](https://www.javascript.com/)
+ - [**Flask**](https://flask.palletsprojects.com/en/2.0.x/)
  - [**Lighthouse**](https://developers.google.com/web/tools/lighthouse) - Website performance testing utility found in Chrome DevTools. 
  - [**DevTools**](https://developers.google.com/web/tools/chrome-devtools) - I used Chrome DevTools throughout the development of the site to modify elements on the screen live, testing screen responsiveness, debugging code and access to the [Lighthouse](https://developers.google.com/web/tools/lighthouse) utility. 
  - [**StackEdit**](https://stackedit.io/editor) Used to help in the creation of this Readme file.

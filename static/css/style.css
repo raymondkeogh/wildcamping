@@ -1,3 +1,10 @@
+/*
+* Prefixed by https://autoprefixer.github.io
+* PostCSS: v7.0.29,
+* Autoprefixer: v9.7.6
+* Browsers: last 4 version
+*/
+
 body {
     background-image: url(../../static/images/background.png);
     background-size: cover;
@@ -43,6 +50,8 @@ nav .brand-logo {
 .nav-wrapper.scrolled {
     font-family: 'Baloo Tammudu 2', 'Roboto';
     background-color: #193954ba;
+    -webkit-transition: background-color 200ms linear;
+    -o-transition: background-color 200ms linear;
     transition: background-color 200ms linear;
 }
 
@@ -85,9 +94,15 @@ nav .brand-logo {
     position: absolute;
     right: 0;
     top: 0;
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     height: 40px;
     width: 50px;
     border-radius: 0 15px 15px 0;
@@ -152,11 +167,14 @@ nav .brand-logo {
 .row .place-card {
     color: black;
     background-color: white;
-    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+            box-sizing: border-box;
     padding: 14px;
     border-radius: 15px;
     margin: 5px;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     position: relative;
     border: 1px solid black;
     max-height: 314px;
@@ -166,7 +184,8 @@ nav .brand-logo {
     white-space: nowrap;
     width: 95%;
     overflow: hidden;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
     margin: 0;
 }
 
@@ -186,7 +205,8 @@ nav .brand-logo {
 .campsite-pic img {
     height: 122px;
     width: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     border-radius: 15px;
     position: relative;
 }
@@ -194,7 +214,8 @@ nav .brand-logo {
 .campsite-pic-upload img {
     height: 150px;
     width: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     border-radius: 15px;
     position: relative;
     margin-top: 20px;
@@ -254,7 +275,7 @@ nav .brand-logo {
     font-size: 1.4em
 }
 
-#profile-text  {
+#profile-text {
     margin-left: 50px;
 }
 
@@ -323,8 +344,12 @@ nav .brand-logo {
 
 
 .profile-posts-header {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     position: relative;
 }
 
@@ -344,6 +369,9 @@ nav .brand-logo {
 
     #user_profile {
         padding: 20px;
+    }
+    #profile-text {
+        margin-left: 0;
     }
 }
 
@@ -398,7 +426,8 @@ nav .brand-logo {
 .profile-pic-upload img {
     height: 150px;
     width: 100%;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     border-radius: 15px;
 }
 
@@ -420,9 +449,16 @@ nav .brand-logo {
 /* Code used for star rating got from  
 https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 .rating {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: center
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: reverse;
+        -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center
 }
 
 .rating>input {
@@ -490,7 +526,8 @@ https://bbbootstrap.com/snippets/star-rating-pure-css-19646372 */
 #forms-container img {
     height: 200px;
     width: 200px;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     overflow: hidden;
     float: left;
 }
@@ -527,6 +564,14 @@ new-file-upload {
     position: absolute;
     bottom: 5px;
     right: 9px;
+}
+
+#previous-rating {
+    color: #26485d; 
+}
+
+.add_location_inputs h5 {
+    margin: 1.0933rem 0 0.656rem 13px;
 }
 
 .add_location_inputs textarea {
@@ -621,9 +666,15 @@ new-file-upload {
 
 
 .top-spot-footer {
+    display: -webkit-box;
+    display: -ms-flexbox;
     display: flex;
-    align-items: center;
-    justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
     background-color: #193954c9;
     border-radius: 0 0 15px 15px;
     padding: 22px;
@@ -643,7 +694,9 @@ new-file-upload {
     color: #acacac;
     cursor: default;
     font-size: 30px;
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     position: absolute;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -656,7 +709,9 @@ new-file-upload {
 .liked-button {
     color: #e2264d;
     font-size: 30px;
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     position: absolute;
     -webkit-user-select: none;
     -moz-user-select: none;
@@ -669,7 +724,9 @@ new-file-upload {
 
 
 .like-button {
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     position: absolute;
     color: #888;
     font-size: 30px;
@@ -701,7 +758,9 @@ input[type="file"] {
 }
 
 .edit-location-button .fa-edit {
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     position: absolute;
     color: #888;
     font-size: 24px;
@@ -715,7 +774,9 @@ input[type="file"] {
 }
 
 .delete-button .fa-trash-alt {
-    align-self: center;
+    -ms-flex-item-align: center;
+        -ms-grid-row-align: center;
+        align-self: center;
     position: absolute;
     color: #888;
     font-size: 24px;
@@ -742,9 +803,10 @@ input[type="file"] {
 
 #upload {
     white-space: nowrap;
-    width: 332px;
+    width: 276px;
     overflow: hidden;
-    text-overflow: ellipsis;
+    -o-text-overflow: ellipsis;
+       text-overflow: ellipsis;
     margin: 20px 0 20px 0;
 }
 
@@ -773,7 +835,8 @@ input[type="file"] {
 
 .location-view img {
     height: 300px;
-    object-fit: cover;
+    -o-object-fit: cover;
+       object-fit: cover;
     overflow: hidden;
     width: 100%;
 }
