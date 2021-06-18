@@ -143,10 +143,12 @@ The full selection of wireframes can be viewed in PDF for [here](static/images/w
 
 
 **Colours:** 
-    - I have got gone for muted colours with this site. I used the nighttime image of the campsite used in the background for inspiration. The dark blue or navy colours evoke the atmospheric feeling of being under the night sky. 
+
+- I have got gone for muted colours with this site. I used the nighttime image of the campsite used in the background for inspiration. The dark blue or navy colours evoke the atmospheric feeling of being under the night sky.
+
 **Typography:** 
 
-    - I chose the 'Baloo Tammudu 2' as the main font for its soft lines. 'Roboto' is the backup font, not so soft but similar in structure. 
+- I chose the 'Baloo Tammudu 2' as the main font for its soft lines. 'Roboto' is the backup font, not so soft but similar in structure. 
 
 **Effects:**
 
@@ -265,11 +267,11 @@ I recieved the following erros which could not be resolved.
 
 Error: Element link is missing one or more of the following attributes: href, resource.
 
-<link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link 
+            <link type="text/css" rel="stylesheet" id="dark-mode-custom-link"><link 
 
 Error: Start tag head seen but an element of the same type was already open.
 
-</style><head><style
+            </style><head><style
 
 Error: Bad value https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Google+Sans:400,500,700|Google+Sans+Text:400 for attribute href on element link: Illegal character in query: | is not allowed.
 
@@ -277,7 +279,7 @@ Error: Bad value https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|
 Error: Attribute controlheight not allowed on element div at this point.
 
 
-/div><div><div class="gmnoprint gm-bundled-control gm-bundled-control-on-bottom" draggable="false" controlwidt…tyle="margin: 10px; user-select: none; position: absolute; display: none; bottom: 26px; left: 0px;"><div c
+            <div class="gmnoprint gm-bundled-control gm-bundled-control-on-bottom" draggable="false" controlwidt…tyle="margin: 10px; user-select: none; position: absolute; display: none; bottom: 26px; left: 0px;"><div c
 
 ----
 **W3C CSS Validation** 
@@ -285,7 +287,7 @@ Error: Attribute controlheight not allowed on element div at this point.
 
 CSS validation with [https://jigsaw.w3.org/css-validator/](https://jigsaw.w3.org/css-validator/)
 
-<****>
+No major errors. 
 
 ----
 **CSS Lint Validation**
@@ -293,8 +295,7 @@ CSS validation with [https://jigsaw.w3.org/css-validator/](https://jigsaw.w3.org
 
 CSS also validated via http://csslint.net/
 
-<****>
-
+No major errors found. 
 ----
 **BeautifyTools Javascript Validation** 
 
@@ -491,7 +492,7 @@ https://stackoverflow.com/questions/29516093/how-to-redirect-to-a-external-404-p
 
 
 
-<****>
+
 
 **Content**
 
