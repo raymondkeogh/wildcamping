@@ -70,15 +70,12 @@
 
                         <div class="col s12">
                             <div>
-                                <input type="text" name="lat" id="lat" required>
-                                <label
-                                    value="{%if location_id %}{{ location_id.location.coordinates[1]|round(3)  }}{% endif %}"
-                                    for="lat">Latitude</label>
+                                <input type="text" name="lat" id="lat" value="{%if location_id %}{{ location_id.location.coordinates[1]|round(3)  }}{% endif %}" required>
+                                <label for="lat">Latitude</label>
                             </div>
                             <div>
-                                <input type="text" name="lng" id="lng" required>
-                                <label
-                                    value="{%if location_id %}{{ location_id.location.coordinates[0]|round(3)  }}{% endif %}"
+                                <input type="text" name="lng" id="lng" value="{%if location_id %}{{ location_id.location.coordinates[0]|round(3)  }}{% endif %}" required>
+                                <label 
                                     for="lng">Longitude</label>
                             </div>
                         </div>
