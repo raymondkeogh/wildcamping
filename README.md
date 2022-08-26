@@ -94,7 +94,7 @@ The full selection of wireframes can be viewed in PDF for [here](static/images/w
     The focus of this project will the search functionality, creating a simple and intuitive way to find, store and share camping locations. 
 
  - **Definition:**  
-    The site will user populated database of camping locations with descriptions and ratings. 
+    The site will be a user populated database of camping locations, descriptions and ratings. 
 
  - **Value:**   
     This site allows users to explore new opportunities in wild camping, share their own camping knowledge and procure their own list of favourite locations.
