@@ -1,7 +1,7 @@
 click==7.1.2
 cloudinary==1.25.0
 dnspython==2.1.0
-Flask==2.2.2
+Flask==2.1.3
 Flask-Cors==3.0.10
 flask-googlemaps==0.4.1
 Flask-PyMongo==2.3.0
